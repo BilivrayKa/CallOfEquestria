@@ -1,0 +1,62 @@
+{
+  "sniff_sound": {
+    "subtitles": "sounds.callofequestria.sniff_sound",
+    "sounds": [
+      "callofequestria:sniff_sound"
+    ]
+  },
+  "yay": {
+    "subtitles": "sounds.callofequestria.yay",
+    "sounds": [
+      "callofequestria:yay"
+    ]
+  },
+  "yay2": {
+    "subtitles": "sounds.callofequestria.yay2",
+    "sounds": [
+      "callofequestria:yay2"
+    ]
+  },
+  "squee1": {
+    "subtitles": "sounds.callofequestria.squee1",
+    "sounds": [
+      "callofequestria:squee1"
+    ]
+  },
+  "squee2": {
+    "subtitles": "sounds.callofequestria.squee2",
+    "sounds": [
+      "callofequestria:squee2"
+    ]
+  },
+  "squee3": {
+    "subtitles": "sounds.callofequestria.squee3",
+    "sounds": [
+      "callofequestria:squee3"
+    ]
+  },
+  "rose1": {
+    "subtitles": "sounds.callofequestria.rose1",
+    "sounds": [
+      "callofequestria:rose1"
+    ]
+  },
+  "rose2": {
+    "subtitles": "sounds.callofequestria.rose2",
+    "sounds": [
+      "callofequestria:rose2"
+    ]
+  },
+  "applejack1": {
+    "subtitles": "sounds.callofequestria.applejack1",
+    "sounds": [
+      "callofequestria:applejack1"
+    ]
+  },
+  "applejack2": {
+    "subtitles": "sounds.callofequestria.applejack2",
+    "sounds": [
+      "callofequestria:applejack2"
+    ]
+  }
+}

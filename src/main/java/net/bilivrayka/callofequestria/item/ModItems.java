@@ -1,0 +1,94 @@
+package net.bilivrayka.callofequestria.item;
+
+import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.block.ModBlocks;
+import net.bilivrayka.callofequestria.item.custom.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+public class ModItems {
+    public static final DeferredRegister<Item> ITEMS =
+            DeferredRegister.create(ForgeRegistries.ITEMS, CallOfEquestria.MOD_ID);
+
+    public static final RegistryObject<Item> WOOD_PLANK = ITEMS.register("wood_plank",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> IRON_NAILS = ITEMS.register("iron_nails",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> WOOD_NAILS = ITEMS.register("wood_nails",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> LONG_STICK = ITEMS.register("long_stick",
+            () -> new LongStickItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> BARK = ITEMS.register("bark",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> MUG = ITEMS.register("mug",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> MOD_BOTTLE = ITEMS.register("mod_bottle",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> JAR = ITEMS.register("jar",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> MUG_APPLE = ITEMS.register("mug_apple",
+            () -> new DrinkItem(ModItems.MUG.get(),new Item.Properties().food(ModFoods.MUG_APPLE)));
+    public static final RegistryObject<Item> MUFIIN = ITEMS.register("muffin",
+            () -> new Item(new Item.Properties().food(ModFoods.MUFFIN)));
+    public static final RegistryObject<Item> APPLE_VODKA = ITEMS.register("apple_vodka",
+            () -> new DrinkItem(ModItems.MOD_BOTTLE.get(), new Item.Properties().food(ModFoods.APPLE_VODKA)));
+    public static final RegistryObject<Item> NOTCH_APPLE_JAM = ITEMS.register("notch_apple_jam",
+            () -> new DrinkItem(ModItems.JAR.get(), new Item.Properties().food(ModFoods.NOTCH_APPLE_JAM)));
+    public static final RegistryObject<Item> HAYBURGER = ITEMS.register("hayburger",
+            () -> new Yay(new Item.Properties().food(ModFoods.HAYBURGER)));
+
+    public static final RegistryObject<Item> FLOWER_DUST = ITEMS.register("flower_dust",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST)));
+    public static final RegistryObject<Item> FLOWER_DUST_BLACK = ITEMS.register("flower_dust_black",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_BLACK)));
+    public static final RegistryObject<Item> FLOWER_DUST_BLUE = ITEMS.register("flower_dust_blue",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_BLUE)));
+    public static final RegistryObject<Item> FLOWER_DUST_BROWN = ITEMS.register("flower_dust_brown",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_BROWN)));
+    public static final RegistryObject<Item> FLOWER_DUST_CYAN = ITEMS.register("flower_dust_cyan",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_CYAN)));
+    public static final RegistryObject<Item> FLOWER_DUST_GRAY = ITEMS.register("flower_dust_gray",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_GRAY)));
+    public static final RegistryObject<Item> FLOWER_DUST_GREEN = ITEMS.register("flower_dust_green",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_GREEN)));
+    public static final RegistryObject<Item> FLOWER_DUST_LIGHTBLUE = ITEMS.register("flower_dust_lightblue",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_LIGHTBLUE)));
+    public static final RegistryObject<Item> FLOWER_DUST_LIGHTGRAY = ITEMS.register("flower_dust_lightgray",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_LIGHTGRAY)));
+    public static final RegistryObject<Item> FLOWER_DUST_LIME = ITEMS.register("flower_dust_lime",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_LIME)));
+    public static final RegistryObject<Item> FLOWER_DUST_MAGENTA = ITEMS.register("flower_dust_magenta",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_MAGENTA)));
+    public static final RegistryObject<Item> FLOWER_DUST_ORANGE = ITEMS.register("flower_dust_orange",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_ORANGE)));
+    public static final RegistryObject<Item> FLOWER_DUST_PINK = ITEMS.register("flower_dust_pink",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_PINK)));
+    public static final RegistryObject<Item> FLOWER_DUST_PURPLE = ITEMS.register("flower_dust_purple",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_PURPLE)));
+    public static final RegistryObject<Item> FLOWER_DUST_RED = ITEMS.register("flower_dust_red",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_RED)));
+    public static final RegistryObject<Item> FLOWER_DUST_WHITE = ITEMS.register("flower_dust_white",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_WHITE)));
+    public static final RegistryObject<Item> FLOWER_DUST_YELLOW = ITEMS.register("flower_dust_yellow",
+            () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST_YELLOW)));
+    public static final RegistryObject<Item> ZINNIA_BUSH_FLOWER = ITEMS.register("zinnia_bush_flower",
+            () -> new ItemNameBlockItem(ModBlocks.ZINNIA_BUSH.get(), new Item.Properties()));
+    public static final RegistryObject<Item> BUDDING_CRYSTAL = ITEMS.register("budding_crystal",
+            () -> new ItemNameBlockItem(ModBlocks.BUDDING_CRYSTAL_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CRYSTAL_CLUSTER = ITEMS.register("crystal_cluster",
+            () -> new ItemNameBlockItem(ModBlocks.CRYSTAL_CLUSTER_BLOCK.get(), new Item.Properties()));
+
+
+
+
+    public static void register(IEventBus eventBus) {
+        ITEMS.register(eventBus);
+    }
+}
+

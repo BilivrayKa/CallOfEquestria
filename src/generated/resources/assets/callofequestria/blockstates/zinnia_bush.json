@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "callofequestria:block/zinnia_bush_flower_stage0"
+    },
+    "age=1": {
+      "model": "callofequestria:block/zinnia_bush_flower_stage1"
+    }
+  }
+}

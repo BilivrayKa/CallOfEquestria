@@ -1,0 +1,31 @@
+{
+  "variants": {
+
+    "facing=down": {
+      "model": "callofequestria:block/crystal_cluster_block",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "callofequestria:block/crystal_cluster_block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "callofequestria:block/crystal_cluster_block",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "callofequestria:block/crystal_cluster_block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "callofequestria:block/crystal_cluster_block"
+    },
+    "facing=west": {
+      "model": "callofequestria:block/crystal_cluster_block",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

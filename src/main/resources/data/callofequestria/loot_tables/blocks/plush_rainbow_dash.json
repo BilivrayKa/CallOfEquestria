@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "callofequestria:plush_rainbow_dash"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "callofequestria:blocks/plush_rainbow_dash"
+}

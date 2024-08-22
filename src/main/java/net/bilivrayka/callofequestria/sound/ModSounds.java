@@ -24,6 +24,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> ROSE2 = registerSoundEvents("rose2");
     public static final RegistryObject<SoundEvent> APPLEJACK1 = registerSoundEvents("applejack1");
     public static final RegistryObject<SoundEvent> APPLEJACK2 = registerSoundEvents("applejack2");
+    public static final RegistryObject<SoundEvent> RAINBOW_DASH1 = registerSoundEvents("rainbow_dash1");
+    public static final RegistryObject<SoundEvent> RAINBOW_DASH2 = registerSoundEvents("rainbow_dash2");
 
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {

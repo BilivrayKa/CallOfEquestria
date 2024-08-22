@@ -66,12 +66,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.PLUSH_ROSE.get());
                         pOutput.accept(ModItems.PLUSH_FLUTTERSHY.get());
                         pOutput.accept(ModItems.PLUSH_APPLEJACK.get());
-                        /*
-                        pOutput.accept(PlushReg.PLUSH_ROSE.get());
-                        pOutput.accept(PlushReg.PLUSH_FLUTTERSHY.get());
-                        pOutput.accept(PlushReg.PLUSH_APPLEJACK.get());
-
-                         */
+                        pOutput.accept(ModItems.PLUSH_RAINBOW_DASH.get());
 
                     })
                     .build());

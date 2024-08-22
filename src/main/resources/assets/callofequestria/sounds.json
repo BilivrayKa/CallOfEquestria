@@ -58,5 +58,17 @@
     "sounds": [
       "callofequestria:applejack2"
     ]
+  },
+  "rainbow_dash1": {
+    "subtitles": "sounds.callofequestria.rainbow_dash1",
+    "sounds": [
+      "callofequestria:rainbow_dash1"
+    ]
+  },
+  "rainbow_dash2": {
+    "subtitles": "sounds.callofequestria.rainbow_dash2",
+    "sounds": [
+      "callofequestria:rainbow_dash2"
+    ]
   }
 }

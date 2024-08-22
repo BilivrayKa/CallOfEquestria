@@ -4,7 +4,7 @@ license="Not specified"
 
 [[mods]]
 modId="callofequestria"
-version="1.0.0"
+version="0.0.1"
 displayName="Pony Stuff"
 authors="Bilivrayka"
 displayTest="IGNORE_SERVER_VERSION"

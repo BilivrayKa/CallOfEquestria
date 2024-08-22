@@ -2,6 +2,7 @@ package net.bilivrayka.callofequestria.item;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.block.ModBlocks;
+import net.bilivrayka.callofequestria.block.PlushReg;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -58,13 +59,19 @@ public class ModCreativeModTabs {
                     .build());
 
     public static final RegistryObject<CreativeModeTab> PLUSHIES_TAB = CREATIVE_MODE_TABS.register("plushies_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.PLUSH_PINKIE_PIE.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(PlushReg.PLUSH_PINKIE_PIE.get()))
                     .title(Component.translatable("creativetab.plushies_tab"))
                     .displayItems((pParameters, pOutput) -> {
-                        pOutput.accept(ModBlocks.PLUSH_PINKIE_PIE.get());
-                        pOutput.accept(ModBlocks.PLUSH_ROSE.get());
-                        pOutput.accept(ModBlocks.PLUSH_FLUTTERSHY.get());
-                        pOutput.accept(ModBlocks.PLUSH_APPLEJACK.get());
+                        pOutput.accept(ModItems.PLUSH_PINKIE_PIE.get());
+                        pOutput.accept(ModItems.PLUSH_ROSE.get());
+                        pOutput.accept(ModItems.PLUSH_FLUTTERSHY.get());
+                        pOutput.accept(ModItems.PLUSH_APPLEJACK.get());
+                        /*
+                        pOutput.accept(PlushReg.PLUSH_ROSE.get());
+                        pOutput.accept(PlushReg.PLUSH_FLUTTERSHY.get());
+                        pOutput.accept(PlushReg.PLUSH_APPLEJACK.get());
+
+                         */
 
                     })
                     .build());

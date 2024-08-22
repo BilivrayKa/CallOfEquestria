@@ -37,14 +37,7 @@ public class ModBlocks {
             () -> new CrystalClusterBlock(4,3,BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).lightLevel((state) -> 7)));
     public static final RegistryObject<Block> LARGE_CRYSTAL_BUD_BLOCK = registerBlock("large_crystal_bud_block",
             () -> new CrystalClusterBlock(5,3,BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).lightLevel((state) -> 8)));
-    public static final RegistryObject<Block> PLUSH_PINKIE_PIE = registerBlock("plush_pinkie_pie",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
-    public static final RegistryObject<Block> PLUSH_ROSE = registerBlock("plush_rose",
-            () -> new PlushBaseBlock(ModSounds.ROSE1.get(),ModSounds.ROSE2.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
-    public static final RegistryObject<Block> PLUSH_FLUTTERSHY = registerBlock("plush_fluttershy",
-            () -> new PlushBaseBlock(ModSounds.YAY.get(),ModSounds.YAY2.get(), BlockBehaviour.Properties.copy(Blocks.YELLOW_WOOL).strength(2).noOcclusion()));
-    public static final RegistryObject<Block> PLUSH_APPLEJACK = registerBlock("plush_applejack",
-            () -> new PlushBaseBlock(ModSounds.APPLEJACK1.get(),ModSounds.APPLEJACK2.get(), BlockBehaviour.Properties.copy(Blocks.ORANGE_WOOL).strength(2).noOcclusion()));
+
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

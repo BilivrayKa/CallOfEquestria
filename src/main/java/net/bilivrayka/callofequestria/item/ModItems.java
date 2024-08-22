@@ -2,10 +2,17 @@ package net.bilivrayka.callofequestria.item;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.block.ModBlocks;
+import net.bilivrayka.callofequestria.block.PlushReg;
+import net.bilivrayka.callofequestria.block.custom.PlushBaseBlock;
 import net.bilivrayka.callofequestria.item.custom.*;
+import net.bilivrayka.callofequestria.sound.ModSounds;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -84,6 +91,14 @@ public class ModItems {
     public static final RegistryObject<Item> CRYSTAL_CLUSTER = ITEMS.register("crystal_cluster",
             () -> new ItemNameBlockItem(ModBlocks.CRYSTAL_CLUSTER_BLOCK.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> PLUSH_PINKIE_PIE = ITEMS.register("plush_pinkie_pie",
+            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),PlushReg.PLUSH_PINKIE_PIE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PLUSH_ROSE = ITEMS.register("plush_rose",
+            () -> new PlushItem(ModSounds.ROSE1.get(),ModSounds.ROSE2.get(),PlushReg.PLUSH_ROSE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PLUSH_FLUTTERSHY = ITEMS.register("plush_fluttershy",
+            () -> new PlushItem(ModSounds.YAY.get(),ModSounds.YAY2.get(), (PlushReg.PLUSH_FLUTTERSHY.get()), new Item.Properties()));
+    public static final RegistryObject<Item> PLUSH_APPLEJACK = ITEMS.register("plush_applejack",
+            () -> new PlushItem(ModSounds.APPLEJACK1.get(),ModSounds.APPLEJACK2.get(), PlushReg.PLUSH_APPLEJACK.get(), new Item.Properties()));
 
 
 

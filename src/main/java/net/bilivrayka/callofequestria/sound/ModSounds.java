@@ -28,6 +28,10 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> RAINBOW_DASH2 = registerSoundEvents("rainbow_dash2");
     public static final RegistryObject<SoundEvent> RARITY1 = registerSoundEvents("rarity1");
     public static final RegistryObject<SoundEvent> RARITY2 = registerSoundEvents("rarity2");
+    public static final RegistryObject<SoundEvent> SPARKLE1 = registerSoundEvents("sparkle1");
+    public static final RegistryObject<SoundEvent> SPARKLE2 = registerSoundEvents("sparkle2");
+    public static final RegistryObject<SoundEvent> DERPY1 = registerSoundEvents("derpy1");
+    public static final RegistryObject<SoundEvent> DERPY2 = registerSoundEvents("derpy2");
 
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {

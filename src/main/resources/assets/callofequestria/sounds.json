@@ -82,5 +82,29 @@
     "sounds": [
       "callofequestria:rarity2"
     ]
+  },
+  "sparkle1": {
+    "subtitles": "sounds.callofequestria.sparkle1",
+    "sounds": [
+      "callofequestria:sparkle1"
+    ]
+  },
+  "sparkle2": {
+    "subtitles": "sounds.callofequestria.sparkle2",
+    "sounds": [
+      "callofequestria:sparkle2"
+    ]
+  },
+  "derpy1": {
+    "subtitles": "sounds.callofequestria.derpy1",
+    "sounds": [
+      "callofequestria:derpy1"
+    ]
+  },
+  "derpy2": {
+    "subtitles": "sounds.callofequestria.derpy2",
+    "sounds": [
+      "callofequestria:derpy2"
+    ]
   }
 }

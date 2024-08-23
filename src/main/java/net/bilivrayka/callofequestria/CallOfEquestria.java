@@ -45,14 +45,6 @@ public class CallOfEquestria {
         // Common setup code
         event.enqueueWork(ModMessages::register);
     }
-    /*
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.WOOD_PLANK);
-            event.accept(ModItems.IRON_NAILS);
-        }
-    }
-    */
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {

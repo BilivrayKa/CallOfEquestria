@@ -70,5 +70,17 @@
     "sounds": [
       "callofequestria:rainbow_dash2"
     ]
+  },
+  "rarity1": {
+    "subtitles": "sounds.callofequestria.rarity1",
+    "sounds": [
+      "callofequestria:rarity1"
+    ]
+  },
+  "rarity2": {
+    "subtitles": "sounds.callofequestria.rarity2",
+    "sounds": [
+      "callofequestria:rarity2"
+    ]
   }
 }

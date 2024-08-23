@@ -101,6 +101,8 @@ public class ModItems {
             () -> new PlushItem(ModSounds.APPLEJACK1.get(),ModSounds.APPLEJACK2.get(), PlushReg.PLUSH_APPLEJACK.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_RAINBOW_DASH = ITEMS.register("plush_rainbow_dash",
             () -> new PlushItem(ModSounds.RAINBOW_DASH1.get(),ModSounds.RAINBOW_DASH2.get(), PlushReg.PLUSH_RAINBOW_DASH.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PLUSH_RARITY = ITEMS.register("plush_rarity",
+            () -> new PlushItem(ModSounds.RARITY1.get(),ModSounds.RARITY2.get(), PlushReg.PLUSH_RARITY.get(), new Item.Properties()));
 
 
 

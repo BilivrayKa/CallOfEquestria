@@ -68,6 +68,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.PLUSH_APPLEJACK.get());
                         pOutput.accept(ModItems.PLUSH_RAINBOW_DASH.get());
                         pOutput.accept(ModItems.PLUSH_RARITY.get());
+                        pOutput.accept(ModItems.PLUSH_SPARKLE.get());
 
                     })
                     .build());

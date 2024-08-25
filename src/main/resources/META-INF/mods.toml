@@ -1,13 +1,14 @@
 modLoader="javafml"
 loaderVersion="[47,)"
-license="Not specified"
+license="GPL-3.0"
 
 [[mods]]
 modId="callofequestria"
 version="0.0.1"
-displayName="Pony Stuff"
+displayName="Equestria"
 authors="Bilivrayka"
 displayTest="IGNORE_SERVER_VERSION"
+description="ponyfied"
 
 # Start of user code block mod configuration
 # End of user code block mod configuration

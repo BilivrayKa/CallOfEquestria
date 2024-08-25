@@ -70,6 +70,10 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.PLUSH_RARITY.get());
                         pOutput.accept(ModItems.PLUSH_SPARKLE.get());
                         pOutput.accept(ModItems.PLUSH_DERPY.get());
+                        pOutput.accept(ModItems.PLUSH_STARLIGHT.get());
+                        pOutput.accept(ModItems.PLUSH_TRIXIE.get());
+                        pOutput.accept(ModItems.PLUSH_SWIRL.get());
+                        pOutput.accept(ModItems.PLUSH_MINUETTE.get());
                     })
                     .build());
 

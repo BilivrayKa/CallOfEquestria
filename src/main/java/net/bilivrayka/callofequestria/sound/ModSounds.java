@@ -32,6 +32,15 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SPARKLE2 = registerSoundEvents("sparkle2");
     public static final RegistryObject<SoundEvent> DERPY1 = registerSoundEvents("derpy1");
     public static final RegistryObject<SoundEvent> DERPY2 = registerSoundEvents("derpy2");
+    public static final RegistryObject<SoundEvent> STARLIGHT1 = registerSoundEvents("starlight1");
+    public static final RegistryObject<SoundEvent> STARLIGHT2 = registerSoundEvents("starlight2");
+    public static final RegistryObject<SoundEvent> TRIXIE1 = registerSoundEvents("trixie1");
+    public static final RegistryObject<SoundEvent> TRIXIE2 = registerSoundEvents("trixie2");
+    public static final RegistryObject<SoundEvent> SWIRL1 = registerSoundEvents("swirl1");
+    public static final RegistryObject<SoundEvent> SWIRL2 = registerSoundEvents("swirl2");
+    public static final RegistryObject<SoundEvent> MINUETTE1 = registerSoundEvents("minuette1");
+    public static final RegistryObject<SoundEvent> MINUETTE2 = registerSoundEvents("minuette2");
+
 
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {

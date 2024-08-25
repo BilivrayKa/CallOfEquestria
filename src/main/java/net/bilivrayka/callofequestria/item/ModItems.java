@@ -107,7 +107,10 @@ public class ModItems {
             () -> new PlushItem(ModSounds.SPARKLE1.get(),ModSounds.SPARKLE2.get(), PlushReg.PLUSH_SPARKLE.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_DERPY = ITEMS.register("plush_derpy",
             () -> new PlushItem(ModSounds.DERPY1.get(),ModSounds.DERPY2.get(), PlushReg.PLUSH_DERPY.get(), new Item.Properties()));
-
+    public static final RegistryObject<Item> PLUSH_STARLIGHT = ITEMS.register("plush_starlight",
+            () -> new PlushItem(ModSounds.STARLIGHT1.get(),ModSounds.STARLIGHT2.get(), PlushReg.PLUSH_STARLIGHT.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PLUSH_TRIXIE = ITEMS.register("plush_trixie",
+            () -> new PlushItem(ModSounds.TRIXIE1.get(),ModSounds.TRIXIE2.get(), PlushReg.PLUSH_TRIXIE.get(), new Item.Properties()));
 
 
     public static void register(IEventBus eventBus) {

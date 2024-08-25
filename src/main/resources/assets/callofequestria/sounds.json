@@ -106,5 +106,29 @@
     "sounds": [
       "callofequestria:derpy2"
     ]
+  },
+  "starlight1": {
+    "subtitles": "sounds.callofequestria.starlight1",
+    "sounds": [
+      "callofequestria:starlight1"
+    ]
+  },
+  "starlight2": {
+    "subtitles": "sounds.callofequestria.starlight2",
+    "sounds": [
+      "callofequestria:starlight2"
+    ]
+  },
+  "trixie1": {
+    "subtitles": "sounds.callofequestria.trixie1",
+    "sounds": [
+      "callofequestria:trixie1"
+    ]
+  },
+  "trixie2": {
+    "subtitles": "sounds.callofequestria.trixie2",
+    "sounds": [
+      "callofequestria:trixie2"
+    ]
   }
 }

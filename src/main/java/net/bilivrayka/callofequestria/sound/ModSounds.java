@@ -40,6 +40,10 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SWIRL2 = registerSoundEvents("swirl2");
     public static final RegistryObject<SoundEvent> MINUETTE1 = registerSoundEvents("minuette1");
     public static final RegistryObject<SoundEvent> MINUETTE2 = registerSoundEvents("minuette2");
+    public static final RegistryObject<SoundEvent> MAUD_PIE1 = registerSoundEvents("maud_pie1");
+    public static final RegistryObject<SoundEvent> MAUD_PIE2 = registerSoundEvents("maud_pie2");
+    public static final RegistryObject<SoundEvent> MARBLE_PIE1 = registerSoundEvents("marble_pie1");
+    public static final RegistryObject<SoundEvent> MARBLE_PIE2 = registerSoundEvents("marble_pie2");
 
 
 

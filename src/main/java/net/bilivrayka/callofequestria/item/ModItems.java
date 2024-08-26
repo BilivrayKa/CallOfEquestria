@@ -115,6 +115,13 @@ public class ModItems {
             () -> new PlushItem(ModSounds.SWIRL1.get(),ModSounds.SWIRL2.get(), PlushReg.PLUSH_SWIRL.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_MINUETTE = ITEMS.register("plush_minuette",
             () -> new PlushItem(ModSounds.MINUETTE1.get(),ModSounds.MINUETTE2.get(), PlushReg.PLUSH_MINUETTE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PLUSH_MAUD_PIE = ITEMS.register("plush_maud_pie",
+            () -> new PlushItem(ModSounds.MAUD_PIE1.get(),ModSounds.MAUD_PIE2.get(), PlushReg.PLUSH_MAUD_PIE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PLUSH_MARBLE_PIE = ITEMS.register("plush_marble_pie",
+            () -> new PlushItem(ModSounds.MARBLE_PIE1.get(),ModSounds.MARBLE_PIE2.get(), PlushReg.PLUSH_MARBLE_PIE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> BOULDER = ITEMS.register("boulder",
+            () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

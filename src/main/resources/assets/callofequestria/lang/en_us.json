@@ -31,6 +31,7 @@
   "item.callofequestria.jar": "Empty Jar",
   "item.callofequestria.notch_apple_jam": "Notch Apple Jam",
   "item.callofequestria.hayburger": "HayBurger",
+  "item.callofequestria.boulder": "Boulder",
   "block.callofequestria.plush_pinkie_pie": "Plush Pinkie Pie",
   "block.callofequestria.plush_rose": "Plush Rose",
   "block.callofequestria.plush_fluttershy": "Plush Fluttershy",
@@ -43,9 +44,16 @@
   "block.callofequestria.plush_trixie": "Plush Trixie",
   "block.callofequestria.plush_swirl": "Plush Sea Swirl",
   "block.callofequestria.plush_minuette": "Plush Minuette",
+  "block.callofequestria.plush_maud_pie": "Plush Maud Pie",
+  "block.callofequestria.plush_marble_pie": "Plush Marble Pie",
 
   "creativetab.stuff_tab": "Stuff tab",
   "creativetab.plushies_tab": "Plushies",
 
-  "sounds.callofequestria.sniff_sound": "Sniff"
+  "sounds.callofequestria.sniff_sound": "Sniff",
+
+  "achievement.dash.title": "Fly Away",
+  "achievement.dash.description": "Get on 1000 blocks height",
+  "achievement.boulder.title": "Stone Pet",
+  "achievement.boulder.description": "You held a Boulder in your inventory for 1 hour"
 }

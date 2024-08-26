@@ -3,10 +3,13 @@ package net.bilivrayka.callofequestria;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
+import net.bilivrayka.callofequestria.event.AdvancementRewardHandler;
 import net.bilivrayka.callofequestria.item.ModCreativeModTabs;
 import net.bilivrayka.callofequestria.item.ModItems;
 import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.sound.ModSounds;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -44,6 +47,8 @@ public class CallOfEquestria {
     private void setup(final FMLCommonSetupEvent event) {
         // Common setup code
         event.enqueueWork(ModMessages::register);
+
+        ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_MAUD_PIE.get(), RenderType.cutout());
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

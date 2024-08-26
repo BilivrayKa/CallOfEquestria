@@ -1,12 +1,15 @@
 package net.bilivrayka.callofequestria.event;
 
+import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.item.ModItems;
 import net.bilivrayka.callofequestria.magic.PlayerFlyStateProvider;
 import net.bilivrayka.callofequestria.magic.PlayerMagic;
 import net.bilivrayka.callofequestria.magic.PlayerMagicProvider;
 import net.bilivrayka.callofequestria.networking.packet.FlyC2SPacket;
 import net.bilivrayka.callofequestria.networking.packet.MagicC2SPacket;
 import net.bilivrayka.callofequestria.util.KeyBinding;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -17,6 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -36,13 +40,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
 public class ModEvents {
+    public static final Logger LOGGER = LogUtils.getLogger();
     //private static final KeyMapping flyKey = new KeyMapping("key.callofequestria.flytowards", GLFW.GLFW_KEY_W, "key.categories.movement");
     //@Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
     //public static class ServerForgeEvents {
@@ -139,4 +144,22 @@ public class ModEvents {
 
         }
     }
+    /*
+    @SubscribeEvent
+    public static void onAdvancement(AdvancementEvent event) {
+        ServerPlayer player = (ServerPlayer) event.getEntity();
+        LOGGER.info("Advancement triggered: " + event.getAdvancement().getId().getPath());
+
+        if (event.getAdvancement().getId().getPath().equals("dash") && !player.level().isClientSide) {
+            AdvancementProgress progress = player.getAdvancements().getOrStartProgress(event.getAdvancement());
+
+            if (progress.isDone()) {
+                ItemStack rewardItem = new ItemStack(ModItems.PLUSH_RAINBOW_DASH.get());
+                player.addItem(rewardItem);
+                LOGGER.info("Rewards added to player: " + player.getName().getString());
+            }
+        }
+    }
+
+     */
 }

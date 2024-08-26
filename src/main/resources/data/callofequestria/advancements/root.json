@@ -1,0 +1,27 @@
+{
+  "display": {
+    "title": {
+      "text": "Equestria Plushies",
+      "color": "gold",
+      "bold": true
+    },
+    "translate": "advancements.story.root.title",
+    "description": {
+      "translate": "advancements.story.root.description"
+    },
+    "icon": {
+      "item": "callofequestria:plush_pinkie_pie"
+    },
+    "frame": "goal",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "sends_telemetry_event": true
+}

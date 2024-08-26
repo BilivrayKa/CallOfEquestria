@@ -30,6 +30,7 @@
   "item.callofequestria.jar": "Пустая Банка",
   "item.callofequestria.notch_apple_jam": "Джем Из Зачарованного Золотого Яблока",
   "item.callofequestria.hayburger": "Бургер с сеном",
+  "item.callofequestria.boulder": "<Боулдер>",
   "block.callofequestria.plush_pinkie_pie": "Плюшевая Пинки Пай",
   "block.callofequestria.plush_rose": "Плюшевая Роуз",
   "block.callofequestria.plush_fluttershy": "Плюшевая Флаттершай",
@@ -42,8 +43,14 @@
   "block.callofequestria.plush_trixie": "Плюшевая Трикси",
   "block.callofequestria.plush_swirl": "Плюшевая Си Свирл",
   "block.callofequestria.plush_minuette": "Плюшевая Минуэтт",
+  "block.callofequestria.plush_maud_pie": "Плюшевая Моуд Пай",
   "creativetab.stuff_tab": "Штуки",
   "creativetab.plushies_tab": "Плюши",
 
-  "sounds.callofequestria.sniff_sound": "Шмыганье носом"
+  "sounds.callofequestria.sniff_sound": "Шмыганье носом",
+
+  "achievement.dash.title": "Я Свободен!",
+  "achievement.dash.description": "Взлетите на 1000 блоков вверх",
+  "achievement.boulder.title": "Камень Питомец",
+  "achievement.boulder.description": "Вы продержали Боулдера в инвентаре 1 час"
 }

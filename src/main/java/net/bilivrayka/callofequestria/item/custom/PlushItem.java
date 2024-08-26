@@ -49,7 +49,7 @@ public class PlushItem extends BlockItem {
                 break;
 
         }
-        pLevel.playSound(null, new BlockPos(pPlayer.getOnPos()),
+        pLevel.playSound(null, pPlayer.getOnPos(),
                 sound, SoundSource.PLAYERS, 1.0F, pitch);
         return super.use(pLevel, pPlayer, pUsedHand);
     }

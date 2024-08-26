@@ -142,5 +142,29 @@
     "sounds": [
       "callofequestria:swirl2"
     ]
+  },
+  "minuette1": {
+    "subtitles": "sounds.callofequestria.minuette1",
+    "sounds": [
+      "callofequestria:minuette1"
+    ]
+  },
+  "minuette2": {
+    "subtitles": "sounds.callofequestria.minuette2",
+    "sounds": [
+      "callofequestria:minuette2"
+    ]
+  },
+  "maud_pie1": {
+    "subtitles": "sounds.callofequestria.maud_pie1",
+    "sounds": [
+      "callofequestria:maud_pie1"
+    ]
+  },
+  "maud_pie2": {
+    "subtitles": "sounds.callofequestria.maud_pie2",
+    "sounds": [
+      "callofequestria:maud_pie2"
+    ]
   }
 }

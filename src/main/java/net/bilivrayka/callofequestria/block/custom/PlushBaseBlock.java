@@ -68,8 +68,8 @@ public class PlushBaseBlock extends Block {
                 break;
 
         }
-        pLevel.playSound(null, new BlockPos(pPos),
-                sound, SoundSource.PLAYERS, 1.0F, pitch);
+        pLevel.playSound(null, pPos,
+                sound, SoundSource.BLOCKS, 1.0F, pitch);
     }
     @Override
     public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {

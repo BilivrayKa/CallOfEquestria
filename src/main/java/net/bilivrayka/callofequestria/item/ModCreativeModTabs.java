@@ -55,6 +55,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModBlocks.SMALL_CRYSTAL_BUD_BLOCK.get());
                         pOutput.accept(ModBlocks.MEDIUM_CRYSTAL_BUD_BLOCK.get());
                         pOutput.accept(ModBlocks.LARGE_CRYSTAL_BUD_BLOCK.get());
+                        pOutput.accept(ModItems.BOULDER.get());
                     })
                     .build());
 
@@ -74,6 +75,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.PLUSH_TRIXIE.get());
                         pOutput.accept(ModItems.PLUSH_SWIRL.get());
                         pOutput.accept(ModItems.PLUSH_MINUETTE.get());
+                        pOutput.accept(ModItems.PLUSH_MAUD_PIE.get());
                     })
                     .build());
 

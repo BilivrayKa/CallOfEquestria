@@ -3,6 +3,7 @@ package net.bilivrayka.callofequestria;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
+import net.bilivrayka.callofequestria.event.AdvancementRewardHandler;
 import net.bilivrayka.callofequestria.item.ModCreativeModTabs;
 import net.bilivrayka.callofequestria.item.ModItems;
 import net.bilivrayka.callofequestria.networking.ModMessages;

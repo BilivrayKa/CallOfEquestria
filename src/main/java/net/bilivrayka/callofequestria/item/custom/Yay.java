@@ -24,7 +24,7 @@ public class Yay extends Item{
         if (pEntityLiving instanceof ServerPlayer $$3) {
             CriteriaTriggers.CONSUME_ITEM.trigger($$3, pStack);
             $$3.awardStat(Stats.ITEM_USED.get(this));
-            pLevel.playSound(null, new BlockPos(pEntityLiving.blockPosition()),
+            pLevel.playSound(null, pEntityLiving.blockPosition(),
                     ModSounds.YAY.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
         }
         return pStack;

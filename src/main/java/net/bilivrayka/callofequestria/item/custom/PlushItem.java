@@ -38,7 +38,7 @@ public class PlushItem extends BlockItem {
 
         pPlayer.getCooldowns().addCooldown(this, 10);
         float pitch = rnd.nextFloat(1,1.15f);
-        SoundEvent sound = ModSounds.SQUEE1.get();
+        SoundEvent sound = ModSounds.STEREO_SQUEE1.get();
 
         switch (rnd.nextInt(3)+1){
             case 2 :
@@ -49,8 +49,23 @@ public class PlushItem extends BlockItem {
                 break;
 
         }
-        pLevel.playSound(null, pPlayer.getOnPos(),
+        /*
+        pLevel.playSound(null, pPlayer.getX(),pPlayer.getY()+1,pPlayer.getZ(),
                 sound, SoundSource.PLAYERS, 1.0F, pitch);
+
+         */
+
+        // если вдруг захочу зарегать все звуки дважды, моно и стерео
+        // это позволит плюшам предметам воспроизводить звук в игроке, чтобы от звука нельзя было убежать
+        // но впизду это делать сейчас
+        if(!pLevel.isClientSide){
+            pLevel.playSound(pPlayer, pPlayer.getOnPos(),
+                    sound, SoundSource.PLAYERS, 1.0F, pitch);
+        }
+        //pPlayer.playSound(sound,1.0f, pitch);
+        pLevel.playLocalSound(pPlayer.getOnPos(),sound,SoundSource.PLAYERS, 1.0f, pitch,true);
+
+
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 

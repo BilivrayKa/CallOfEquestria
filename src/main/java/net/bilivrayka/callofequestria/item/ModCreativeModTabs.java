@@ -77,6 +77,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.PLUSH_MINUETTE.get());
                         pOutput.accept(ModItems.PLUSH_MAUD_PIE.get());
                         pOutput.accept(ModItems.PLUSH_MARBLE_PIE.get());
+                        pOutput.accept(ModItems.PLUSH_DARING_DO.get());
                     })
                     .build());
 

@@ -49,6 +49,8 @@ public class PlushReg {
             () -> new PlushBaseBlock(ModSounds.MAUD_PIE1.get(),ModSounds.MAUD_PIE2.get(), BlockBehaviour.Properties.copy(Blocks.GRAY_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_MARBLE_PIE = registerBlock("plush_marble_pie",
             () -> new PlushBaseBlock(ModSounds.MARBLE_PIE1.get(),ModSounds.MARBLE_PIE2.get(), BlockBehaviour.Properties.copy(Blocks.GRAY_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_DARING_DO = registerBlock("plush_daring_do",
+            () -> new PlushBaseBlock(ModSounds.DARING_DO1.get(),ModSounds.DARING_DO2.get(), BlockBehaviour.Properties.copy(Blocks.BROWN_WOOL).strength(2).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = PLUSHIES.register(name, block);

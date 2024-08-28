@@ -51,13 +51,9 @@ public class DrinkItem extends Item {
         return 40;
     }
 
-    public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.DRINK;
-    }
+    public UseAnim getUseAnimation(ItemStack pStack) { return UseAnim.DRINK; }
 
-    public SoundEvent getDrinkingSound() {
-        return SoundEvents.HONEY_DRINK;
-    }
+    public SoundEvent getDrinkingSound() { return SoundEvents.HONEY_DRINK; }
 
     public SoundEvent getEatingSound() {
         return SoundEvents.HONEY_DRINK;

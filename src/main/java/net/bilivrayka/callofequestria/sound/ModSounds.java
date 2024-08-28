@@ -44,6 +44,41 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> MAUD_PIE2 = registerSoundEvents("maud_pie2");
     public static final RegistryObject<SoundEvent> MARBLE_PIE1 = registerSoundEvents("marble_pie1");
     public static final RegistryObject<SoundEvent> MARBLE_PIE2 = registerSoundEvents("marble_pie2");
+    public static final RegistryObject<SoundEvent> DARING_DO1 = registerSoundEvents("daring_do1");
+    public static final RegistryObject<SoundEvent> DARING_DO2 = registerSoundEvents("daring_do2");
+
+    public static final RegistryObject<SoundEvent> STEREO_SNIFF_SOUND = registerSoundEvents("stereo_sniff_sound");
+    public static final RegistryObject<SoundEvent> STEREO_YAY = registerSoundEvents("stereo_yay");
+    public static final RegistryObject<SoundEvent> STEREO_YAY2 = registerSoundEvents("stereo_yay2");
+    public static final RegistryObject<SoundEvent> STEREO_SQUEE1 = registerSoundEvents("stereo_squee1");
+    public static final RegistryObject<SoundEvent> STEREO_SQUEE2 = registerSoundEvents("stereo_squee2");
+    public static final RegistryObject<SoundEvent> STEREO_SQUEE3 = registerSoundEvents("stereo_squee3");
+    public static final RegistryObject<SoundEvent> STEREO_ROSE1 = registerSoundEvents("stereo_rose1");
+    public static final RegistryObject<SoundEvent> STEREO_ROSE2 = registerSoundEvents("stereo_rose2");
+    public static final RegistryObject<SoundEvent> STEREO_APPLEJACK1 = registerSoundEvents("stereo_applejack1");
+    public static final RegistryObject<SoundEvent> STEREO_APPLEJACK2 = registerSoundEvents("stereo_applejack2");
+    public static final RegistryObject<SoundEvent> STEREO_RAINBOW_DASH1 = registerSoundEvents("stereo_rainbow_dash1");
+    public static final RegistryObject<SoundEvent> STEREO_RAINBOW_DASH2 = registerSoundEvents("stereo_rainbow_dash2");
+    public static final RegistryObject<SoundEvent> STEREO_RARITY1 = registerSoundEvents("stereo_rarity1");
+    public static final RegistryObject<SoundEvent> STEREO_RARITY2 = registerSoundEvents("stereo_rarity2");
+    public static final RegistryObject<SoundEvent> STEREO_SPARKLE1 = registerSoundEvents("stereo_sparkle1");
+    public static final RegistryObject<SoundEvent> STEREO_SPARKLE2 = registerSoundEvents("stereo_sparkle2");
+    public static final RegistryObject<SoundEvent> STEREO_DERPY1 = registerSoundEvents("stereo_derpy1");
+    public static final RegistryObject<SoundEvent> STEREO_DERPY2 = registerSoundEvents("stereo_derpy2");
+    public static final RegistryObject<SoundEvent> STEREO_STARLIGHT1 = registerSoundEvents("stereo_starlight1");
+    public static final RegistryObject<SoundEvent> STEREO_STARLIGHT2 = registerSoundEvents("stereo_starlight2");
+    public static final RegistryObject<SoundEvent> STEREO_TRIXIE1 = registerSoundEvents("stereo_trixie1");
+    public static final RegistryObject<SoundEvent> STEREO_TRIXIE2 = registerSoundEvents("stereo_trixie2");
+    public static final RegistryObject<SoundEvent> STEREO_SWIRL1 = registerSoundEvents("stereo_swirl1");
+    public static final RegistryObject<SoundEvent> STEREO_SWIRL2 = registerSoundEvents("stereo_swirl2");
+    public static final RegistryObject<SoundEvent> STEREO_MINUETTE1 = registerSoundEvents("stereo_minuette1");
+    public static final RegistryObject<SoundEvent> STEREO_MINUETTE2 = registerSoundEvents("stereo_minuette2");
+    public static final RegistryObject<SoundEvent> STEREO_MAUD_PIE1 = registerSoundEvents("stereo_maud_pie1");
+    public static final RegistryObject<SoundEvent> STEREO_MAUD_PIE2 = registerSoundEvents("stereo_maud_pie2");
+    public static final RegistryObject<SoundEvent> STEREO_MARBLE_PIE1 = registerSoundEvents("stereo_marble_pie1");
+    public static final RegistryObject<SoundEvent> STEREO_MARBLE_PIE2 = registerSoundEvents("stereo_marble_pie2");
+    public static final RegistryObject<SoundEvent> STEREO_DARING_DO1 = registerSoundEvents("stereo_daring_do1");
+    public static final RegistryObject<SoundEvent> STEREO_DARING_DO2 = registerSoundEvents("stereo_daring_do2");
 
 
 

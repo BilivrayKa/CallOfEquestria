@@ -3,7 +3,8 @@ package net.bilivrayka.callofequestria;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
-import net.bilivrayka.callofequestria.event.AdvancementRewardHandler;
+import net.bilivrayka.callofequestria.fluid.ModFluidTypes;
+import net.bilivrayka.callofequestria.fluid.ModFluids;
 import net.bilivrayka.callofequestria.item.ModCreativeModTabs;
 import net.bilivrayka.callofequestria.item.ModItems;
 import net.bilivrayka.callofequestria.networking.ModMessages;
@@ -37,6 +38,8 @@ public class CallOfEquestria {
         ModSounds.register(modEventBus);
         ModBlocks.register(modEventBus);
         PlushReg.register(modEventBus);
+        ModFluids.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
 
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -50,6 +53,16 @@ public class CallOfEquestria {
 
         ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_MAUD_PIE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_DARING_DO.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.APPLE_BLOCK.get(), RenderType.solid());
+        /*
+        //ItemBlockRenderTypes.setRenderLayer(ModBlocks.PRESSING_TROUGH.get(), RenderType.cutout());
+        ModBlocks.PRESSING_TROUGH.get().getStateDefinition().getPossibleStates().forEach(state -> {
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.PRESSING_TROUGH.get(), RenderType.translucent());
+        });
+
+         */
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_APPLE_JUICE.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_APPLE_JUICE.get(), RenderType.translucent());
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

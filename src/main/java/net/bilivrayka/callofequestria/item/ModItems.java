@@ -3,16 +3,11 @@ package net.bilivrayka.callofequestria.item;
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
-import net.bilivrayka.callofequestria.block.custom.PlushBaseBlock;
+import net.bilivrayka.callofequestria.fluid.ModFluids;
 import net.bilivrayka.callofequestria.item.custom.*;
 import net.bilivrayka.callofequestria.sound.ModSounds;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -32,8 +27,11 @@ public class ModItems {
     public static final RegistryObject<Item> BARK = ITEMS.register("bark",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> APPLE_JUICE_BUCKET = ITEMS.register("apple_juice_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_APPLE_JUICE,new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+
     public static final RegistryObject<Item> MUG = ITEMS.register("mug",
-            () -> new Item(new Item.Properties()));
+            () -> new DrinkBucketItem(ModFluids.SOURCE_APPLE_JUICE.get(),new Item.Properties()));
     public static final RegistryObject<Item> MOD_BOTTLE = ITEMS.register("mod_bottle",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> JAR = ITEMS.register("jar",

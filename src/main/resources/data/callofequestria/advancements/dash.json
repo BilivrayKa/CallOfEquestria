@@ -5,7 +5,8 @@
       "item": "callofequestria:plush_rainbow_dash"
     },
     "title": {
-      "translate": "achievement.dash.title"
+      "translate": "achievement.dash.title",
+      "color": "aqua"
     },
     "description": {
       "translate": "achievement.dash.description"

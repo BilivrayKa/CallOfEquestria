@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "variant=default": {
+      "model": "callofequestria:block/pressing_trough"
+    },
+    "variant=apple": {
+      "model": "callofequestria:block/pressing_trough_apple"
+    },
+    "variant=apple_juice": {
+      "model": "callofequestria:block/pressing_trough_apple_juice"
+    }
+  }
+}

@@ -6,6 +6,11 @@ import net.bilivrayka.callofequestria.item.ModItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.PlayerAdvancements;
+import net.minecraft.server.ServerAdvancementManager;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -16,22 +21,16 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
+import java.util.Objects;
 import java.util.logging.LogManager;
 
 public class AdvancementRewardHandler{
-
-
-
-    public static void onAdvancement(AdvancementEvent event) {
-        ServerPlayer player = (ServerPlayer) event.getEntity();
-
-        if (event.getAdvancement().getId().getPath().equals("dash")) {
-            AdvancementProgress progress = player.getAdvancements().getOrStartProgress(event.getAdvancement());
-
-            if (progress.isDone()) {
-                ItemStack rewardItem = new ItemStack(ModItems.PLUSH_RAINBOW_DASH.get());
-                player.addItem(rewardItem);
-            }
-        }
+    public static final ResourceLocation DERPY_AD = new ResourceLocation("callofequestria", "derpy");
+    public static void giveAdvancement(ServerPlayer player) {
+        MinecraftServer server = player.getServer();
+        ServerAdvancementManager advancementManager = server.getAdvancements();
+        var playerAdvancements = player.getAdvancements();
+        Advancement advancement = advancementManager.getAdvancement(DERPY_AD);
+        playerAdvancements.award(advancement, "requirement");
     }
 }

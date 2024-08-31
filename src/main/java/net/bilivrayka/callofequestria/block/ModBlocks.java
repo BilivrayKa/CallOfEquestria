@@ -1,17 +1,14 @@
 package net.bilivrayka.callofequestria.block;
 
-import com.mojang.blaze3d.platform.Lighting;
 import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.block.custom.BuddingClusterBlock;
-import net.bilivrayka.callofequestria.block.custom.CrystalClusterBlock;
-import net.bilivrayka.callofequestria.block.custom.PlushBaseBlock;
-import net.bilivrayka.callofequestria.block.custom.ZinniaBushBlock;
+import net.bilivrayka.callofequestria.block.custom.*;
+import net.bilivrayka.callofequestria.fluid.ModFluids;
 import net.bilivrayka.callofequestria.item.ModItems;
-import net.bilivrayka.callofequestria.sound.ModSounds;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -38,6 +35,19 @@ public class ModBlocks {
     public static final RegistryObject<Block> LARGE_CRYSTAL_BUD_BLOCK = registerBlock("large_crystal_bud_block",
             () -> new CrystalClusterBlock(5,3,BlockBehaviour.Properties.copy(Blocks.AMETHYST_CLUSTER).lightLevel((state) -> 8)));
 
+    /* huita
+    public static final RegistryObject<Block> PRESSING_TROUGH = registerBlock("pressing_trough",
+            () -> new PressingTrough(BlockBehaviour.Properties.copy(Blocks.COMPOSTER).noOcclusion()));
+
+     */
+
+    //TODO
+    //Fluids&Blocks from another apple types
+    public static final RegistryObject<Block> APPLE_BLOCK = registerBlock("apple_block",
+            () -> new BlockToFluid(ModFluids.SOURCE_APPLE_JUICE.get(),3 ,BlockBehaviour.Properties.copy(Blocks.HONEY_BLOCK)));
+
+    public static final RegistryObject<LiquidBlock> APPLE_JUICE_BLOCK = registerBlock("apple_juice_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_APPLE_JUICE, BlockBehaviour.Properties.copy(Blocks.WATER)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

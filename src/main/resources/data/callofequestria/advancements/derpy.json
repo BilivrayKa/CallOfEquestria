@@ -6,18 +6,18 @@
     }
   },
   "rewards": {
-    "function": "callofequestria:maud_pie"
+    "function": "callofequestria:derpy"
   },
   "display": {
     "title": {
-      "translate": "achievement.boulder.title",
+      "translate": "achievement.derpy.title",
       "color": "gray"
     },
     "description": {
-      "translate": "achievement.boulder.description"
+      "translate": "achievement.derpy.description"
     },
     "icon": {
-      "item": "callofequestria:plush_maud_pie"
+      "item": "callofequestria:plush_derpy"
     },
     "frame": "task",
     "show_toast": true,

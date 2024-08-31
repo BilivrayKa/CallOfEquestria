@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 
 public class BuddingClusterBlock extends AmethystBlock {
-    public static final int GROWTH_CHANCE = 5;
     private static final Direction[] DIRECTIONS = Direction.values();
 
     public BuddingClusterBlock(BlockBehaviour.Properties pProperties) {

@@ -2,7 +2,6 @@ package net.bilivrayka.callofequestria.item.custom;
 
 import net.bilivrayka.callofequestria.sound.ModSounds;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -27,6 +26,7 @@ public class Yay extends Item{
             pLevel.playSound(null, pEntityLiving.blockPosition(),
                     ModSounds.YAY.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
         }
+
         return pStack;
 
     }

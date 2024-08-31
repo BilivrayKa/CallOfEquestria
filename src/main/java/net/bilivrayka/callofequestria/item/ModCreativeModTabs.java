@@ -48,6 +48,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.MUG.get());
                         pOutput.accept(ModItems.MOD_BOTTLE.get());
                         pOutput.accept(ModItems.MUG_APPLE.get());
+                        pOutput.accept(ModItems.APPLE_JUICE_BUCKET.get());
                         pOutput.accept(ModItems.MUFIIN.get());
                         pOutput.accept(ModItems.APPLE_VODKA.get());
                         pOutput.accept(ModItems.HAYBURGER.get());
@@ -55,6 +56,8 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModBlocks.SMALL_CRYSTAL_BUD_BLOCK.get());
                         pOutput.accept(ModBlocks.MEDIUM_CRYSTAL_BUD_BLOCK.get());
                         pOutput.accept(ModBlocks.LARGE_CRYSTAL_BUD_BLOCK.get());
+                        //pOutput.accept(ModBlocks.PRESSING_TROUGH.get());
+                        pOutput.accept(ModBlocks.APPLE_BLOCK.get());
                         pOutput.accept(ModItems.BOULDER.get());
                     })
                     .build());

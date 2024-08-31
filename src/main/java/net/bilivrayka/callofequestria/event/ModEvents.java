@@ -14,12 +14,16 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraft.network.chat.Component;
@@ -144,6 +148,17 @@ public class ModEvents {
 
         }
     }
+    @SubscribeEvent
+    public static void onPlayerDamage(LivingDamageEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        boolean isCollisionDamage = event.getSource().getMsgId().equals("flyIntoWall");
+        if (isCollisionDamage) {
+            AdvancementRewardHandler.giveAdvancement(player);
+        }
+    }
+
     /*
     @SubscribeEvent
     public static void onAdvancement(AdvancementEvent event) {

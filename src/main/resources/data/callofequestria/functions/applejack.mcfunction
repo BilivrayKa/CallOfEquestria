@@ -1,0 +1,1 @@
+give @s callofequestria:plush_applejack 1

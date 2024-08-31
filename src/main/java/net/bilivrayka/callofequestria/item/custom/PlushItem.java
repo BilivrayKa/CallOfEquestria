@@ -47,19 +47,19 @@ public class PlushItem extends BlockItem {
         SoundEvent sound = ModSounds.SQUEE1.get();
         SoundEvent stereoSound = ModSounds.STEREO_SQUEE1.get();
         pPlayer.getCooldowns().addCooldown(this, 10);
+        switch (rnd.nextInt(3)+1){
+            case 2 :
+                sound = sound2;
+                stereoSound = stereo_sound2;
+                break;
+            case 3 :
+                sound = sound3;
+                stereoSound = stereo_sound3;
+                break;
+
+        }
+
         if(!pLevel.isClientSide){
-
-            switch (rnd.nextInt(3)+1){
-                case 2 :
-                    sound = sound2;
-                    stereoSound = stereo_sound2;
-                    break;
-                case 3 :
-                    sound = sound3;
-                    stereoSound = stereo_sound3;
-                    break;
-
-            }
             pLevel.playSound(pPlayer, pPlayer.getOnPos(),
                     sound, SoundSource.PLAYERS, 1.0F, pitch);
 

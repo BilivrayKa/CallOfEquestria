@@ -32,6 +32,9 @@
   "item.callofequestria.notch_apple_jam": "Notch Apple Jam",
   "item.callofequestria.hayburger": "HayBurger",
   "item.callofequestria.boulder": "Boulder",
+
+  "item.callofequestria.apple_juice_bucket": "Apple Juice Bucket",
+
   "block.callofequestria.plush_pinkie_pie": "Plush Pinkie Pie",
   "block.callofequestria.plush_rose": "Plush Rose",
   "block.callofequestria.plush_fluttershy": "Plush Fluttershy",
@@ -47,6 +50,10 @@
   "block.callofequestria.plush_maud_pie": "Plush Maud Pie",
   "block.callofequestria.plush_marble_pie": "Plush Marble Pie",
   "block.callofequestria.plush_daring_do": "Plush Daring Do",
+  "block.callofequestria.pressing_trough": "Pressing Trough",
+  "block.callofequestria.apple_block": "Apples",
+
+
 
   "creativetab.stuff_tab": "Stuff tab",
   "creativetab.plushies_tab": "Plushies",
@@ -55,6 +62,12 @@
 
   "achievement.dash.title": "Fly Away",
   "achievement.dash.description": "Get on 1000 blocks height",
-  "achievement.boulder.title": "Stone Pet",
-  "achievement.boulder.description": "You held a Boulder in your inventory for 1 hour"
+  "achievement.boulder.title": "Friends Forever(Exclamation Mark)",
+  "achievement.boulder.description": "Took care of Boulder for 1 hour",
+  "achievement.applejack.title": "Wait an apple-pickin' minute!!!",
+  "achievement.applejack.description": "Ate Applejack's the most delicious apple jam",
+  "achievement.fluttershy.title": "They Are All SO Cute ///",
+  "achievement.fluttershy.description": "Get a Pet",
+  "achievement.derpy.title": "Whoopsy!",
+  "achievement.derpy.description": "Crash into a wall while flying"
 }

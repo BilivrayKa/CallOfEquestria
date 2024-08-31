@@ -1,5 +1,8 @@
 package net.bilivrayka.callofequestria.item.custom;
 
+import net.bilivrayka.callofequestria.block.ModBlocks;
+import net.bilivrayka.callofequestria.fluid.ModFluidTypes;
+import net.bilivrayka.callofequestria.fluid.ModFluids;
 import net.bilivrayka.callofequestria.item.ModItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
@@ -7,6 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,7 +19,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class DrinkItem extends Item {
     protected final Item drinkType;
@@ -36,7 +43,7 @@ public class DrinkItem extends Item {
             return new ItemStack(drinkType);
         } else {
             if (pEntityLiving instanceof Player && !((Player)pEntityLiving).getAbilities().instabuild) {
-                ItemStack $$4 = new ItemStack(ModItems.MOD_BOTTLE.get());
+                ItemStack $$4 = new ItemStack(drinkType);
                 Player $$5 = (Player)pEntityLiving;
                 if (!$$5.getInventory().add($$4)) {
                     $$5.drop($$4, false);
@@ -46,6 +53,8 @@ public class DrinkItem extends Item {
             return pStack;
         }
     }
+
+
 
     public int getUseDuration(ItemStack pStack) {
         return 40;

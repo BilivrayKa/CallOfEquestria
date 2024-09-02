@@ -25,12 +25,13 @@ import java.util.Objects;
 import java.util.logging.LogManager;
 
 public class AdvancementRewardHandler{
-    public static final ResourceLocation DERPY_AD = new ResourceLocation("callofequestria", "derpy");
-    public static void giveAdvancement(ServerPlayer player) {
+
+    public static void giveAdvancement(ServerPlayer player, ResourceLocation name) {
         MinecraftServer server = player.getServer();
         ServerAdvancementManager advancementManager = server.getAdvancements();
         var playerAdvancements = player.getAdvancements();
-        Advancement advancement = advancementManager.getAdvancement(DERPY_AD);
+
+        Advancement advancement = advancementManager.getAdvancement(name);
         playerAdvancements.award(advancement, "requirement");
     }
 }

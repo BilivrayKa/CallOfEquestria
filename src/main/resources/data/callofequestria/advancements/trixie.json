@@ -1,0 +1,32 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_trixie"
+    },
+    "title": {
+      "translate": "achievement.trixie.title",
+      "color": "aqua"
+    },
+    "description": {
+      "translate": "achievement.trixie.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:warden"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:trixie"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "parent": "callofequestria:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:rose"
+  },
+  "display": {
+    "title": {
+      "translate": "achievement.rose.title",
+      "color": "yellow"
+    },
+    "description": {
+      "translate": "achievement.rose.description"
+    },
+    "icon": {
+      "item": "callofequestria:plush_rose"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  }
+}

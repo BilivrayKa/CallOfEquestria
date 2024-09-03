@@ -57,6 +57,8 @@
 
   "sounds.callofequestria.sniff_sound": "Шмыганье носом",
 
+  "achievement.root.title": "Собери их всех!!!",
+  "achievement.root.description": "Идите и ищите всех плюшевых поняшек",
   "achievement.dash.title": "Я Свободен!",
   "achievement.dash.description": "Взлетите на 1000 блоков вверх",
   "achievement.boulder.title": "Друзья Навсегда(Восклицательный знак)",
@@ -70,5 +72,19 @@
   "achievement.trixie.title": "ВЕЛИКАЯ И МОГУЧАЯ!!!",
   "achievement.trixie.description": "Докажите, что вы ВЕЛИКИЙ! и МОГУЧИЙ!",
   "achievement.sparkle.title": "ПУДИиинг?",
-  "achievement.sparkle.description": "Прочтите книгу"
+  "achievement.sparkle.description": "Прочтите книгу",
+  "achievement.daring_do.title": "Еще Одно Приключение Ждет...",
+  "achievement.daring_do.description": "Найдите пирамиду в джунглях",
+  "achievement.marble_pie.title": "Мм-хмм?",
+  "achievement.marble_pie.description": "Мм-хмм...",
+  "achievement.minuette.title": "Сюда, Сюда!",
+  "achievement.minuette.description": "Говорите слишком много",
+  "achievement.pinkie_pie.title": "ТОРТИКИ!!!",
+  "achievement.pinkie_pie.description": "Приготовьте торт",
+  "achievement.rarity.title": "Посмотрите на меня!",
+  "achievement.rarity.description": "Покрасьте броню",
+  "achievement.rose.title": "The horror!",
+  "achievement.rose.description": "Set the Creeper on fire",
+  "achievement.starlight.title": "The only way to be happy is if we're all equal!",
+  "achievement.starlight.description": "Make a villager lose his job"
 }

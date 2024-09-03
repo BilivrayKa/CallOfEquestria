@@ -1,0 +1,27 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_pinkie_pie"
+    },
+    "title": {
+      "translate": "achievement.pinkie_pie.title",
+      "color": "red"
+    },
+    "description": {
+      "translate": "achievement.pinkie_pie.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:pinkie_pie"
+  }
+}

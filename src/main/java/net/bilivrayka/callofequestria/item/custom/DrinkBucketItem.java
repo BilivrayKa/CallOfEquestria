@@ -36,9 +36,12 @@ public class DrinkBucketItem extends Item {
         if(fluid == ModFluids.SOURCE_APPLE_JUICE.get()){
             pStack = new ItemStack(ModItems.MUG_APPLE.get());
         }
+        /*
         if (hitResult == null) {
             return InteractionResult.PASS;
         }
+
+         */
 
         if (context.getPlayer() instanceof ServerPlayer player){
             if(fluidState.getType() == fluid.defaultFluidState().getType()){

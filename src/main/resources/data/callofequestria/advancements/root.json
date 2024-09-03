@@ -5,9 +5,9 @@
       "color": "gold",
       "bold": true
     },
-    "translate": "advancements.story.root.title",
+    "translate": "achievement.root.title",
     "description": {
-      "translate": "advancements.story.root.description"
+      "translate": "achievement.root.description"
     },
     "icon": {
       "item": "callofequestria:plush_pinkie_pie"

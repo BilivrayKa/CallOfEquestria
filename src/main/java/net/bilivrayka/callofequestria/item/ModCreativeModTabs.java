@@ -46,6 +46,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.CRYSTAL_CLUSTER.get());
                         pOutput.accept(ModItems.BUDDING_CRYSTAL.get());
                         pOutput.accept(ModItems.MUG.get());
+                        pOutput.accept(ModItems.JAR.get());
                         pOutput.accept(ModItems.MOD_BOTTLE.get());
                         pOutput.accept(ModItems.MUG_APPLE.get());
                         pOutput.accept(ModItems.APPLE_JUICE_BUCKET.get());

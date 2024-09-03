@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "@@@",
+    "@#@",
+    "@@@"
+  ],
+  "key": {
+    "#": {
+      "item": "callofequestria:jar"
+    },
+    "@": {
+      "item": "minecraft:enchanted_golden_apple"
+    }
+  },
+  "result": {
+    "item": "callofequestria:notch_apple_jam",
+    "count": 1
+  }
+}

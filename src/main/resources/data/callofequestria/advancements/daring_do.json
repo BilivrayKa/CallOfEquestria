@@ -1,0 +1,34 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_daring_do"
+    },
+    "title": {
+      "translate": "achievement.daring_do.title",
+      "color": "gold"
+    },
+    "description": {
+      "translate": "achievement.daring_do.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": {
+          "location": {
+            "structure": "minecraft:jungle_pyramid"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:daring_do"
+  }
+}

@@ -59,7 +59,8 @@
   "creativetab.plushies_tab": "Plushies",
 
   "sounds.callofequestria.sniff_sound": "Sniff",
-
+  "achievement.root.title": "Collect them All!!!",
+  "achievement.root.description": "Go and find all of pony plushies",
   "achievement.dash.title": "Fly Away",
   "achievement.dash.description": "Get on 1000 blocks height",
   "achievement.boulder.title": "Friends Forever(Exclamation Mark)",
@@ -75,5 +76,19 @@
   "achievement.swirl.title": "Sea Swirl's Heart",
   "achievement.swirl.description": "Get the Heart Of The Sea",
   "achievement.sparkle.title": "PUDDIiiing?",
-  "achievement.sparkle.description": "Read a Book"
+  "achievement.sparkle.description": "Read a Book",
+  "achievement.daring_do.title": "Another Adventure Awaits...",
+  "achievement.daring_do.description": "Find Jungle Pyramid",
+  "achievement.marble_pie.title": "Mm-hmm?",
+  "achievement.marble_pie.description": "Mm-hmm...",
+  "achievement.minuette.title": "Over Here, Over Here!",
+  "achievement.minuette.description": "Talk too much",
+  "achievement.pinkie_pie.title": "CAKES!!!",
+  "achievement.pinkie_pie.description": "Bake a cake",
+  "achievement.rarity.title": "Look Upon Me!",
+  "achievement.rarity.description": "Dye an armor",
+  "achievement.rose.title": "The Horror!",
+  "achievement.rose.description": "Set the Creeper on fire",
+  "achievement.starlight.title": "The Only Way To Be Happy Is If We're All Equal!",
+  "achievement.starlight.description": "Make a villager lose his job"
 }

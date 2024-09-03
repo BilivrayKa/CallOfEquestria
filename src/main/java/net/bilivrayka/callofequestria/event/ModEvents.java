@@ -1,5 +1,6 @@
 package net.bilivrayka.callofequestria.event;
 
+import com.ibm.icu.text.UnicodeSetSpanner;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.item.ModItems;
@@ -19,18 +20,31 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.VillagerData;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -38,8 +52,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -54,12 +66,17 @@ import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
 
 @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
 public class ModEvents {
     public static final Logger LOGGER = LogUtils.getLogger();
+    private static final Map<ServerPlayer, Integer> messageCounters = new HashMap<>();
+    private static final int MESSAGE_THRESHOLD = 25;
     //private static final KeyMapping flyKey = new KeyMapping("key.callofequestria.flytowards", GLFW.GLFW_KEY_W, "key.categories.movement");
     //@Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
     //public static class ServerForgeEvents {
@@ -184,23 +201,66 @@ public class ModEvents {
         }
     }
 
-
-    /*
     @SubscribeEvent
-    public static void onAdvancement(AdvancementEvent event) {
-        ServerPlayer player = (ServerPlayer) event.getEntity();
-        LOGGER.info("Advancement triggered: " + event.getAdvancement().getId().getPath());
+    public static void onBreakingSomeVillagerLive(BlockEvent.BreakEvent event) {
+        BlockState state = event.getState();
+        ServerPlayer player = (ServerPlayer) event.getPlayer();
+        AABB aabb = new AABB(event.getPos()).inflate(5.0D);
+        if (VillagerProfessionHandler.isProfessionBlock(state.getBlock())) {
+            event.getLevel().getEntitiesOfClass(Villager.class, aabb).forEach(villager -> {
+                Block workStation = VillagerProfessionHandler.getBlockByProfession(villager.getVillagerData().getProfession());
+                //boolean hasProfession = VillagerProfession.NONE != villager.getVillagerData().getProfession();
+                boolean hasProfession = workStation == state.getBlock();
+                if (hasProfession) {
+                    ResourceLocation STARLIGHT_AD = new ResourceLocation("callofequestria", "starlight");
+                    AdvancementRewardHandler.giveAdvancement(player, STARLIGHT_AD);
+                }
+            });
+        }
+    }
+    @SubscribeEvent
+    public static void onPlayerCraft(PlayerEvent.ItemCraftedEvent event) {
+        UUID uuid = Minecraft.getInstance().player.getUUID();
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        ServerPlayer player = server.getPlayerList().getPlayer(uuid);
+        ItemStack itemStack = event.getCrafting();
+        if (itemStack.getItem() instanceof DyeableLeatherItem){
+            DyeableLeatherItem dyeableItem = (DyeableLeatherItem) itemStack.getItem();
+            int color = dyeableItem.getColor(itemStack);
+            if (color != -1) {
+                ResourceLocation RARITY_AD = new ResourceLocation("callofequestria", "rarity");
+                AdvancementRewardHandler.giveAdvancement(player, RARITY_AD);
 
-        if (event.getAdvancement().getId().getPath().equals("dash") && !player.level().isClientSide) {
-            AdvancementProgress progress = player.getAdvancements().getOrStartProgress(event.getAdvancement());
-
-            if (progress.isDone()) {
-                ItemStack rewardItem = new ItemStack(ModItems.PLUSH_RAINBOW_DASH.get());
-                player.addItem(rewardItem);
-                LOGGER.info("Rewards added to player: " + player.getName().getString());
             }
+        } else if (itemStack.getItem() == Items.CAKE) {
+            ResourceLocation PINKIE_PIE_AD = new ResourceLocation("callofequestria", "pinkie_pie");
+            AdvancementRewardHandler.giveAdvancement(player, PINKIE_PIE_AD);
         }
     }
 
-     */
+    @SubscribeEvent
+    public static void onServerChat(ServerChatEvent event) {
+        ServerPlayer player = event.getPlayer();
+        int messageCount = messageCounters.getOrDefault(player, 0) + 1;
+        messageCounters.put(player, messageCount);
+        if (messageCount >= MESSAGE_THRESHOLD) {
+            ResourceLocation MINUETTE_AD = new ResourceLocation("callofequestria", "minuette");
+            AdvancementRewardHandler.giveAdvancement(player, MINUETTE_AD);
+        }
+    }
+    @SubscribeEvent
+    public static void onPlayerInteract(PlayerInteractEvent.EntityInteract event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            ItemStack itemStack = player.getMainHandItem();
+
+            if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
+                Entity targetEntity = event.getTarget();
+                if (targetEntity instanceof Creeper) {
+                    ResourceLocation ROSE_AD = new ResourceLocation("callofequestria", "rose");
+                    AdvancementRewardHandler.giveAdvancement(player, ROSE_AD);
+
+                }
+            }
+        }
+    }
 }

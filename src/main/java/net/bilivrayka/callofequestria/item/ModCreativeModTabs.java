@@ -1,20 +1,19 @@
 package net.bilivrayka.callofequestria.item;
 
-import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.Ponified;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModCreativeModTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CallOfEquestria.MOD_ID);
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Ponified.MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> STUFF_TAB = CREATIVE_MODE_TABS.register("stuff_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.ZINNIA_BUSH_FLOWER.get()))

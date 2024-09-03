@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.block;
 
-import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.Ponified;
 import net.bilivrayka.callofequestria.block.custom.*;
 import net.bilivrayka.callofequestria.fluid.ModFluids;
 import net.bilivrayka.callofequestria.item.ModItems;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, CallOfEquestria.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.BLOCKS, Ponified.MOD_ID);
     //tak ne pisat blyat
     public static final RegistryObject<Block> ZINNIA_BUSH = BLOCKS.register("zinnia_bush",
             () -> new ZinniaBushBlock(BlockBehaviour.Properties.copy(Blocks.SWEET_BERRY_BUSH).noOcclusion().noCollission()));

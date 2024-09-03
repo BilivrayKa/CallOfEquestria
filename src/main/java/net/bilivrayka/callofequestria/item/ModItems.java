@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.item;
 
-import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.Ponified;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
 import net.bilivrayka.callofequestria.fluid.ModFluids;
@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, CallOfEquestria.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.ITEMS, Ponified.MOD_ID);
 
     public static final RegistryObject<Item> WOOD_PLANK = ITEMS.register("wood_plank",
             () -> new Item(new Item.Properties()));

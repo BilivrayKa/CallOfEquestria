@@ -1,6 +1,5 @@
 package net.bilivrayka.callofequestria.item.custom;
 
-import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.fluid.ModFluids;
 import net.bilivrayka.callofequestria.item.ModItems;
 import net.minecraft.advancements.CriteriaTriggers;

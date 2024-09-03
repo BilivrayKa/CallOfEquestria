@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.datagen;
 
-import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.Ponified;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.custom.ZinniaBushBlock;
 import net.minecraft.data.PackOutput;
@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class ModBlockStateProvider extends BlockStateProvider {
 
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, CallOfEquestria.MOD_ID, exFileHelper);
+        super(output, Ponified.MOD_ID, exFileHelper);
     }
     @Override
     protected void registerStatesAndModels() {
@@ -27,7 +27,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private ConfiguredModel[] zinniaStates(BlockState state, BushBlock block, String modelName, String textureName) {
         ConfiguredModel[] models = new ConfiguredModel[1];
         models[0] = new ConfiguredModel(models().cross(modelName + state.getValue(((ZinniaBushBlock) block).getAgeProperty()),
-                new ResourceLocation(CallOfEquestria.MOD_ID, "block/" + textureName + state.getValue(((ZinniaBushBlock) block).getAgeProperty()))).renderType("cutout"));
+                new ResourceLocation(Ponified.MOD_ID, "block/" + textureName + state.getValue(((ZinniaBushBlock) block).getAgeProperty()))).renderType("cutout"));
 
         return models;
     }

@@ -5,10 +5,10 @@ license="GPL-3.0"
 [[mods]]
 modId="callofequestria"
 version="0.0.1"
-displayName="Equestria"
+displayName="Ponified"
 authors="Bilivrayka"
 displayTest="IGNORE_SERVER_VERSION"
-description="ponyfied"
+description="ponified"
 logoFile="logo.png"
 
 # Start of user code block mod configuration

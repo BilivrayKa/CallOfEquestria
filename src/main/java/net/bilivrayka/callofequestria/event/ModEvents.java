@@ -1,78 +1,42 @@
 package net.bilivrayka.callofequestria.event;
 
-import com.ibm.icu.text.UnicodeSetSpanner;
 import com.mojang.logging.LogUtils;
-import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.item.ModItems;
-import net.bilivrayka.callofequestria.magic.PlayerFlyStateProvider;
+import net.bilivrayka.callofequestria.Ponified;
 import net.bilivrayka.callofequestria.magic.PlayerMagic;
 import net.bilivrayka.callofequestria.magic.PlayerMagicProvider;
-import net.bilivrayka.callofequestria.networking.packet.FlyC2SPacket;
-import net.bilivrayka.callofequestria.networking.packet.MagicC2SPacket;
-import net.bilivrayka.callofequestria.util.KeyBinding;
-import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.players.PlayerList;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
-import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerData;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.armortrim.ArmorTrim;
-import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Level;
 
-@Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
+@Mod.EventBusSubscriber(modid = Ponified.MOD_ID)
 public class ModEvents {
     public static final Logger LOGGER = LogUtils.getLogger();
     private static final Map<ServerPlayer, Integer> messageCounters = new HashMap<>();
@@ -84,7 +48,7 @@ public class ModEvents {
     public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player) {
             if (!event.getObject().getCapability(PlayerMagicProvider.PLAYER_MAGIC).isPresent()) {
-                event.addCapability(new ResourceLocation(CallOfEquestria.MOD_ID, "properties"), new PlayerMagicProvider());
+                event.addCapability(new ResourceLocation(Ponified.MOD_ID, "properties"), new PlayerMagicProvider());
             }
             /*
             if (!event.getObject().getCapability(PlayerFlyStateProvider.PLAYER_FLY_STATE).isPresent()) {
@@ -185,7 +149,7 @@ public class ModEvents {
         }
         boolean isCollisionDamage = event.getSource().getMsgId().equals("flyIntoWall");
         if (isCollisionDamage) {
-            ResourceLocation DERPY_AD = new ResourceLocation("callofequestria", "derpy");
+            ResourceLocation DERPY_AD = new ResourceLocation("ponified", "derpy");
             AdvancementRewardHandler.giveAdvancement(player,DERPY_AD);
         }
     }
@@ -196,7 +160,7 @@ public class ModEvents {
             UUID uuid = Minecraft.getInstance().player.getUUID();
             MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
             ServerPlayer player = server.getPlayerList().getPlayer(uuid);
-            ResourceLocation SPARKLE_AD = new ResourceLocation("callofequestria", "sparkle");
+            ResourceLocation SPARKLE_AD = new ResourceLocation("ponified", "sparkle");
             AdvancementRewardHandler.giveAdvancement(player, SPARKLE_AD);
         }
     }
@@ -212,7 +176,7 @@ public class ModEvents {
                 //boolean hasProfession = VillagerProfession.NONE != villager.getVillagerData().getProfession();
                 boolean hasProfession = workStation == state.getBlock();
                 if (hasProfession) {
-                    ResourceLocation STARLIGHT_AD = new ResourceLocation("callofequestria", "starlight");
+                    ResourceLocation STARLIGHT_AD = new ResourceLocation("ponified", "starlight");
                     AdvancementRewardHandler.giveAdvancement(player, STARLIGHT_AD);
                 }
             });
@@ -228,12 +192,12 @@ public class ModEvents {
             DyeableLeatherItem dyeableItem = (DyeableLeatherItem) itemStack.getItem();
             int color = dyeableItem.getColor(itemStack);
             if (color != -1) {
-                ResourceLocation RARITY_AD = new ResourceLocation("callofequestria", "rarity");
+                ResourceLocation RARITY_AD = new ResourceLocation("ponified", "rarity");
                 AdvancementRewardHandler.giveAdvancement(player, RARITY_AD);
 
             }
         } else if (itemStack.getItem() == Items.CAKE) {
-            ResourceLocation PINKIE_PIE_AD = new ResourceLocation("callofequestria", "pinkie_pie");
+            ResourceLocation PINKIE_PIE_AD = new ResourceLocation("ponified", "pinkie_pie");
             AdvancementRewardHandler.giveAdvancement(player, PINKIE_PIE_AD);
         }
     }
@@ -244,7 +208,7 @@ public class ModEvents {
         int messageCount = messageCounters.getOrDefault(player, 0) + 1;
         messageCounters.put(player, messageCount);
         if (messageCount >= MESSAGE_THRESHOLD) {
-            ResourceLocation MINUETTE_AD = new ResourceLocation("callofequestria", "minuette");
+            ResourceLocation MINUETTE_AD = new ResourceLocation("ponified", "minuette");
             AdvancementRewardHandler.giveAdvancement(player, MINUETTE_AD);
         }
     }
@@ -256,7 +220,7 @@ public class ModEvents {
             if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
                 Entity targetEntity = event.getTarget();
                 if (targetEntity instanceof Creeper) {
-                    ResourceLocation ROSE_AD = new ResourceLocation("callofequestria", "rose");
+                    ResourceLocation ROSE_AD = new ResourceLocation("ponified", "rose");
                     AdvancementRewardHandler.giveAdvancement(player, ROSE_AD);
 
                 }

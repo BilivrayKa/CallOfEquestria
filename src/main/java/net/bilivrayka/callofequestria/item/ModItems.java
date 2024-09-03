@@ -91,7 +91,7 @@ public class ModItems {
 
     //Дальше бога нет
     public static final RegistryObject<Item> PLUSH_PINKIE_PIE = ITEMS.register("plush_pinkie_pie",
-            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(),PlushReg.PLUSH_PINKIE_PIE.get(), new Item.Properties()));
+            () -> new PlushItem(ModSounds.PINKIE1.get(),ModSounds.PINKIE2.get(),ModSounds.STEREO_PINKIE1.get(),ModSounds.STEREO_PINKIE2.get(),PlushReg.PLUSH_PINKIE_PIE.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_ROSE = ITEMS.register("plush_rose",
             () -> new PlushItem(ModSounds.ROSE1.get(),ModSounds.ROSE2.get(),ModSounds.STEREO_ROSE1.get(),ModSounds.STEREO_ROSE2.get(),PlushReg.PLUSH_ROSE.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_FLUTTERSHY = ITEMS.register("plush_fluttershy",

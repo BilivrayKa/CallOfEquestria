@@ -17,6 +17,18 @@
       "callofequestria:yay2"
     ]
   },
+  "pinkie1": {
+    "subtitles": "sounds.callofequestria.pinkie1",
+    "sounds": [
+      "callofequestria:pinkie1"
+    ]
+  },
+  "pinkie2": {
+    "subtitles": "sounds.callofequestria.pinkie2",
+    "sounds": [
+      "callofequestria:pinkie2"
+    ]
+  },
   "squee1": {
     "subtitles": "sounds.callofequestria.squee1",
     "sounds": [
@@ -209,6 +221,18 @@
     "subtitles": "sounds.callofequestria.yay2",
     "sounds": [
       "callofequestria:stereo_yay2"
+    ]
+  },
+  "stereo_pinkie1": {
+    "subtitles": "sounds.callofequestria.pinkie1",
+    "sounds": [
+      "callofequestria:stereo_pinkie1"
+    ]
+  },
+  "stereo_pinkie2": {
+    "subtitles": "sounds.callofequestria.pinkie2",
+    "sounds": [
+      "callofequestria:stereo_pinkie2"
     ]
   },
   "stereo_squee1": {

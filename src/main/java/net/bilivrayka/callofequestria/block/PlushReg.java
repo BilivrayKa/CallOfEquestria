@@ -22,7 +22,7 @@ public class PlushReg {
             DeferredRegister.create(ForgeRegistries.BLOCKS, CallOfEquestria.MOD_ID);
 
     public static final RegistryObject<Block> PLUSH_PINKIE_PIE = registerBlock("plush_pinkie_pie",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+            () -> new PlushBaseBlock(ModSounds.PINKIE1.get(),ModSounds.PINKIE2.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_ROSE = registerBlock("plush_rose",
             () -> new PlushBaseBlock(ModSounds.ROSE1.get(),ModSounds.ROSE2.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_FLUTTERSHY = registerBlock("plush_fluttershy",

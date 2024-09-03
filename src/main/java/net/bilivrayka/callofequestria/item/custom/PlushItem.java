@@ -46,7 +46,17 @@ public class PlushItem extends BlockItem {
         float pitch = rnd.nextFloat(1,1.15f);
         SoundEvent sound = ModSounds.SQUEE1.get();
         SoundEvent stereoSound = ModSounds.STEREO_SQUEE1.get();
-        pPlayer.getCooldowns().addCooldown(this, 10);
+        switch (rnd.nextInt(3)+1){
+            case 2 :
+                sound = ModSounds.SQUEE2.get();
+                stereoSound = ModSounds.STEREO_SQUEE2.get();
+                break;
+            case 3 :
+                sound = ModSounds.SQUEE3.get();
+                stereoSound = ModSounds.STEREO_SQUEE3.get();
+                break;
+
+        }
         switch (rnd.nextInt(3)+1){
             case 2 :
                 sound = sound2;
@@ -58,13 +68,13 @@ public class PlushItem extends BlockItem {
                 break;
 
         }
-
         if(!pLevel.isClientSide){
             pLevel.playSound(pPlayer, pPlayer.getOnPos(),
                     sound, SoundSource.PLAYERS, 1.0F, pitch);
 
         }
         pLevel.playLocalSound(pPlayer.getOnPos(),stereoSound,SoundSource.PLAYERS, 1.0f, pitch,true);
+        pPlayer.getCooldowns().addCooldown(this, 10);
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 

@@ -58,7 +58,15 @@ public class PlushBaseBlock extends Block {
     public void playSound(Level pLevel, BlockPos pPos){
         float pitch = rnd.nextFloat(1,1.15f);
         SoundEvent sound = ModSounds.SQUEE1.get();
+        switch (rnd.nextInt(3)+1){
+            case 2 :
+                sound = ModSounds.SQUEE2.get();
+                break;
+            case 3 :
+                sound = ModSounds.SQUEE3.get();
+                break;
 
+        }
         switch (rnd.nextInt(3)+1){
             case 2 :
                 sound = sound2;

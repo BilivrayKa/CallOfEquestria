@@ -17,6 +17,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SNIFF_SOUND = registerSoundEvents("sniff_sound");
     public static final RegistryObject<SoundEvent> YAY = registerSoundEvents("yay");
     public static final RegistryObject<SoundEvent> YAY2 = registerSoundEvents("yay2");
+    public static final RegistryObject<SoundEvent> PINKIE1 = registerSoundEvents("pinkie1");
+    public static final RegistryObject<SoundEvent> PINKIE2 = registerSoundEvents("pinkie2");
     public static final RegistryObject<SoundEvent> SQUEE1 = registerSoundEvents("squee1");
     public static final RegistryObject<SoundEvent> SQUEE2 = registerSoundEvents("squee2");
     public static final RegistryObject<SoundEvent> SQUEE3 = registerSoundEvents("squee3");
@@ -50,6 +52,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> STEREO_SNIFF_SOUND = registerSoundEvents("stereo_sniff_sound");
     public static final RegistryObject<SoundEvent> STEREO_YAY = registerSoundEvents("stereo_yay");
     public static final RegistryObject<SoundEvent> STEREO_YAY2 = registerSoundEvents("stereo_yay2");
+    public static final RegistryObject<SoundEvent> STEREO_PINKIE1 = registerSoundEvents("stereo_pinkie1");
+    public static final RegistryObject<SoundEvent> STEREO_PINKIE2 = registerSoundEvents("stereo_pinkie2");
     public static final RegistryObject<SoundEvent> STEREO_SQUEE1 = registerSoundEvents("stereo_squee1");
     public static final RegistryObject<SoundEvent> STEREO_SQUEE2 = registerSoundEvents("stereo_squee2");
     public static final RegistryObject<SoundEvent> STEREO_SQUEE3 = registerSoundEvents("stereo_squee3");

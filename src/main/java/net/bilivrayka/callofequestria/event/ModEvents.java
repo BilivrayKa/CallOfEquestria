@@ -1,7 +1,7 @@
 package net.bilivrayka.callofequestria.event;
 
 import com.mojang.logging.LogUtils;
-import net.bilivrayka.callofequestria.Ponified;
+import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.magic.PlayerMagic;
 import net.bilivrayka.callofequestria.magic.PlayerMagicProvider;
 import net.minecraft.client.Minecraft;
@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = Ponified.MOD_ID)
+@Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
 public class ModEvents {
     public static final Logger LOGGER = LogUtils.getLogger();
     private static final Map<ServerPlayer, Integer> messageCounters = new HashMap<>();
@@ -48,7 +48,7 @@ public class ModEvents {
     public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player) {
             if (!event.getObject().getCapability(PlayerMagicProvider.PLAYER_MAGIC).isPresent()) {
-                event.addCapability(new ResourceLocation(Ponified.MOD_ID, "properties"), new PlayerMagicProvider());
+                event.addCapability(new ResourceLocation(CallOfEquestria.MOD_ID, "properties"), new PlayerMagicProvider());
             }
             /*
             if (!event.getObject().getCapability(PlayerFlyStateProvider.PLAYER_FLY_STATE).isPresent()) {

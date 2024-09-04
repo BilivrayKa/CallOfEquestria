@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.fluid;
 
-import net.bilivrayka.callofequestria.Ponified;
+import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.item.ModItems;
 import net.minecraft.world.level.material.FlowingFluid;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(ForgeRegistries.FLUIDS, Ponified.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.FLUIDS, CallOfEquestria.MOD_ID);
 
     public static final RegistryObject<FlowingFluid> SOURCE_APPLE_JUICE = FLUIDS.register("apple_juice_fluid",
             () -> new ForgeFlowingFluid.Source(ModFluids.APPLE_JUICE_FLUID_PROPERTIES));

@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.block;
 
-import net.bilivrayka.callofequestria.Ponified;
+import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.block.custom.PlushBaseBlock;
 import net.bilivrayka.callofequestria.sound.ModSounds;
 import net.minecraft.world.level.block.Block;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public class PlushReg {
     public static final DeferredRegister<Block> PLUSHIES =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, Ponified.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.BLOCKS, CallOfEquestria.MOD_ID);
 
     public static final RegistryObject<Block> PLUSH_PINKIE_PIE = registerBlock("plush_pinkie_pie",
             () -> new PlushBaseBlock(ModSounds.PINKIE1.get(),ModSounds.PINKIE2.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));

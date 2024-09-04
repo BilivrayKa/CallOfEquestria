@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.fluid;
 
-import net.bilivrayka.callofequestria.Ponified;
+import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.common.SoundAction;
@@ -14,10 +14,10 @@ import org.joml.Vector3f;
 public class ModFluidTypes {
     public static final ResourceLocation WATER_STILL_RL = new ResourceLocation("block/water_still");
     public static final ResourceLocation WATER_FLOWING_RL = new ResourceLocation("block/water_flow");
-    public static final ResourceLocation SOAP_OVERLAY_RL = new ResourceLocation(Ponified.MOD_ID, "misc/in_apple_water");
+    public static final ResourceLocation SOAP_OVERLAY_RL = new ResourceLocation(CallOfEquestria.MOD_ID, "misc/in_apple_water");
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
-            DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, Ponified.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, CallOfEquestria.MOD_ID);
 
     public static final RegistryObject<FluidType> APPLE_JUICE_FLUID_TYPE = register("apple_juice_fluid",
             FluidType.Properties.create().density(15).viscosity(5).sound(SoundAction.get("drink"),

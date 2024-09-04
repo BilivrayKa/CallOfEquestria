@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.sound;
 
-import net.bilivrayka.callofequestria.Ponified;
+import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -10,7 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Ponified.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, CallOfEquestria.MOD_ID);
 
     public static final RegistryObject<SoundEvent> SNIFF_SOUND = registerSoundEvents("sniff_sound");
     public static final RegistryObject<SoundEvent> YAY = registerSoundEvents("yay");
@@ -86,7 +86,7 @@ public class ModSounds {
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
         //return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(CallOfEquestria.MOD_ID, name)));
-        ResourceLocation id = new ResourceLocation(Ponified.MOD_ID, name);
+        ResourceLocation id = new ResourceLocation(CallOfEquestria.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 

@@ -23,11 +23,11 @@ import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("callofequestria")
-public class Ponified {
+public class CallOfEquestria {
     public static final String MOD_ID = "callofequestria";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public Ponified() {
+    public CallOfEquestria() {
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);

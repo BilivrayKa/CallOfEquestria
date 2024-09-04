@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.networking;
 
-import net.bilivrayka.callofequestria.Ponified;
+import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.networking.packet.FlyC2SPacket;
 import net.bilivrayka.callofequestria.networking.packet.MagicC2SPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +20,7 @@ public class ModMessages {
 
     public static void register() {
         SimpleChannel net = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(Ponified.MOD_ID, "messages"))
+                .named(new ResourceLocation(CallOfEquestria.MOD_ID, "messages"))
                 .networkProtocolVersion(() -> "1.0")
                 .clientAcceptedVersions(s -> true)
                 .serverAcceptedVersions(s -> true)

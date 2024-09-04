@@ -15,9 +15,12 @@ public class ClientEvents {
     public static class ClientForgeEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
+            /*
             if(KeyBinding.MAGIC_KEY.consumeClick()) {
                 ModMessages.sendToServer(new MagicC2SPacket());
             }
+
+             */
         }
     }
 
@@ -25,9 +28,12 @@ public class ClientEvents {
     public static class ClientModBusEvents {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
+            /*
             event.register(KeyBinding.MAGIC_KEY);
             event.register(KeyBinding.FLY_TOWARDS_KEY);
             event.register(KeyBinding.FLY_BACKWARDS_KEY);
+
+             */
         }
         /*
         @SubscribeEvent

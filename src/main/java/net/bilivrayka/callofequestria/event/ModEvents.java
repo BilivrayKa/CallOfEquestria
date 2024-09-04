@@ -149,7 +149,7 @@ public class ModEvents {
         }
         boolean isCollisionDamage = event.getSource().getMsgId().equals("flyIntoWall");
         if (isCollisionDamage) {
-            ResourceLocation DERPY_AD = new ResourceLocation("ponified", "derpy");
+            ResourceLocation DERPY_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "derpy");
             AdvancementRewardHandler.giveAdvancement(player,DERPY_AD);
         }
     }
@@ -160,7 +160,7 @@ public class ModEvents {
             UUID uuid = Minecraft.getInstance().player.getUUID();
             MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
             ServerPlayer player = server.getPlayerList().getPlayer(uuid);
-            ResourceLocation SPARKLE_AD = new ResourceLocation("ponified", "sparkle");
+            ResourceLocation SPARKLE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "sparkle");
             AdvancementRewardHandler.giveAdvancement(player, SPARKLE_AD);
         }
     }
@@ -176,7 +176,7 @@ public class ModEvents {
                 //boolean hasProfession = VillagerProfession.NONE != villager.getVillagerData().getProfession();
                 boolean hasProfession = workStation == state.getBlock();
                 if (hasProfession) {
-                    ResourceLocation STARLIGHT_AD = new ResourceLocation("ponified", "starlight");
+                    ResourceLocation STARLIGHT_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "starlight");
                     AdvancementRewardHandler.giveAdvancement(player, STARLIGHT_AD);
                 }
             });
@@ -192,12 +192,12 @@ public class ModEvents {
             DyeableLeatherItem dyeableItem = (DyeableLeatherItem) itemStack.getItem();
             int color = dyeableItem.getColor(itemStack);
             if (color != -1) {
-                ResourceLocation RARITY_AD = new ResourceLocation("ponified", "rarity");
+                ResourceLocation RARITY_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "rarity");
                 AdvancementRewardHandler.giveAdvancement(player, RARITY_AD);
 
             }
         } else if (itemStack.getItem() == Items.CAKE) {
-            ResourceLocation PINKIE_PIE_AD = new ResourceLocation("ponified", "pinkie_pie");
+            ResourceLocation PINKIE_PIE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "pinkie_pie");
             AdvancementRewardHandler.giveAdvancement(player, PINKIE_PIE_AD);
         }
     }
@@ -208,7 +208,7 @@ public class ModEvents {
         int messageCount = messageCounters.getOrDefault(player, 0) + 1;
         messageCounters.put(player, messageCount);
         if (messageCount >= MESSAGE_THRESHOLD) {
-            ResourceLocation MINUETTE_AD = new ResourceLocation("ponified", "minuette");
+            ResourceLocation MINUETTE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "minuette");
             AdvancementRewardHandler.giveAdvancement(player, MINUETTE_AD);
         }
     }
@@ -220,7 +220,7 @@ public class ModEvents {
             if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
                 Entity targetEntity = event.getTarget();
                 if (targetEntity instanceof Creeper) {
-                    ResourceLocation ROSE_AD = new ResourceLocation("ponified", "rose");
+                    ResourceLocation ROSE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "rose");
                     AdvancementRewardHandler.giveAdvancement(player, ROSE_AD);
 
                 }

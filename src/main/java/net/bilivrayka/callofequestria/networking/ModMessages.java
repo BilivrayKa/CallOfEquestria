@@ -3,6 +3,7 @@ package net.bilivrayka.callofequestria.networking;
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.networking.packet.FlyC2SPacket;
 import net.bilivrayka.callofequestria.networking.packet.MagicC2SPacket;
+import net.bilivrayka.callofequestria.networking.packet.RaceC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -38,6 +39,12 @@ public class ModMessages {
                 .decoder(FlyC2SPacket::new)
                 .encoder(FlyC2SPacket::toBytes)
                 .consumerMainThread(FlyC2SPacket::handle)
+                .add();
+
+        net.messageBuilder(RaceC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(RaceC2SPacket::decode)
+                .encoder(RaceC2SPacket::encode)
+                .consumerMainThread(RaceC2SPacket::handle)
                 .add();
 
     }

@@ -4,11 +4,16 @@ import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.magic.PlayerMagic;
 import net.bilivrayka.callofequestria.magic.PlayerMagicProvider;
+import net.bilivrayka.callofequestria.magic.PlayerRaceDataProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.*;
@@ -20,6 +25,7 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -44,12 +50,18 @@ public class ModEvents {
     //private static final KeyMapping flyKey = new KeyMapping("key.callofequestria.flytowards", GLFW.GLFW_KEY_W, "key.categories.movement");
     //@Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
     //public static class ServerForgeEvents {
+
     @SubscribeEvent
     public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player) {
             if (!event.getObject().getCapability(PlayerMagicProvider.PLAYER_MAGIC).isPresent()) {
                 event.addCapability(new ResourceLocation(CallOfEquestria.MOD_ID, "properties"), new PlayerMagicProvider());
+
             }
+            if (!event.getObject().getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).isPresent()) {
+                event.addCapability(new ResourceLocation(CallOfEquestria.MOD_ID, "player_race_data"), new PlayerRaceDataProvider());
+            }
+
             /*
             if (!event.getObject().getCapability(PlayerFlyStateProvider.PLAYER_FLY_STATE).isPresent()) {
                 event.addCapability(new ResourceLocation(CallOfEquestria.MOD_ID, "flyProp"), new PlayerFlyStateProvider());
@@ -75,6 +87,11 @@ public class ModEvents {
             });
 
              */
+            event.getOriginal().getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(oldStore -> {
+                event.getEntity().getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(newStore -> {
+                    newStore.copyFrom(oldStore);
+                });
+            });
         }
     }
 
@@ -85,6 +102,17 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if(event.side == LogicalSide.SERVER) {
+            event.player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
+                if(data.getSelectedRace() == 1){
+                    event.player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 1));
+                } else if(data.getSelectedRace() == 2){
+                    event.player.addEffect(new MobEffectInstance(MobEffects.BAD_OMEN, 1));
+                } else if(data.getSelectedRace() == 3){
+                    event.player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 1));
+                }
+            });
+        }
         /*
         if(false){
             if(event.side == LogicalSide.SERVER && !event.player.isCreative()) {
@@ -225,6 +253,31 @@ public class ModEvents {
 
                 }
             }
+        }
+    }
+    @SubscribeEvent
+    public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer) {
+            ServerPlayer player = (ServerPlayer) event.getEntity();
+            player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
+                CompoundTag nbt = new CompoundTag();
+                data.saveNBTData(nbt);
+                player.getPersistentData().put(CallOfEquestria.MOD_ID, nbt);
+            });
+
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer) {
+            ServerPlayer player = (ServerPlayer) event.getEntity();
+            player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
+                CompoundTag nbt = player.getPersistentData().getCompound(CallOfEquestria.MOD_ID);
+                data.loadNBTData(nbt);
+                int selectedRace = data.getSelectedRace();
+                player.sendSystemMessage(Component.literal("" + selectedRace));
+            });
         }
     }
 }

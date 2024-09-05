@@ -124,6 +124,9 @@ public class ModItems {
     public static final RegistryObject<Item> BOULDER = ITEMS.register("boulder",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> RACE_CHOOSE_ITEM = ITEMS.register("race_choose_item",
+            () -> new RaceChooseItem(new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

@@ -1,9 +1,14 @@
 package net.bilivrayka.callofequestria.networking;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.event.ClientEvents;
+import net.bilivrayka.callofequestria.gui.ClientRacePacket;
+import net.bilivrayka.callofequestria.magic.PlayerRaceData;
 import net.bilivrayka.callofequestria.networking.packet.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
@@ -46,20 +51,31 @@ public class ModMessages {
                 .encoder(RaceC2SPacket::encode)
                 .consumerMainThread(RaceC2SPacket::handle)
                 .add();
+        net.messageBuilder(AdvancementC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(AdvancementC2SPacket::decode)
+                .encoder(AdvancementC2SPacket::encode)
+                .consumerMainThread(AdvancementC2SPacket::handle)
+                .add();
+        /*
         net.messageBuilder(GUIRaceS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(GUIRaceS2CPacket::decode)
                 .encoder(GUIRaceS2CPacket::encode)
                 .consumerMainThread(GUIRaceS2CPacket::handle)
                 .add();
+
+         */
         net.messageBuilder(MagicSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(MagicSyncS2CPacket::new)
                 .encoder(MagicSyncS2CPacket::toBytes)
                 .consumerMainThread(MagicSyncS2CPacket::handle)
                 .add();
-
+        net.messageBuilder(RaceSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(RaceSyncS2CPacket::new)
+                .encoder(RaceSyncS2CPacket::toBytes)
+                .consumerMainThread(RaceSyncS2CPacket::handle)
+                .add();
 
     }
-
     public static <MSG> void sendToServer(MSG message) {
         INSTANCE.sendToServer(message);
     }

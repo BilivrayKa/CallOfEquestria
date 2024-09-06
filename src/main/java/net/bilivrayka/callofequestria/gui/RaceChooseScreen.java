@@ -36,34 +36,44 @@ public class RaceChooseScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics); // Рендеринг фона
-
-        // Координаты для карточек
+        this.renderBackground(guiGraphics);
         int cardWidth = 100;
         int cardHeight = 150;
         int spacing = 20;
         int centerX = (this.width - 3 * cardWidth - 2 * spacing) / 2;
         int centerY = (this.height - cardHeight) / 2;
-        /*
-        RenderSystem.setShaderTexture(0, CARD_TEXTURE_1);
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.enableDepthTest();
-
-
-         */
-        guiGraphics.blit(CARD_TEXTURE_1, centerX, centerY, 0, 0, cardWidth, cardHeight, cardWidth, cardHeight);
-        guiGraphics.blit(CARD_TEXTURE_2, centerX + cardWidth + spacing, centerY, 0, 0, cardWidth, cardHeight, cardWidth, cardHeight);
-        guiGraphics.blit(CARD_TEXTURE_3, centerX + 2 * (cardWidth + spacing), centerY, 0, 0, cardWidth, cardHeight, cardWidth, cardHeight);
-
-        guiGraphics.drawCenteredString(this.font, "EarthPony", centerX + cardWidth / 2, centerY + cardHeight + 10, 0xFFFFFF);
-        guiGraphics.drawCenteredString(this.font, "Pegasus", centerX + (cardWidth + spacing) + cardWidth / 2, centerY + cardHeight + 10, 0xFFFFFF);
-        guiGraphics.drawCenteredString(this.font, "Unicorn", centerX + 2 * (cardWidth + spacing) + cardWidth / 2, centerY + cardHeight + 10, 0xFFFFFF);
-
+        //TODO анимки карточек isHovered ? ANIMATION_FRAMES[currentFrame] : getCardTexture(i) к примеру крч хуй знает сам блядь думай
+        for (int i = 0; i < 3; i++) {
+            int x = centerX + i * (cardWidth + spacing);
+            int y = centerY;
+            boolean isHovered = isMouseOverCard(mouseX, mouseY, x, y, cardWidth, cardHeight);
+            int hoverOffset = isHovered ? -10 : 0;
+            guiGraphics.blit(getCardTexture(i), x, y + hoverOffset, 0, 0, cardWidth, cardHeight, cardWidth, cardHeight);
+            guiGraphics.drawCenteredString(this.font, getCardLabel(i), x + cardWidth / 2, y + cardHeight + 10 + hoverOffset, 0xFFFFFF);
+        }
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    }
+
+    private boolean isMouseOverCard(double mouseX, double mouseY, int cardX, int cardY, int cardWidth, int cardHeight) {
+        return mouseX >= cardX && mouseX <= cardX + cardWidth && mouseY >= cardY && mouseY <= cardY + cardHeight;
+    }
+
+    private ResourceLocation getCardTexture(int cardIndex) {
+        switch (cardIndex) {
+            case 0: return CARD_TEXTURE_1;
+            case 1: return CARD_TEXTURE_2;
+            case 2: return CARD_TEXTURE_3;
+            default: return CARD_TEXTURE_1;
+        }
+    }
+
+    private String getCardLabel(int cardIndex) {
+        switch (cardIndex) {
+            case 0: return "EarthPony";
+            case 1: return "Pegasus";
+            case 2: return "Unicorn";
+            default: return "";
+        }
     }
 
     @Override
@@ -73,16 +83,14 @@ public class RaceChooseScreen extends Screen {
         int spacing = 20;
         int centerX = (this.width - 3 * cardWidth - 2 * spacing) / 2;
         int centerY = (this.height - cardHeight) / 2;
-
-        if (mouseX >= centerX && mouseX <= centerX + cardWidth && mouseY >= centerY && mouseY <= centerY + cardHeight) {
-            this.selectedCard = 1;
-            this.onCardSelected(1);
-        } else if (mouseX >= centerX + cardWidth + spacing && mouseX <= centerX + 2 * cardWidth + spacing && mouseY >= centerY && mouseY <= centerY + cardHeight) {
-            this.selectedCard = 2;
-            this.onCardSelected(2);
-        } else if (mouseX >= centerX + 2 * (cardWidth + spacing) && mouseX <= centerX + 3 * cardWidth + 2 * spacing && mouseY >= centerY && mouseY <= centerY + cardHeight) {
-            this.selectedCard = 3;
-            this.onCardSelected(3);
+        for (int i = 0; i < 3; i++) {
+            int x = centerX + i * (cardWidth + spacing);
+            int y = centerY;
+            if (isMouseOverCard(mouseX, mouseY, x, y, cardWidth, cardHeight)) {
+                this.selectedCard = i + 1;
+                this.onCardSelected(i + 1);
+                return true;
+            }
         }
         return super.mouseClicked(mouseX, mouseY, button);
     }

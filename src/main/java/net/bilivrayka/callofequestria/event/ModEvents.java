@@ -63,9 +63,6 @@ public class ModEvents {
     private static final Map<ServerPlayer, Integer> messageCounters = new HashMap<>();
     private static final int MESSAGE_THRESHOLD = 25;
     private static int race;
-    //private static final KeyMapping flyKey = new KeyMapping("key.callofequestria.flytowards", GLFW.GLFW_KEY_W, "key.categories.movement");
-    //@Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
-    //public static class ServerForgeEvents {
 
     @SubscribeEvent
     public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
@@ -119,7 +116,7 @@ public class ModEvents {
         if(event.side == LogicalSide.SERVER && !event.player.isCreative()) {
             event.player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
                 float tick = event.player.getRandom().nextFloat();
-                if(magic.getMagic() != 10 && tick < 0.035f && event.player.onGround()) {
+                if(magic.getMagic() <= 10 && tick < 0.035f && event.player.onGround()) {
                     event.player.getAbilities().mayfly = true;
                     event.player.onUpdateAbilities();
                     magic.addMagic(1);
@@ -154,7 +151,7 @@ public class ModEvents {
             if(KeyBinding.FLY_BACKWARDS_KEY.isDown()){
                 player.setDeltaMovement(player.getDeltaMovement().add(lookDirection.scale(-0.025).x,
                         lookDirection.scale(-0.10).y,lookDirection.scale(-0.025).z));
-                }
+            }
         }
         if(event.player.getAbilities().flying && !event.player.isCreative() && race == 2){
             event.player.setPose(Pose.SWIMMING);

@@ -37,15 +37,27 @@ public class RaceC2SPacket {
                     data.setSelectedRace(packet.cardIndex);
 
                     AttributeInstance maxHealthAttribute = player.getAttribute(Attributes.MAX_HEALTH);
+                    AttributeInstance armorAttribute = player.getAttribute(Attributes.ARMOR);
+                    AttributeInstance attackDamageAttribute = player.getAttribute(Attributes.ATTACK_DAMAGE);
+                    AttributeInstance speedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
                     switch (data.getSelectedRace()){
                         case 1:
                             maxHealthAttribute.setBaseValue((float) 20);
+                            armorAttribute.setBaseValue((float) 2);
+                            attackDamageAttribute.setBaseValue((float) 2);
+                            speedAttribute.setBaseValue((float) 0.15);
                             break;
                         case 2:
                             maxHealthAttribute.setBaseValue((float) 16);
+                            armorAttribute.setBaseValue((float) 0);
+                            attackDamageAttribute.setBaseValue((float) 1);
+                            speedAttribute.setBaseValue((float) 0.1);
                             break;
                         case 3:
                             maxHealthAttribute.setBaseValue((float) 18);
+                            armorAttribute.setBaseValue((float) 0);
+                            attackDamageAttribute.setBaseValue((float) 0);
+                            speedAttribute.setBaseValue((float) 0.1);
                             break;
                         default:
                             break;

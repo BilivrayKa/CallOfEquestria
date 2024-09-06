@@ -91,6 +91,7 @@ public class ModEvents {
                     ModMessages.sendToServer(new RaceC2SPacket(oldData.getSelectedRace()));
                 });
             });
+            event.getOriginal().invalidateCaps();
             event.getOriginal().getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(oldStore -> {
                 event.getOriginal().getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(newStore -> {
                     newStore.copyFrom(oldStore);

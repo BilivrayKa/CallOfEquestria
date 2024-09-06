@@ -49,7 +49,7 @@ public class RaceChooseScreen extends Screen {
             boolean isHovered = isMouseOverCard(mouseX, mouseY, x, y, cardWidth, cardHeight);
             int hoverOffset = isHovered ? -10 : 0;
             guiGraphics.blit(getCardTexture(i), x, y + hoverOffset, 0, 0, cardWidth, cardHeight, cardWidth, cardHeight);
-            guiGraphics.drawCenteredString(this.font, getCardLabel(i), x + cardWidth / 2, y + cardHeight + 10 + hoverOffset, 0xFFFFFF);
+            //guiGraphics.drawCenteredString(this.font, getCardLabel(i), x + cardWidth / 2, y + cardHeight + 10 + hoverOffset, 0xFFFFFF);
         }
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }

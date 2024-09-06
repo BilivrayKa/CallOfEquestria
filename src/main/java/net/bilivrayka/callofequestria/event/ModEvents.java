@@ -2,24 +2,38 @@ package net.bilivrayka.callofequestria.event;
 
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.gui.RaceChooseScreen;
 import net.bilivrayka.callofequestria.magic.PlayerMagic;
 import net.bilivrayka.callofequestria.magic.PlayerMagicProvider;
+import net.bilivrayka.callofequestria.magic.PlayerRaceData;
 import net.bilivrayka.callofequestria.magic.PlayerRaceDataProvider;
+import net.bilivrayka.callofequestria.networking.ModMessages;
+import net.bilivrayka.callofequestria.networking.packet.GUIRaceS2CPacket;
+import net.bilivrayka.callofequestria.networking.packet.MagicSyncS2CPacket;
+import net.bilivrayka.callofequestria.networking.packet.RaceC2SPacket;
+import net.bilivrayka.callofequestria.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -36,6 +50,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import org.openjdk.nashorn.internal.runtime.Undefined;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
@@ -47,6 +62,7 @@ public class ModEvents {
     public static final Logger LOGGER = LogUtils.getLogger();
     private static final Map<ServerPlayer, Integer> messageCounters = new HashMap<>();
     private static final int MESSAGE_THRESHOLD = 25;
+    private static int race;
     //private static final KeyMapping flyKey = new KeyMapping("key.callofequestria.flytowards", GLFW.GLFW_KEY_W, "key.categories.movement");
     //@Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
     //public static class ServerForgeEvents {
@@ -61,34 +77,25 @@ public class ModEvents {
             if (!event.getObject().getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).isPresent()) {
                 event.addCapability(new ResourceLocation(CallOfEquestria.MOD_ID, "player_race_data"), new PlayerRaceDataProvider());
             }
-
-            /*
-            if (!event.getObject().getCapability(PlayerFlyStateProvider.PLAYER_FLY_STATE).isPresent()) {
-                event.addCapability(new ResourceLocation(CallOfEquestria.MOD_ID, "flyProp"), new PlayerFlyStateProvider());
-            }
-
-             */
         }
     }
-    //}
+
     @SubscribeEvent
     public static void onPlayerCloned(PlayerEvent.Clone event) {
         if(event.isWasDeath()) {
+            MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+            UUID oldUUID = event.getOriginal().getUUID();
+            ServerPlayer oldPlayer = server.getPlayerList().getPlayer(oldUUID);
+            oldPlayer.reviveCaps();
+            oldPlayer.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(oldData -> {
+                UUID newUUID = event.getOriginal().getUUID();
+                ServerPlayer newPlayer = server.getPlayerList().getPlayer(newUUID);
+                newPlayer.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(newData -> {
+                    ModMessages.sendToServer(new RaceC2SPacket(oldData.getSelectedRace()));
+                });
+            });
             event.getOriginal().getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(oldStore -> {
                 event.getOriginal().getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(newStore -> {
-                    newStore.copyFrom(oldStore);
-                });
-            });
-            /*
-            event.getOriginal().getCapability(PlayerFlyStateProvider.PLAYER_FLY_STATE).ifPresent(oldStore -> {
-                event.getOriginal().getCapability(PlayerFlyStateProvider.PLAYER_FLY_STATE).ifPresent(newStore -> {
-                    newStore.copyFrom(oldStore);
-                });
-            });
-
-             */
-            event.getOriginal().getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(oldStore -> {
-                event.getEntity().getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(newStore -> {
                     newStore.copyFrom(oldStore);
                 });
             });
@@ -98,77 +105,73 @@ public class ModEvents {
     @SubscribeEvent
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.register(PlayerMagic.class);
+        event.register(PlayerRaceData.class);
     }
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if(event.side == LogicalSide.SERVER) {
-            event.player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
-                if(data.getSelectedRace() == 1){
-                    event.player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 1));
-                } else if(data.getSelectedRace() == 2){
-                    event.player.addEffect(new MobEffectInstance(MobEffects.BAD_OMEN, 1));
-                } else if(data.getSelectedRace() == 3){
-                    event.player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 1));
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        UUID uuid = event.player.getUUID();
+        ServerPlayer serverPlayer = server.getPlayerList().getPlayer(uuid);
+        serverPlayer.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
+            race = data.getSelectedRace();
+        });
+        if(event.side == LogicalSide.SERVER && !event.player.isCreative()) {
+            event.player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                float tick = event.player.getRandom().nextFloat();
+                if(magic.getMagic() != 10 && tick < 0.035f && event.player.onGround()) {
+                    event.player.getAbilities().mayfly = true;
+                    event.player.onUpdateAbilities();
+                    magic.addMagic(1);
+                    ModMessages.sendToPlayer(new MagicSyncS2CPacket(magic.getMagic()), ((ServerPlayer) event.player));
+                }
+                if(event.player.getAbilities().flying && tick < 0.002f && race == 2) {
+                    magic.subMagic(1);
+                    ModMessages.sendToPlayer(new MagicSyncS2CPacket(magic.getMagic()), ((ServerPlayer) event.player));
+                }
+                if(magic.getMagic() <= 0 && race == 2){
+                    event.player.getAbilities().mayfly = false;
+                    event.player.getAbilities().flying = false;
+                    event.player.onUpdateAbilities();
                 }
             });
         }
-        /*
-        if(false){
-            if(event.side == LogicalSide.SERVER && !event.player.isCreative()) {
-                event.player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
-                    float tick = event.player.getRandom().nextFloat();
-
-                    if(magic.getMagic() != 10 && tick < 0.035f) {
-                        magic.addMagic(1);
-                    }
-                    if(event.player.getAbilities().flying && tick < 0.037f){
-                        magic.subMagic(1);
-                        //event.player.sendSystemMessage(Component.literal("" + magic.getMagic()));
-                    }
-                    if(magic.getMagic() <= 0){
-                        event.player.getAbilities().mayfly = false;
-                        event.player.getAbilities().flying = false;
-                        event.player.onUpdateAbilities();
-                    }
-                });
-
-            }
-            if(event.side == LogicalSide.CLIENT && event.player.getAbilities().flying
-                    && !event.player.isCreative()){
-
-                Player player = event.player;
-                Vec3 lookDirection = player.getLookAngle();
-
-                if(KeyBinding.FLY_TOWARDS_KEY.isDown()){
-                    player.setDeltaMovement(player.getDeltaMovement().add(lookDirection.scale(0.025).x,
-                            lookDirection.scale(0.10).y,lookDirection.scale(0.025).z));
-                }
-                if(KeyBinding.FLY_BACKWARDS_KEY.isDown()){
-                    player.setDeltaMovement(player.getDeltaMovement().add(lookDirection.scale(-0.025).x,
-                            lookDirection.scale(-0.10).y,lookDirection.scale(-0.025).z));
-                }
-            }
-
-            if(event.player.getAbilities().flying && !event.player.isCreative()){
-                event.player.setPose(Pose.SWIMMING);
-                int solidBlocks = 0;
-
-                for (int i = 1; i != 20; i++){
-                    BlockPos blockpos = new BlockPos(event.player.getBlockX(),
-                            event.player.getBlockY()-i,event.player.getBlockZ());
-                    if(!event.player.level().getBlockState(blockpos).isAir()){
-                        solidBlocks++;
-                    }
-                }
-                if(solidBlocks == 0){
-                    event.player.setDeltaMovement(event.player.getDeltaMovement().x,-0.25, event.player.getDeltaMovement().z);
-                }
-
-            }
+        if(event.side == LogicalSide.SERVER && !event.player.isCreative() && race != 2){
+            event.player.getAbilities().mayfly = false;
+            event.player.getAbilities().flying = false;
+            event.player.onUpdateAbilities();
         }
+        if(event.side == LogicalSide.CLIENT && event.player.getAbilities().flying
+                && !event.player.isCreative() && race == 2){
 
-         */
+            Player player = event.player;
+            Vec3 lookDirection = player.getLookAngle();
+
+            if(KeyBinding.FLY_TOWARDS_KEY.isDown()){
+                player.setDeltaMovement(player.getDeltaMovement().add(lookDirection.scale(0.025).x,
+                        lookDirection.scale(0.10).y,lookDirection.scale(0.025).z));
+            }
+            if(KeyBinding.FLY_BACKWARDS_KEY.isDown()){
+                player.setDeltaMovement(player.getDeltaMovement().add(lookDirection.scale(-0.025).x,
+                        lookDirection.scale(-0.10).y,lookDirection.scale(-0.025).z));
+                }
+        }
+        if(event.player.getAbilities().flying && !event.player.isCreative() && race == 2){
+            event.player.setPose(Pose.SWIMMING);
+            int solidBlocks = 0;
+
+            for (int i = 1; i != 20; i++){
+                BlockPos blockpos = new BlockPos(event.player.getBlockX(),
+                        event.player.getBlockY()-i,event.player.getBlockZ());
+                if(!event.player.level().getBlockState(blockpos).isAir()){
+                    solidBlocks++;
+                }
+            }
+            if(solidBlocks == 0){
+                event.player.setDeltaMovement(event.player.getDeltaMovement().x,-0.25, event.player.getDeltaMovement().z);
+            }
+
+        }
     }
     @SubscribeEvent
     public static void onPlayerDamage(LivingDamageEvent event) {
@@ -276,7 +279,9 @@ public class ModEvents {
                 CompoundTag nbt = player.getPersistentData().getCompound(CallOfEquestria.MOD_ID);
                 data.loadNBTData(nbt);
                 int selectedRace = data.getSelectedRace();
-                player.sendSystemMessage(Component.literal("" + selectedRace));
+                if(selectedRace <= 0){
+                    ModMessages.sendToPlayer(new GUIRaceS2CPacket(), player);
+                }
             });
         }
     }

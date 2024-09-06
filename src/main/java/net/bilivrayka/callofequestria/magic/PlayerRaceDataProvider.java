@@ -10,11 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PlayerRaceDataProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-
-    public static final Capability<PlayerRaceData> PLAYER_RACE_DATA = CapabilityManager.get(new CapabilityToken<>() {});
-    private final LazyOptional<PlayerRaceData> instance = LazyOptional.of(PlayerRaceData::new);
+    public static Capability<PlayerRaceData> PLAYER_RACE_DATA = CapabilityManager.get(new CapabilityToken<PlayerRaceData>() {});
 
     private PlayerRaceData playerRaceData = null;
+    private final LazyOptional<PlayerRaceData> instance = LazyOptional.of(this::createPlayerRaceData);
 
     private PlayerRaceData createPlayerRaceData() {
         if(this.playerRaceData == null) {

@@ -1,9 +1,7 @@
 package net.bilivrayka.callofequestria.networking;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.networking.packet.FlyC2SPacket;
-import net.bilivrayka.callofequestria.networking.packet.MagicC2SPacket;
-import net.bilivrayka.callofequestria.networking.packet.RaceC2SPacket;
+import net.bilivrayka.callofequestria.networking.packet.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -28,12 +26,14 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
-
+/*
         net.messageBuilder(MagicC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(MagicC2SPacket::new)
                 .encoder(MagicC2SPacket::toBytes)
                 .consumerMainThread(MagicC2SPacket::handle)
                 .add();
+
+ */
 
         net.messageBuilder(FlyC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(FlyC2SPacket::new)
@@ -46,6 +46,17 @@ public class ModMessages {
                 .encoder(RaceC2SPacket::encode)
                 .consumerMainThread(RaceC2SPacket::handle)
                 .add();
+        net.messageBuilder(GUIRaceS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(GUIRaceS2CPacket::decode)
+                .encoder(GUIRaceS2CPacket::encode)
+                .consumerMainThread(GUIRaceS2CPacket::handle)
+                .add();
+        net.messageBuilder(MagicSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MagicSyncS2CPacket::new)
+                .encoder(MagicSyncS2CPacket::toBytes)
+                .consumerMainThread(MagicSyncS2CPacket::handle)
+                .add();
+
 
     }
 

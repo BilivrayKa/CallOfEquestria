@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.UUID;
@@ -88,20 +89,6 @@ public class RaceChooseScreen extends Screen {
 
     private void onCardSelected(int cardIndex) {
         ModMessages.sendToServer(new RaceC2SPacket(cardIndex));
-        UUID uuid = Minecraft.getInstance().player.getUUID();
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-        ServerPlayer player = server.getPlayerList().getPlayer(uuid);
-        player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
-            CompoundTag nbt = new CompoundTag();
-            data.saveNBTData(nbt);
-            player.getPersistentData().put(CallOfEquestria.MOD_ID, nbt);
-        });
-        player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
-            CompoundTag nbt = player.getPersistentData().getCompound(CallOfEquestria.MOD_ID);
-            data.loadNBTData(nbt);
-            int selectedRace = data.getSelectedRace();
-            player.sendSystemMessage(Component.literal("" + selectedRace));
-        });
         this.onClose();
     }
 

@@ -1,5 +1,6 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
+import net.bilivrayka.callofequestria.magic.PlayerRaceDataProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -9,6 +10,7 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class MagicC2SPacket {
+
     public MagicC2SPacket() {
 
     }
@@ -25,23 +27,20 @@ public class MagicC2SPacket {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-
             ServerLevel level = (ServerLevel) player.level();
-
-            if(player.getAbilities().flying){
-                player.getAbilities().mayfly = false;
-                player.getAbilities().flying = false;
-                player.sendSystemMessage(Component.literal("Fly is off"));
-                //player.setPose(Pose.STANDING);
-            } else {
-                player.getAbilities().mayfly = true;
-                player.getAbilities().flying = true;
-                player.sendSystemMessage(Component.literal("Fly is on"));
-                //player.setPose(Pose.SWIMMING);
-            }
-
-            player.onUpdateAbilities();
-
+            player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
+                int race = data.getSelectedRace();
+                if(player.getAbilities().flying && race == 2){
+                    player.getAbilities().mayfly = false;
+                    player.getAbilities().flying = false;
+                    player.sendSystemMessage(Component.literal("Fly is off"));
+                } else if (race == 2){
+                    player.getAbilities().mayfly = true;
+                    player.getAbilities().flying = true;
+                    player.sendSystemMessage(Component.literal("Fly is on"));
+                }
+                player.onUpdateAbilities();
+            });
         });
         return true;
     }

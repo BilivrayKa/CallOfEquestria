@@ -20,6 +20,6 @@ public class PlayerRaceData {
     }
 
     public void loadNBTData(CompoundTag nbt) {
-        selectedRace = nbt.getInt("SelectedRace");
+       selectedRace = nbt.getInt("SelectedRace");
     }
 }

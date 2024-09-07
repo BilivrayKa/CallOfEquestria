@@ -5,6 +5,7 @@ import net.bilivrayka.callofequestria.event.ClientEvents;
 import net.bilivrayka.callofequestria.gui.ClientRacePacket;
 import net.bilivrayka.callofequestria.magic.PlayerRaceData;
 import net.bilivrayka.callofequestria.networking.packet.*;
+import net.bilivrayka.callofequestria.networking.packet.spell.RepelSpellC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,6 +46,11 @@ public class ModMessages {
                 .encoder(FlyC2SPacket::toBytes)
                 .consumerMainThread(FlyC2SPacket::handle)
                 .add();
+        net.messageBuilder(FlyStateC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(FlyStateC2SPacket::new)
+                .encoder(FlyStateC2SPacket::toBytes)
+                .consumerMainThread(FlyStateC2SPacket::handle)
+                .add();
 
         net.messageBuilder(RaceC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RaceC2SPacket::decode)
@@ -55,6 +61,11 @@ public class ModMessages {
                 .decoder(AdvancementC2SPacket::decode)
                 .encoder(AdvancementC2SPacket::encode)
                 .consumerMainThread(AdvancementC2SPacket::handle)
+                .add();
+        net.messageBuilder(RepelSpellC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(RepelSpellC2SPacket::decode)
+                .encoder(RepelSpellC2SPacket::encode)
+                .consumerMainThread(RepelSpellC2SPacket::handle)
                 .add();
         /*
         net.messageBuilder(GUIRaceS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)

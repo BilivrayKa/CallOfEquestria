@@ -93,6 +93,7 @@ public class RaceChooseScreen extends Screen {
             if (isMouseOverCard(mouseX, mouseY, x, y, cardWidth, cardHeight)) {
                 this.selectedCard = i + 1;
                 this.onCardSelected(i + 1);
+
                 return true;
             }
         }
@@ -101,7 +102,7 @@ public class RaceChooseScreen extends Screen {
 
     private void onCardSelected(int cardIndex) {
         ModMessages.sendToServer(new RaceC2SPacket(cardIndex));
-        //ModMessages.sendToPlayer(new RaceSyncS2CPacket(cardIndex));
+        ClientRacePacket.set(cardIndex);
         this.onClose();
     }
 

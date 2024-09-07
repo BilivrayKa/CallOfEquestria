@@ -72,16 +72,19 @@ public class RaceC2SPacket {
                     }
                     int selectedRace = data.getSelectedRace();
                     ModMessages.sendToPlayer(new RaceSyncS2CPacket(selectedRace), (ServerPlayer) player);
-                    Minecraft.getInstance().setScreen(null);
+                    //Minecraft.getInstance().setScreen(null);
                     /*
                     Minecraft.getInstance().screen.onClose();
                     Minecraft.getInstance().setScreen(null);
 
                      */
+                    /*
                     Minecraft.getInstance().mouseHandler.grabMouse();
                     if (!Minecraft.getInstance().mouseHandler.isMouseGrabbed()) {
                         Minecraft.getInstance().mouseHandler.grabMouse();  // Попробуйте захватить мышь ещё раз
                     }
+
+                     */
                     //Minecraft.getInstance().mouseHandler.grabMouse();
                 });
             }

@@ -2,6 +2,8 @@ package net.bilivrayka.callofequestria.event;
 
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.gui.ClientRacePacket;
+import net.bilivrayka.callofequestria.gui.ClientRenderHotbar;
 import net.bilivrayka.callofequestria.gui.RaceChooseScreen;
 import net.bilivrayka.callofequestria.magic.PlayerMagic;
 import net.bilivrayka.callofequestria.magic.PlayerMagicProvider;
@@ -179,10 +181,12 @@ public class ModEvents {
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer) {
+            ClientRenderHotbar.set(false);
             ServerPlayer player = (ServerPlayer) event.getEntity();
             player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
                 CompoundTag nbt = player.getPersistentData().getCompound(CallOfEquestria.MOD_ID);
                 data.loadNBTData(nbt);
+                ClientRacePacket.set(data.getSelectedRace());
                 //int selectedRace = data.getSelectedRace();
                 //onPlayerLoggedInClient(selectedRace);
                 //ModMessagesClient.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new ClientRacePacket(selectedRace));

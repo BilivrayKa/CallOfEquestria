@@ -1,15 +1,10 @@
 package net.bilivrayka.callofequestria.networking;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.event.ClientEvents;
-import net.bilivrayka.callofequestria.gui.ClientRacePacket;
-import net.bilivrayka.callofequestria.magic.PlayerRaceData;
 import net.bilivrayka.callofequestria.networking.packet.*;
 import net.bilivrayka.callofequestria.networking.packet.spell.RepelSpellC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;

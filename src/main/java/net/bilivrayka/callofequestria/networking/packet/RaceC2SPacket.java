@@ -1,19 +1,13 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
-import net.bilivrayka.callofequestria.magic.PlayerRaceDataProvider;
+import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
 import net.bilivrayka.callofequestria.networking.ModMessages;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.function.Supplier;
 

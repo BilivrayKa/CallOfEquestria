@@ -1,8 +1,7 @@
-package net.bilivrayka.callofequestria.magic;
+package net.bilivrayka.callofequestria.providers;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;

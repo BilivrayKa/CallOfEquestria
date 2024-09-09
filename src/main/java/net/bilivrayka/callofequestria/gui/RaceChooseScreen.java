@@ -1,30 +1,14 @@
 package net.bilivrayka.callofequestria.gui;
 
-import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.magic.PlayerRaceDataProvider;
 import net.bilivrayka.callofequestria.networking.ModMessages;
+import net.bilivrayka.callofequestria.providers.ClientRacePacket;
 import net.bilivrayka.callofequestria.networking.packet.RaceC2SPacket;
-import net.bilivrayka.callofequestria.networking.packet.RaceSyncS2CPacket;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.server.ServerLifecycleHooks;
 
-import java.util.UUID;
 //@OnlyIn(Dist.CLIENT)
 public class RaceChooseScreen extends Screen {
 

@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
-import net.bilivrayka.callofequestria.gui.ClientMagicData;
+import net.bilivrayka.callofequestria.providers.ClientMagicData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 

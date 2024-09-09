@@ -1,15 +1,11 @@
 package net.bilivrayka.callofequestria.networking;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.event.ClientEvents;
-import net.bilivrayka.callofequestria.gui.ClientRacePacket;
-import net.bilivrayka.callofequestria.magic.PlayerRaceData;
 import net.bilivrayka.callofequestria.networking.packet.*;
+import net.bilivrayka.callofequestria.networking.packet.spell.MagicProjectileC2SPacket;
 import net.bilivrayka.callofequestria.networking.packet.spell.RepelSpellC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
@@ -66,6 +62,11 @@ public class ModMessages {
                 .decoder(RepelSpellC2SPacket::decode)
                 .encoder(RepelSpellC2SPacket::encode)
                 .consumerMainThread(RepelSpellC2SPacket::handle)
+                .add();
+        net.messageBuilder(MagicProjectileC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MagicProjectileC2SPacket::new)
+                .encoder(MagicProjectileC2SPacket::toBytes)
+                .consumerMainThread(MagicProjectileC2SPacket::handle)
                 .add();
         /*
         net.messageBuilder(GUIRaceS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)

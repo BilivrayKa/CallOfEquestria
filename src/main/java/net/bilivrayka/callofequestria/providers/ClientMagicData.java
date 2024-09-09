@@ -1,4 +1,4 @@
-package net.bilivrayka.callofequestria.gui;
+package net.bilivrayka.callofequestria.providers;
 
 public class ClientMagicData {
     private static int playerMagic;

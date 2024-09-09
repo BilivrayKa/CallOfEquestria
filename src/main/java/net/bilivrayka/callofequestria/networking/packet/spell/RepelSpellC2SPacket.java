@@ -1,7 +1,11 @@
 package net.bilivrayka.callofequestria.networking.packet.spell;
 
+import net.minecraft.client.particle.Particle;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -37,8 +41,10 @@ public class RepelSpellC2SPacket {
         player.level().getEntitiesOfClass(LivingEntity.class, area).forEach(entity -> {
             Vec3 entityPosition = entity.position();
             Vec3 direction = entityPosition.subtract(player.position().x,player.position().y - 2,player.position().z).normalize();
-            //Vec3 forceVector = direction.multiply(); // Вектор силы
+            //Vec3 forceVector = direction.multiply();
             entity.setDeltaMovement(direction);
         });
+        player.level().playSound(null, player.getOnPos(), SoundEvents.WITHER_BREAK_BLOCK, SoundSource.PLAYERS,1,1);
+        player.level().addParticle(ParticleTypes.EXPLOSION,1,1,1,1,1,1);
     }
 }

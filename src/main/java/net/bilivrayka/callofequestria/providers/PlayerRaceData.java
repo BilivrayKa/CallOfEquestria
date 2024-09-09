@@ -1,4 +1,4 @@
-package net.bilivrayka.callofequestria.magic;
+package net.bilivrayka.callofequestria.providers;
 
 import net.minecraft.nbt.CompoundTag;
 

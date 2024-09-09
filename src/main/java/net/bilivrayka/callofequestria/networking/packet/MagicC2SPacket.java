@@ -1,6 +1,6 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
-import net.bilivrayka.callofequestria.magic.PlayerRaceDataProvider;
+import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;

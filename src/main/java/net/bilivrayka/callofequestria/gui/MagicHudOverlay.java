@@ -3,8 +3,12 @@ package net.bilivrayka.callofequestria.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.providers.ClientMagicData;
+import net.bilivrayka.callofequestria.providers.PlayerMagicProvider;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class MagicHudOverlay {
@@ -31,14 +35,17 @@ public class MagicHudOverlay {
         RenderSystem.setShaderTexture(0, EMPTY_MAGIC);
 
  */
-        for(int i = 0; i < 10; i++) {
-            if(ClientMagicData.get() > i) {
-                guiGraphics.blit(FILLED_MAGIC, x + 9 + (i * 8), y -48, 0, 0, 9, 9,
-                        9, 9);
-            } else {
-                break;
+        Player player = Minecraft.getInstance().player;
+        player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+            for(int i = 0; i < 10; i++) {
+                if(magic.getMagic() > i) {
+                    guiGraphics.blit(FILLED_MAGIC, x + 9 + (i * 8), y -48, 0, 0, 9, 9,
+                            9, 9);
+                } else {
+                    break;
+                }
             }
-        }
+        });
     });
 }
 

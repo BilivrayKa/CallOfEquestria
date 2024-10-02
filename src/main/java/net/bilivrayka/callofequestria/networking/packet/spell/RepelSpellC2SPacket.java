@@ -7,6 +7,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.entity.ChunkEntities;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
@@ -26,25 +30,38 @@ public class RepelSpellC2SPacket {
         return new RepelSpellC2SPacket();
     }
 
-    public static void handle(RepelSpellC2SPacket msg, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            ServerPlayer player = ctx.get().getSender();
+    public static void handle(RepelSpellC2SPacket msg, Supplier<NetworkEvent.Context> context) {
+        context.get().enqueueWork(() -> {
+            ServerPlayer player = context.get().getSender();
             if (player != null) {
                 castRepelSpell(player, 5.0, 2.0);
             }
         });
-        ctx.get().setPacketHandled(true);
+        context.get().setPacketHandled(true);
     }
 
     private static void castRepelSpell(ServerPlayer player, double radius, double force) {
         AABB area = new AABB(player.blockPosition()).inflate(radius);
         player.level().getEntitiesOfClass(LivingEntity.class, area).forEach(entity -> {
-            Vec3 entityPosition = entity.position();
-            Vec3 direction = entityPosition.subtract(player.position().x,player.position().y - 2,player.position().z).normalize();
-            //Vec3 forceVector = direction.multiply();
-            entity.setDeltaMovement(direction);
+            if(!(entity instanceof Player) || !entity.getUUID().equals(player.getUUID())) {
+                Vec3 entityPosition = entity.position();
+                Vec3 direction = entityPosition.subtract(player.position().x,player.position().y - 2,player.position().z).normalize();
+                entity.setDeltaMovement(direction);
+            }
         });
-        player.level().playSound(null, player.getOnPos(), SoundEvents.WITHER_BREAK_BLOCK, SoundSource.PLAYERS,1,1);
-        player.level().addParticle(ParticleTypes.EXPLOSION,1,1,1,1,1,1);
+        player.level().getEntitiesOfClass(Projectile.class, area).forEach(entity -> {
+            Vec3 entityPosition = entity.position();
+            Vec3 direction = entityPosition.subtract(player.position().x, player.getEyeY(), player.position().z).normalize();
+            Vec3 playerLook = player.getLookAngle();
+            if (entity instanceof Arrow) {
+                entity.shoot(playerLook.x, playerLook.y, playerLook.z, 2, 0);
+            } else {
+                entity.setDeltaMovement(playerLook.scale(2));
+            }
+        });
+        player.level().playSound(null, player.getOnPos(), SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS,1,1);
+        player.serverLevel().sendParticles(ParticleTypes.EXPLOSION,
+                player.position().x, player.position().y, player.position().z,
+                10,0.1,0.1,0.1,0.1);
     }
 }

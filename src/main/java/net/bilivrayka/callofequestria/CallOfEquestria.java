@@ -3,6 +3,10 @@ package net.bilivrayka.callofequestria;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
+import net.bilivrayka.callofequestria.entity.ModEntities;
+import net.bilivrayka.callofequestria.entity.custom.FloatingBlockEntity;
+import net.bilivrayka.callofequestria.entity.custom.FloatingBlockRenderer;
+import net.bilivrayka.callofequestria.entity.custom.MagicProjectileRenderer;
 import net.bilivrayka.callofequestria.fluid.ModFluidTypes;
 import net.bilivrayka.callofequestria.fluid.ModFluids;
 import net.bilivrayka.callofequestria.item.ModCreativeModTabs;
@@ -11,6 +15,9 @@ import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.sound.ModSounds;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.ArrowRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -40,6 +47,7 @@ public class CallOfEquestria {
         PlushReg.register(modEventBus);
         ModFluids.register(modEventBus);
         ModFluidTypes.register(modEventBus);
+        ModEntities.register(modEventBus);
 
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -72,6 +80,11 @@ public class CallOfEquestria {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.APPLE_BLOCK.get(), RenderType.cutoutMipped());
             ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_APPLE_JUICE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_APPLE_JUICE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MAGIC_PROJECTILE.get(), RenderType.translucent());
+
+            EntityRenderers.register(ModEntities.MAGIC_PROJECTILE.get(), MagicProjectileRenderer::new);
+            EntityRenderers.register(ModEntities.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
+
             //MenuScreens.register(ModItems.RACE_CHOOSE_ITEM.get(), RaceChooseScreen::new);
         }
     }

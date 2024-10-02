@@ -4,6 +4,7 @@ import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.providers.ClientRacePacket;
 import net.bilivrayka.callofequestria.networking.packet.RaceC2SPacket;
+import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -86,7 +87,10 @@ public class RaceChooseScreen extends Screen {
 
     private void onCardSelected(int cardIndex) {
         ModMessages.sendToServer(new RaceC2SPacket(cardIndex));
-        ClientRacePacket.set(cardIndex);
+        //ClientRacePacket.set(cardIndex);
+        minecraft.player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(races -> {
+            races.setSelectedRace(cardIndex);
+        });
         this.onClose();
     }
 

@@ -1,9 +1,15 @@
 package net.bilivrayka.callofequestria.networking.packet.spell;
 
+import net.bilivrayka.callofequestria.entity.ModEntities;
+import net.bilivrayka.callofequestria.entity.custom.MagicProjectile;
+import net.bilivrayka.callofequestria.item.ModItems;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -35,15 +41,18 @@ public class MagicProjectileC2SPacket {
     // Обработка пакета на сервере
     public void handle(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            //ServerPlayer player = context.get().getSender();
+            ServerPlayer player = context.get().getSender();
             ServerLevel world = context.get().getSender().serverLevel();
 
-            // Создаём и запускаем снаряд на сервере
-            MagicProjectile projectile = new MagicProjectile(EntityType.ARROW, world);
-            projectile.setPos(position.x, position.y, position.z);
-            projectile.setDeltaMovement(direction.normalize().scale(1.5));
-
+            MagicProjectile projectile = new MagicProjectile(ModEntities.MAGIC_PROJECTILE.get(), world);
+            projectile.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
+            Vec3 lookVec = player.getLookAngle();
+            projectile.shoot(lookVec.x, lookVec.y, lookVec.z, 3F, 0.1F);
             world.addFreshEntity(projectile);
+            player.level().playSound(null, player.getOnPos(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS,1,1);
+            world.sendParticles(ParticleTypes.WITCH,
+                    projectile.getX(), projectile.getY() - 0.5f, projectile.getZ(),
+                    10, 0.1f, 0.1f, 0.1f, 0.1f);
         });
         context.get().setPacketHandled(true);
     }

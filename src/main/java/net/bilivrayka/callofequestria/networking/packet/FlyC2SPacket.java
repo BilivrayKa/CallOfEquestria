@@ -22,6 +22,7 @@ public class FlyC2SPacket {
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeBoolean(isFly);
     }
+
     public boolean getIsFly() {
         return isFly;
     }

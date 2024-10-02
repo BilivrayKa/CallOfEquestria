@@ -7,6 +7,7 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class MagicSyncS2CPacket {
+
     private final int magic;
 
     public MagicSyncS2CPacket(int magic) {
@@ -20,11 +21,14 @@ public class MagicSyncS2CPacket {
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeInt(magic);
     }
+    public int getMagic() {
+        return magic;
+    }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            ClientMagicData.set(magic);
+            //ClientMagicData.set(getMagic());
         });
         return true;
     }

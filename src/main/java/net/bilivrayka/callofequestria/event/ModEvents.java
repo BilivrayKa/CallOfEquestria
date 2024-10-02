@@ -2,12 +2,8 @@ package net.bilivrayka.callofequestria.event;
 
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.providers.ClientRacePacket;
+import net.bilivrayka.callofequestria.providers.*;
 import net.bilivrayka.callofequestria.gui.ClientRenderHotbar;
-import net.bilivrayka.callofequestria.providers.PlayerMagic;
-import net.bilivrayka.callofequestria.providers.PlayerMagicProvider;
-import net.bilivrayka.callofequestria.providers.PlayerRaceData;
-import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
 import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.networking.packet.AdvancementC2SPacket;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +14,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -70,6 +67,14 @@ public class ModEvents {
         player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
             race = data.getSelectedRace();
         });
+        /*
+        if(BlockGrabData.get()){
+            Vec3 playerLook = player.getLookAngle();
+            Vec3 targetPosition = player.position().add(playerLook.x * 3, player.getEyeY() - 1, playerLook.z * 3);
+            BlockGrabData.getFallingBlockEntity().setPos(targetPosition.x, targetPosition.y, targetPosition.z);
+        }
+
+         */
 /*
         if (event.side == LogicalSide.SERVER && !event.player.isCreative()) {
             event.player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
@@ -157,7 +162,11 @@ public class ModEvents {
                 data.saveNBTData(nbt);
                 player.getPersistentData().put(CallOfEquestria.MOD_ID, nbt);
             });
-
+            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(data -> {
+                CompoundTag nbt = new CompoundTag();
+                data.saveNBTData(nbt);
+                player.getPersistentData().put(CallOfEquestria.MOD_ID, nbt);
+            });
         }
     }
     @SubscribeEvent
@@ -169,33 +178,12 @@ public class ModEvents {
                 CompoundTag nbt = player.getPersistentData().getCompound(CallOfEquestria.MOD_ID);
                 data.loadNBTData(nbt);
                 ClientRacePacket.set(data.getSelectedRace());
-                //int selectedRace = data.getSelectedRace();
-                //onPlayerLoggedInClient(selectedRace);
-                //ModMessagesClient.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new ClientRacePacket(selectedRace));
+            });
+            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(data -> {
+                CompoundTag nbt = player.getPersistentData().getCompound(CallOfEquestria.MOD_ID);
+                data.loadNBTData(nbt);
             });
         }
     }
-
-/*
-    @OnlyIn(Dist.CLIENT)
-    public static void onPlayerLoggedInClient(int race) {
-        if(race <= 0){
-            //Minecraft.getInstance().execute(() -> {
-                System.out.println("PlayerLoggedInEvent triggered on client!");
-                Minecraft.getInstance().setScreen(new RaceChooseScreen());
-            //});
-        }
-    }
-
- */
-  /*
-    public static void onPlayerFirstRaceChoose(PlayerEvent.PlayerLoggedInEvent event) {
-        if(event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer){
-
-            //ServerPlayer player = (ServerPlayer) event.getEntity();
-            //ModMessages.sendToPlayer(new GUIRaceS2CPacket(), player);
-        }
-     }
-   */
 
 }

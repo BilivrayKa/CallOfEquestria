@@ -41,6 +41,9 @@ public class ModBlocks {
 
      */
 
+    public static final RegistryObject<Block> MAGIC_PROJECTILE = registerBlock("magic_projectile",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.AIR).noOcclusion()));
+
     //TODO
     //Fluids&Blocks from another apple types
     public static final RegistryObject<Block> APPLE_BLOCK = registerBlock("apple_block",

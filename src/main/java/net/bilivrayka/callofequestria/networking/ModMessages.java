@@ -2,6 +2,8 @@ package net.bilivrayka.callofequestria.networking;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.networking.packet.*;
+import net.bilivrayka.callofequestria.networking.packet.spell.BlinkSpellC2SPacket;
+import net.bilivrayka.callofequestria.networking.packet.spell.BlockGrabC2SPacket;
 import net.bilivrayka.callofequestria.networking.packet.spell.MagicProjectileC2SPacket;
 import net.bilivrayka.callofequestria.networking.packet.spell.RepelSpellC2SPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -63,10 +65,20 @@ public class ModMessages {
                 .encoder(RepelSpellC2SPacket::encode)
                 .consumerMainThread(RepelSpellC2SPacket::handle)
                 .add();
+        net.messageBuilder(BlinkSpellC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(BlinkSpellC2SPacket::decode)
+                .encoder(BlinkSpellC2SPacket::encode)
+                .consumerMainThread(BlinkSpellC2SPacket::handle)
+                .add();
         net.messageBuilder(MagicProjectileC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(MagicProjectileC2SPacket::new)
                 .encoder(MagicProjectileC2SPacket::toBytes)
                 .consumerMainThread(MagicProjectileC2SPacket::handle)
+                .add();
+        net.messageBuilder(BlockGrabC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(BlockGrabC2SPacket::decode)
+                .encoder(BlockGrabC2SPacket::encode)
+                .consumerMainThread(BlockGrabC2SPacket::handle)
                 .add();
         /*
         net.messageBuilder(GUIRaceS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)

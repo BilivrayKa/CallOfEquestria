@@ -1,5 +1,10 @@
 package net.bilivrayka.callofequestria.networking.packet.spell;
 
+import net.bilivrayka.callofequestria.networking.ModMessages;
+import net.bilivrayka.callofequestria.networking.packet.MagicSyncS2CPacket;
+import net.bilivrayka.callofequestria.providers.PlayerMagicProvider;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.FriendlyByteBuf;
@@ -53,6 +58,9 @@ public class BlinkSpellC2SPacket {
                 && !player.level().isEmptyBlock(targetPos.below()) && player.onGround()) {
             player.teleportTo(targetPos.getX(), targetPos.getY(), targetPos.getZ());
             player.level().playSound(null, player.getOnPos(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS,1,1);
+            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                ModMessages.sendToPlayer(new MagicSyncS2CPacket(3,100,1), player);
+            });
         }
     }
 }

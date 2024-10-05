@@ -2,14 +2,12 @@ package net.bilivrayka.callofequestria.providers;
 
 import net.bilivrayka.callofequestria.entity.custom.BlockUtils;
 import net.bilivrayka.callofequestria.entity.custom.FloatingBlockEntity;
-import net.minecraft.BlockUtil;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.UUID;
 
 
 public class PlayerMagic {
@@ -17,6 +15,7 @@ public class PlayerMagic {
     private int[] cooldowns = new int[9];
     private BlockState magicGrabbedBlockState;
     private FloatingBlockEntity floatingBlockEntity;
+    private CompoundTag savedBlockGrabbedInventory;
     private boolean isBlockGrabbed = false;
     private final int MIN_MAGIC = 0;
     private final int MAX_MAGIC = 10;
@@ -32,6 +31,9 @@ public class PlayerMagic {
     }
     public FloatingBlockEntity getFloatingBlockEntity() {
         return floatingBlockEntity;
+    }
+    public CompoundTag getSavedBlockGrabbedInventory() {
+        return savedBlockGrabbedInventory;
     }
     public boolean isBlockGrabbed(){
         return isBlockGrabbed;
@@ -54,6 +56,9 @@ public class PlayerMagic {
     public void setFloatingBlockEntity(FloatingBlockEntity floatingBlockEntity){
         this.floatingBlockEntity = floatingBlockEntity;
     }
+    public void saveBlockGrabbedInventory(CompoundTag savedBlockGrabbedInventory){
+        this.savedBlockGrabbedInventory = savedBlockGrabbedInventory;
+    }
     public void doCooldowns() {
         for (int i = 0; i < this.cooldowns.length; i++) {
             if (this.cooldowns[i] > 0) {
@@ -68,13 +73,23 @@ public class PlayerMagic {
         this.cooldowns = source.cooldowns;
         this.isBlockGrabbed = source.isBlockGrabbed;
         this.floatingBlockEntity = source.floatingBlockEntity;
+        this.savedBlockGrabbedInventory = source.savedBlockGrabbedInventory;
     }
 
     public void saveNBTData(CompoundTag nbt) {
         nbt.putInt("magic", magic);
-        nbt.putString("blockState", magicGrabbedBlockState.getBlock().builtInRegistryHolder().key().location().toString());
+        if(magicGrabbedBlockState != null){nbt.putString("blockState", magicGrabbedBlockState.getBlock().builtInRegistryHolder().key().location().toString());}
         nbt.putIntArray("cooldowns", cooldowns);
         nbt.putBoolean("grabbed", isBlockGrabbed);
+        /*
+        if(floatingBlockEntity != null){
+            nbt.putString("floatingBlockEntity", floatingBlockEntity.getStringUUID());
+        }
+
+         */
+        if(savedBlockGrabbedInventory != null){
+            nbt.put("savedBlockGrabbedInventory", savedBlockGrabbedInventory);
+        }
     }
 
     public void loadNBTData(CompoundTag nbt) {
@@ -82,6 +97,8 @@ public class PlayerMagic {
         magicGrabbedBlockState = BlockUtils.getBlockStateFromString(nbt.getString("blockState"));
         cooldowns = nbt.getIntArray("cooldowns");
         isBlockGrabbed = nbt.getBoolean("grabbed");
+        //floatingBlockEntity = nbt.getString("floatingBlockEntity");
+        savedBlockGrabbedInventory = nbt.getCompound("savedBlockGrabbedInventory");
     }
 
 }

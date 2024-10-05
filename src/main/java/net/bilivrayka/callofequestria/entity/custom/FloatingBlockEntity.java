@@ -13,6 +13,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -24,27 +25,27 @@ import java.util.UUID;
 
 public class FloatingBlockEntity extends Entity {
 
-    public static final Logger LOGGER = LogUtils.getLogger();
-    private BlockState blockState;
-    private BlockState savedBlockState;
-    private UUID ownerUUID;
-    private ServerPlayer player;
     private static final EntityDataAccessor<String> PLAYER = SynchedEntityData.defineId(FloatingBlockEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<String> BLOCKSTATE = SynchedEntityData.defineId(FloatingBlockEntity.class, EntityDataSerializers.STRING);
-    private Set<String> tags = new HashSet<>();
+    //private static final EntityDataAccessor<CompoundTag> SAVED_INVENTORY = SynchedEntityData.defineId(FloatingBlockEntity.class, EntityDataSerializers.COMPOUND_TAG);
+    private ServerPlayer player;
+    //private CompoundTag savedInventoryTag;
 
     public FloatingBlockEntity(EntityType<?> entityType, Level world) {
         super(entityType, world);
-        //this.addTag(blockState.getBlock().builtInRegistryHolder().key().location().toString());
     }
 
     public FloatingBlockEntity(Level world, BlockPos pos, BlockState blockState, ServerPlayer player) {
         this(ModEntities.FLOATING_BLOCK.get(), world);
-        this.blockState = blockState;
-        this.ownerUUID = player.getUUID();
+        /*
+        if(savedInventory != null){
+            setInventory(savedInventory);
+        }
+
+         */
+        //this.savedInventoryTag = savedInventory;
         setOwnerUUID(player.getUUID().toString());
         setBlockState(blockState.getBlock().builtInRegistryHolder().key().location().toString());
-
         this.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
     }
 
@@ -57,17 +58,22 @@ public class FloatingBlockEntity extends Entity {
             player = this.getServer().getPlayerList().getPlayer(uuid);
         }
         if (player == null) {
-        } else {
-            Vec3 lookDirection = player.getLookAngle();
-
-            double distance = 3.0;
-            Vec3 playerEyePosition = player.getEyePosition(1.0F);
-            Vec3 targetPosition = playerEyePosition.add(lookDirection.scale(distance));
-
-            Vec3 currentPosition = this.position();
-            Vec3 moveVector = targetPosition.subtract(currentPosition).scale(0.1);
-            this.setPos(currentPosition.add(moveVector));
+            return;
         }
+        Vec3 lookDirection = player.getLookAngle();
+        double distance = 3.0;
+        Vec3 playerEyePosition = player.getEyePosition(1.0F);
+        Vec3 targetPosition = playerEyePosition.add(lookDirection.scale(distance));
+        Vec3 currentPosition = this.position();
+        Vec3 moveVector = targetPosition.subtract(currentPosition);
+        double maxSpeed = 0.75;
+        double smoothFactor = 0.05;
+        Vec3 interpolatedMove = moveVector.scale(smoothFactor);
+        if (interpolatedMove.length() > maxSpeed) {
+            interpolatedMove = interpolatedMove.normalize().scale(maxSpeed);
+        }
+        this.setDeltaMovement(interpolatedMove);
+        this.move(MoverType.PLAYER, this.getDeltaMovement());
     }
 
     public String ownerUUID() {
@@ -85,6 +91,20 @@ public class FloatingBlockEntity extends Entity {
     public void setBlockState(String blockState) {
         this.entityData.set(BLOCKSTATE, blockState);
     }
+/*
+    public CompoundTag savedInventory() {
+        return this.entityData.get(SAVED_INVENTORY);
+    }
+
+    public void setInventory(CompoundTag savedInventory) {
+        this.entityData.set(SAVED_INVENTORY, savedInventory);
+    }
+
+    public CompoundTag getSavedInventoryTag() {
+        return savedInventory();
+    }
+
+ */
 
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
@@ -94,11 +114,18 @@ public class FloatingBlockEntity extends Entity {
         if (tag.contains("BlockState")) {
             setBlockState(tag.getString("BlockState"));
         }
+        /*
+        if (tag.contains("SavedInventory")) {
+            this.savedInventoryTag = tag.getCompound("SavedInventory");
+        }
+
+         */
     }
     @Override
     protected void defineSynchedData() {
         this.entityData.define(PLAYER, "");
         this.entityData.define(BLOCKSTATE, "minecraft:sand");
+        //this.entityData.define(SAVED_INVENTORY, this.savedInventoryTag);
     }
 
 
@@ -106,6 +133,12 @@ public class FloatingBlockEntity extends Entity {
     protected void addAdditionalSaveData(CompoundTag tag) {
         tag.putString("OwnerUUID", this.ownerUUID());
         tag.putString("BlockState", this.blockState());
+        /*
+        if (this.savedInventoryTag != null) {
+            tag.put("SavedInventory", this.savedInventoryTag);
+        }
+
+         */
     }
 
     @Override

@@ -1,18 +1,22 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
+import com.mojang.logging.LogUtils;
+import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
 import net.bilivrayka.callofequestria.networking.ModMessages;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
+import org.slf4j.Logger;
 
 import java.util.function.Supplier;
 
 public class RaceC2SPacket {
-
+    public static final Logger LOGGER = LogUtils.getLogger();
     private final int cardIndex;
 
     public RaceC2SPacket(int cardIndex) {
@@ -30,7 +34,7 @@ public class RaceC2SPacket {
     public static boolean handle(RaceC2SPacket packet, Supplier<NetworkEvent.Context> context) {
         NetworkEvent.Context ctx = context.get();
         ctx.enqueueWork(() -> {
-            Player player = ctx.getSender();
+            ServerPlayer player = ctx.getSender();
             if (player != null) {
                 player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
                     data.setSelectedRace(packet.cardIndex);
@@ -65,21 +69,10 @@ public class RaceC2SPacket {
                         player.setHealth((float) player.getMaxHealth());
                     }
                     int selectedRace = data.getSelectedRace();
-                    ModMessages.sendToPlayer(new RaceSyncS2CPacket(selectedRace), (ServerPlayer) player);
-                    //Minecraft.getInstance().setScreen(null);
-                    /*
-                    Minecraft.getInstance().screen.onClose();
-                    Minecraft.getInstance().setScreen(null);
-
-                     */
-                    /*
-                    Minecraft.getInstance().mouseHandler.grabMouse();
-                    if (!Minecraft.getInstance().mouseHandler.isMouseGrabbed()) {
-                        Minecraft.getInstance().mouseHandler.grabMouse();  // Попробуйте захватить мышь ещё раз
-                    }
-
-                     */
-                    //Minecraft.getInstance().mouseHandler.grabMouse();
+                    CompoundTag nbt = new CompoundTag();
+                    data.saveNBTData(nbt);
+                    player.getPersistentData().put("server_player_race_data", nbt);
+                    ModMessages.sendToPlayer(new RaceSyncS2CPacket(selectedRace), player);
                 });
             }
         });

@@ -80,6 +80,16 @@ public class ModMessages {
                 .encoder(BlockGrabC2SPacket::encode)
                 .consumerMainThread(BlockGrabC2SPacket::handle)
                 .add();
+        net.messageBuilder(IsMagicHotbarActiveSyncC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(IsMagicHotbarActiveSyncC2SPacket::decode)
+                .encoder(IsMagicHotbarActiveSyncC2SPacket::encode)
+                .consumerMainThread(IsMagicHotbarActiveSyncC2SPacket::handle)
+                .add();
+        net.messageBuilder(GrabbedBlockOnDeathC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(GrabbedBlockOnDeathC2SPacket::new)
+                .encoder(GrabbedBlockOnDeathC2SPacket::toBytes)
+                .consumerMainThread(GrabbedBlockOnDeathC2SPacket::handle)
+                .add();
         /*
         net.messageBuilder(GUIRaceS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(GUIRaceS2CPacket::decode)
@@ -97,6 +107,16 @@ public class ModMessages {
                 .decoder(RaceSyncS2CPacket::new)
                 .encoder(RaceSyncS2CPacket::toBytes)
                 .consumerMainThread(RaceSyncS2CPacket::handle)
+                .add();
+        net.messageBuilder(MagicS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MagicS2CPacket::new)
+                .encoder(MagicS2CPacket::toBytes)
+                .consumerMainThread(MagicS2CPacket::handle)
+                .add();
+        net.messageBuilder(IsMagicHotbarActiveSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(IsMagicHotbarActiveSyncS2CPacket::new)
+                .encoder(IsMagicHotbarActiveSyncS2CPacket::toBytes)
+                .consumerMainThread(IsMagicHotbarActiveSyncS2CPacket::handle)
                 .add();
 
     }

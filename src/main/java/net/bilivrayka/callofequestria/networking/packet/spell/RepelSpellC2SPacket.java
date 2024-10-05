@@ -1,5 +1,7 @@
 package net.bilivrayka.callofequestria.networking.packet.spell;
 
+import com.mojang.logging.LogUtils;
+import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,13 +16,14 @@ import net.minecraft.world.level.entity.ChunkEntities;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
+import org.slf4j.Logger;
 
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.function.Supplier;
 
 public class RepelSpellC2SPacket {
-
+    public static final Logger LOGGER = LogUtils.getLogger();
     public RepelSpellC2SPacket() {}
 
     public static void encode(RepelSpellC2SPacket msg, FriendlyByteBuf buffer) {
@@ -43,10 +46,11 @@ public class RepelSpellC2SPacket {
     private static void castRepelSpell(ServerPlayer player, double radius, double force) {
         AABB area = new AABB(player.blockPosition()).inflate(radius);
         player.level().getEntitiesOfClass(LivingEntity.class, area).forEach(entity -> {
-            if(!(entity instanceof Player) || !entity.getUUID().equals(player.getUUID())) {
+            if(entity.getUUID() != player.getUUID()) {
                 Vec3 entityPosition = entity.position();
                 Vec3 direction = entityPosition.subtract(player.position().x,player.position().y - 2,player.position().z).normalize();
                 entity.setDeltaMovement(direction);
+                entity.hurtMarked = true;
             }
         });
         player.level().getEntitiesOfClass(Projectile.class, area).forEach(entity -> {

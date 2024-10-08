@@ -2,11 +2,11 @@ package net.bilivrayka.callofequestria.networking.packet.spell;
 
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.data.PlayerMagicDataProvider;
 import net.bilivrayka.callofequestria.entity.custom.FloatingBlockEntity;
-import net.bilivrayka.callofequestria.event.VillagerProfessionHandler;
+import net.bilivrayka.callofequestria.data.VillagerProfessionHandler;
 import net.bilivrayka.callofequestria.networking.ModMessages;
-import net.bilivrayka.callofequestria.networking.packet.MagicSyncS2CPacket;
-import net.bilivrayka.callofequestria.providers.PlayerMagicProvider;
+import net.bilivrayka.callofequestria.networking.packet.MagicSpellUsedS2CPacket;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -79,7 +79,7 @@ public class BlockGrabC2SPacket {
             isAir = blockState.isAir();
             isEmptyBlockRelative = player.level().isEmptyBlock(blockPos.relative(hitResult.getDirection()));
             isEmptyBlock = player.level().isEmptyBlock(blockPos);
-            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+            player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
                 savedBlockState = magic.getMagicGrabbedBlockState();
                 isMagicBlockGrabbed = magic.isBlockGrabbed();
             });
@@ -87,7 +87,7 @@ public class BlockGrabC2SPacket {
                 if (blockState.hasBlockEntity()) {
                     BlockEntity blockEntity = player.level().getBlockEntity(blockPos);
                     if (blockEntity instanceof Container container) {
-                        player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                        player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
                             inventoryTag = saveInventoryToNBT(container);
                             container.clearContent();
                             LOGGER.debug(inventoryTag.toString());
@@ -97,12 +97,12 @@ public class BlockGrabC2SPacket {
                 }
                 entity = new FloatingBlockEntity(world, blockPos, blockState, player);
                 onBreakingSomeVillagerLive(blockPos,blockState,world,player);
-                player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
                     magic.changeMagicGrabbedBlockState(blockState);
                     magic.setMagicGrabble(true);
                     magic.setFloatingBlockEntity(entity);
                 });
-                ModMessages.sendToPlayer(new MagicSyncS2CPacket(3,20,3), player);
+                ModMessages.sendToPlayer(new MagicSpellUsedS2CPacket(3,20,3), player);
                 world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
                 world.addFreshEntity(entity);
                 player.level().playSound(null, blockPos.relative(hitResult.getDirection()
@@ -112,24 +112,28 @@ public class BlockGrabC2SPacket {
                 if (player.level().getBlockState(blockPos.relative(hitResult.getDirection())).hasBlockEntity()) {
                     BlockEntity blockEntity = world.getBlockEntity(blockPos.relative(hitResult.getDirection()));
                     if (blockEntity instanceof Container container) {
-                        player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                        player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
                             CompoundTag savedInventoryTag = magic.getSavedBlockGrabbedInventory();
                             loadInventoryFromNBT(container, savedInventoryTag);
-                            LOGGER.debug(savedInventoryTag.toString());
                             magic.saveBlockGrabbedInventory(null);
                         });
                     }
                 }
-                player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
                     magic.setMagicGrabble(false);
                     magic.getFloatingBlockEntity().remove(Entity.RemovalReason.KILLED);
                     magic.setFloatingBlockEntity(null);
-                    ModMessages.sendToPlayer(new MagicSyncS2CPacket(3,20,3), player);
+                    ModMessages.sendToPlayer(new MagicSpellUsedS2CPacket(3,20,3), player);
                     BlockPos placeBlockPos = blockPos.relative(hitResult.getDirection());
                     player.level().playSound(null, blockPos.relative(hitResult.getDirection()
                     ), player.level().getBlockState(placeBlockPos).getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1);
                 });
             }
+            player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                CompoundTag nbt = new CompoundTag();
+                magic.saveNBTData(nbt);
+                player.getPersistentData().put("properties", nbt);
+            });
         });
         context.get().setPacketHandled(true);
     }

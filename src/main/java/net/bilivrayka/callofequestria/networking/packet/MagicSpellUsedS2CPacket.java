@@ -1,7 +1,6 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
-import net.bilivrayka.callofequestria.providers.ClientMagicData;
-import net.bilivrayka.callofequestria.providers.PlayerMagicProvider;
+import net.bilivrayka.callofequestria.data.PlayerMagicDataProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
@@ -9,19 +8,19 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MagicSyncS2CPacket {
+public class MagicSpellUsedS2CPacket {
 
     private final int magic;
     private final int cooldown;
     private final int slot;
 
-    public MagicSyncS2CPacket(int magic, int cooldown, int slot) {
+    public MagicSpellUsedS2CPacket(int magic, int cooldown, int slot) {
         this.magic = magic;
         this.cooldown = cooldown;
         this.slot = slot;
     }
 
-    public MagicSyncS2CPacket(FriendlyByteBuf buf) {
+    public MagicSpellUsedS2CPacket(FriendlyByteBuf buf) {
         this.magic = buf.readInt();
         this.cooldown = buf.readInt();
         this.slot = buf.readInt();
@@ -37,7 +36,7 @@ public class MagicSyncS2CPacket {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             LocalPlayer player = Minecraft.getInstance().player;
-            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(data -> {
+            player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(data -> {
                 data.subMagic(magic);
                 data.setCooldowns(slot,cooldown);
             });

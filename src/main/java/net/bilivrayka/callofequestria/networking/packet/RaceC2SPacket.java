@@ -1,15 +1,13 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
 import com.mojang.logging.LogUtils;
-import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
+import net.bilivrayka.callofequestria.data.PlayerRaceDataProvider;
 import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
 import org.slf4j.Logger;
 
@@ -44,11 +42,17 @@ public class RaceC2SPacket {
                     AttributeInstance attackDamageAttribute = player.getAttribute(Attributes.ATTACK_DAMAGE);
                     AttributeInstance speedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
                     switch (data.getSelectedRace()){
+                        case 0:
+                            maxHealthAttribute.setBaseValue((float) 20);
+                            armorAttribute.setBaseValue((float) 0);
+                            attackDamageAttribute.setBaseValue((float) 1);
+                            speedAttribute.setBaseValue((float) 0.1);
+                            break;
                         case 1:
                             maxHealthAttribute.setBaseValue((float) 20);
                             armorAttribute.setBaseValue((float) 2);
                             attackDamageAttribute.setBaseValue((float) 2);
-                            speedAttribute.setBaseValue((float) 0.15);
+                            speedAttribute.setBaseValue((float) 0.125);
                             break;
                         case 2:
                             maxHealthAttribute.setBaseValue((float) 16);

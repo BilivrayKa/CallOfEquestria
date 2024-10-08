@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -18,9 +19,10 @@ import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
 public class MagicProjectileRenderer extends EntityRenderer<MagicProjectile> {
-
+    private float tick;
     public MagicProjectileRenderer(EntityRendererProvider.Context context) {
         super(context);
+        this.tick = 40;
     }
 
     @Override
@@ -32,6 +34,13 @@ public class MagicProjectileRenderer extends EntityRenderer<MagicProjectile> {
         ItemStack itemStack = entity.getItem();
         Minecraft.getInstance().getItemRenderer().renderStatic(itemStack, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY , poseStack, bufferSource, entity.level(),0);
         poseStack.popPose();
+        tick -= 1;
+        if(tick <= 0){
+            entity.level().addParticle(ParticleTypes.WITCH,
+                    entity.position().x, entity.position().y + 0.5, entity.position().z,
+                    0.5,0.5,0.5);
+            tick = 10;
+        }
         super.render(entity, entityYaw, partialTicks, poseStack, bufferSource, packedLight);
     }
 

@@ -1,15 +1,13 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
 import com.mojang.logging.LogUtils;
-import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.providers.ClientRacePacket;
-import net.bilivrayka.callofequestria.providers.PlayerMagicProvider;
-import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
+import net.bilivrayka.callofequestria.data.PlayerRaceDataProvider;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraftforge.network.NetworkEvent;
 import org.slf4j.Logger;
 
@@ -40,18 +38,22 @@ public class RaceSyncS2CPacket {
                 CompoundTag nbt = new CompoundTag();
                 data.saveNBTData(nbt);
                 Minecraft.getInstance().player.getPersistentData().put("player_race_data", nbt);
-                LOGGER.debug("Local Race: " + data.getSelectedRace());
-            });
-            /*
-            context.getSender().getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data ->{
-                data.setSelectedRace(race);
-                CompoundTag nbt = new CompoundTag();
-                data.saveNBTData(nbt);
-                Minecraft.getInstance().player.getPersistentData().put(CallOfEquestria.MOD_ID, nbt);
-            });
+                if(data.getSelectedRace() == 3){
+                    Minecraft.getInstance().player.sendSystemMessage(
+                            Component.literal("Note: ")
+                                    .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF00)))
+                                    .append(Component.literal("You have Magic Mode! Press ")
+                                            .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFFFF))))
+                                    .append(Component.literal("V")
+                                            .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF00))))
+                                    .append(Component.literal("(By Default) ")
+                                            .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xCCCCCC))))
+                                    .append(Component.literal("To Toggle It ")
+                                            .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFFFF))))
+                    );
+                }
 
-             */
-            //ClientRacePacket.set(race);
+            });
         });
         return true;
     }

@@ -2,15 +2,13 @@ package net.bilivrayka.callofequestria.gui;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.networking.ModMessages;
-import net.bilivrayka.callofequestria.networking.packet.RaceSyncS2CPacket;
-import net.bilivrayka.callofequestria.providers.ClientRacePacket;
 import net.bilivrayka.callofequestria.networking.packet.RaceC2SPacket;
-import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 
 //@OnlyIn(Dist.CLIENT)
 public class RaceChooseScreen extends Screen {
@@ -88,6 +86,7 @@ public class RaceChooseScreen extends Screen {
     }
 
     private void onCardSelected(int cardIndex) {
+        Minecraft.getInstance().player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP,1f,1f);
         ModMessages.sendToServer(new RaceC2SPacket(cardIndex));
         this.onClose();
     }

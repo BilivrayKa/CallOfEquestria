@@ -2,32 +2,24 @@ package net.bilivrayka.callofequestria.event;
 
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.entity.custom.FloatingBlockEntity;
 import net.bilivrayka.callofequestria.networking.packet.*;
-import net.bilivrayka.callofequestria.providers.*;
-import net.bilivrayka.callofequestria.gui.ClientRenderHotbar;
+import net.bilivrayka.callofequestria.data.*;
 import net.bilivrayka.callofequestria.networking.ModMessages;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -52,8 +44,8 @@ public class ModEvents {
     @SubscribeEvent
     public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player) {
-            if (!event.getObject().getCapability(PlayerMagicProvider.PLAYER_MAGIC).isPresent()) {
-                event.addCapability(new ResourceLocation(CallOfEquestria.MOD_ID, "properties"), new PlayerMagicProvider());
+            if (!event.getObject().getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).isPresent()) {
+                event.addCapability(new ResourceLocation(CallOfEquestria.MOD_ID, "properties"), new PlayerMagicDataProvider());
 
             }
             if (!event.getObject().getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).isPresent()) {
@@ -86,7 +78,6 @@ public class ModEvents {
         if(event.getOriginal().level().isClientSide)
             return;
         if (event.isWasDeath()) {
-
             Player original = event.getOriginal();
             ServerPlayer player = (ServerPlayer) event.getEntity();
             original.reviveCaps();
@@ -94,48 +85,52 @@ public class ModEvents {
                 original.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(oldData -> {
                     event.getEntity().getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(newData -> {
                         newData.copyFrom(oldData);
-                        LOGGER.debug("Race: "+newData.getSelectedRace());
-                        //ModMessages.sendToServer(new RaceC2SPacket(newData.getSelectedRace()));
-                        ModMessages.sendToPlayer(new MagicS2CPacket(newData.getSelectedRace()),player);
+                        ModMessages.sendToPlayer(new RaceS2CPacket(newData.getSelectedRace()),player);
                     });
                 });
             }
-            original.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(oldData -> {
-                event.getEntity().getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(newData -> {
+            original.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(oldData -> {
+                event.getEntity().getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(newData -> {
                     newData.copyFrom(oldData);
-                    /*
-                    if(newData.getFloatingBlockEntity() != null){
-                        BlockPos blockPos = new BlockPos(player.getOnPos().getX(),player.getOnPos().getY()+1,player.getOnPos().getZ());
-                        player.level().setBlock(blockPos, newData.getMagicGrabbedBlockState(), 3);
-                        BlockEntity blockEntity = player.level().getBlockEntity(blockPos);
-                        if (blockEntity instanceof Container container) {
-                            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
-                                CompoundTag savedInventoryTag = magic.getSavedBlockGrabbedInventory();
-                                loadInventoryFromNBT(container, savedInventoryTag);
-                            });
-                        }
-                        newData.getFloatingBlockEntity().remove(Entity.RemovalReason.KILLED);
-                    }
-
-                     */
                     newData.setMagicGrabble(false);
-                    /*
-                    if(newData.getMagicGrabbedBlockState() != null){
-                        newData.getFloatingBlockEntity().remove(Entity.RemovalReason.KILLED);
-                    }
-
-                     */
-
                 });
             });
             original.invalidateCaps();
         }
     }
 
+    @SubscribeEvent
+    public static void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        ServerPlayer player = (ServerPlayer) event.getEntity();
+        player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
+            CompoundTag magicNBT = player.getPersistentData().getCompound("properties");
+            magic.loadNBTData(magicNBT);
+            player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(races -> {
+                CompoundTag raceNBT = player.getPersistentData().getCompound("server_player_race_data");
+                races.loadNBTData(raceNBT);
+                if(true){
+                    ModMessages.sendToPlayer(new IsMagicHotbarActiveSyncS2CPacket(races.getIsMagicHotbarActive()), player);
+                }
+                ModMessages.sendToPlayer(new RaceSyncS2CPacket(races.getSelectedRace()), player);
+            });
+            if(magic.getFloatingBlockEntity() != null){
+                magic.getFloatingBlockEntity().remove(Entity.RemovalReason.KILLED);
+                FloatingBlockEntity entity = new FloatingBlockEntity(player.level(), player.getOnPos(), magic.getMagicGrabbedBlockState(), player);
+                magic.setFloatingBlockEntity(entity);
+                player.level().addFreshEntity(entity);
+            }
+        });
+    }
+    @SubscribeEvent
+    public static void onEntityChangeDimension(EntityTravelToDimensionEvent event) {
+        if (event.getEntity() instanceof FloatingBlockEntity) {
+            event.setCanceled(true);
+        }
 
+    }
     @SubscribeEvent
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
-        event.register(PlayerMagic.class);
+        event.register(PlayerMagicData.class);
         event.register(PlayerRaceData.class);
     }
 
@@ -146,30 +141,19 @@ public class ModEvents {
             race = data.getSelectedRace();
         });
     }
-/*
-    @SubscribeEvent
-    public void onPlayerBreakBlock(BlockEvent.BreakEvent event){
-        Player player = event.getPlayer();
-        player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(races -> {
-            boolean isMagicHotbarActive = races.getIsMagicHotbarActive();
-            if(isMagicHotbarActive){
-                event.setCanceled(true);
-            }
-        });
-    }
 
-
- */
     @SubscribeEvent
     public static void onPlayerDamage(LivingDamageEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
         boolean isCollisionDamage = event.getSource().getMsgId().equals("flyIntoWall");
-        if (isCollisionDamage) {
-            ResourceLocation DERPY_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "derpy");
-            ModMessages.sendToServer(new AdvancementC2SPacket(DERPY_AD));
-        }
+        player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(races -> {
+            if (isCollisionDamage || races.getSelectedRace() == 2 && event.getSource().is(DamageTypes.FALL)) {
+                ResourceLocation DERPY_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "derpy");
+                ModMessages.sendToServer(new AdvancementC2SPacket(DERPY_AD));
+            }
+        });
     }
 
     @SubscribeEvent
@@ -203,18 +187,18 @@ public class ModEvents {
             ServerPlayer player = (ServerPlayer) event.getEntity();
             player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
                 data.setMagicHotbar(false);
-                ModMessages.sendToPlayer(new IsMagicHotbarActiveSyncS2CPacket(), player);
+                ModMessages.sendToPlayer(new IsMagicHotbarActiveSyncS2CPacket(false), player);
                 CompoundTag nbt = new CompoundTag();
                 data.saveNBTData(nbt);
                 player.getPersistentData().put("server_player_race_data", nbt);
             });
-            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(data -> {
+            player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(data -> {
                 if(data.getFloatingBlockEntity() != null){
                     BlockPos blockPos = new BlockPos(player.getOnPos().getX(),player.getOnPos().getY()+1,player.getOnPos().getZ());
                     player.level().setBlock(blockPos, data.getMagicGrabbedBlockState(), 3);
                     BlockEntity blockEntity = player.level().getBlockEntity(blockPos);
                     if (blockEntity instanceof Container container) {
-                        player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                        player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
                             CompoundTag savedInventoryTag = magic.getSavedBlockGrabbedInventory();
                             if(magic.getSavedBlockGrabbedInventory() != null){
                                 loadInventoryFromNBT(container, savedInventoryTag);
@@ -227,7 +211,7 @@ public class ModEvents {
                 data.setMagicGrabble(false);
                 CompoundTag nbt = new CompoundTag();
                 data.saveNBTData(nbt);
-                player.getPersistentData().put(CallOfEquestria.MOD_ID, nbt);
+                player.getPersistentData().put("properties", nbt);
             });
         }
     }
@@ -242,18 +226,16 @@ public class ModEvents {
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer) {
-
-            ClientRenderHotbar.set(false);
             ServerPlayer player = (ServerPlayer) event.getEntity();
 
             player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(data -> {
                 data.setMagicHotbar(false);
-                ModMessages.sendToPlayer(new IsMagicHotbarActiveSyncS2CPacket(), player);
+                ModMessages.sendToPlayer(new IsMagicHotbarActiveSyncS2CPacket(false), player);
                 CompoundTag nbt = player.getPersistentData().getCompound("server_player_race_data");
                 data.loadNBTData(nbt);
                 ModMessages.sendToPlayer(new RaceSyncS2CPacket(data.getSelectedRace()), player);
             });
-            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(data -> {
+            player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(data -> {
                 CompoundTag nbt = player.getPersistentData().getCompound(CallOfEquestria.MOD_ID);
                 data.loadNBTData(nbt);
             });

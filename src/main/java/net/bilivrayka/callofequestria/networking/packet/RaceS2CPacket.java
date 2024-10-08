@@ -6,14 +6,14 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MagicS2CPacket {
+public class RaceS2CPacket {
     private final int race;
 
-    public MagicS2CPacket(int race) {
+    public RaceS2CPacket(int race) {
         this.race = race;
     }
 
-    public MagicS2CPacket(FriendlyByteBuf buf) {
+    public RaceS2CPacket(FriendlyByteBuf buf) {
         this.race = buf.readInt();
     }
 

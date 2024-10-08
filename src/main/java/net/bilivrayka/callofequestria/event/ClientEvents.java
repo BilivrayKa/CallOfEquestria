@@ -1,65 +1,44 @@
 package net.bilivrayka.callofequestria.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.gui.*;
-import net.bilivrayka.callofequestria.item.ModItems;
 import net.bilivrayka.callofequestria.networking.packet.spell.BlinkSpellC2SPacket;
 import net.bilivrayka.callofequestria.networking.packet.spell.BlockGrabC2SPacket;
 import net.bilivrayka.callofequestria.networking.packet.spell.MagicProjectileC2SPacket;
-import net.bilivrayka.callofequestria.providers.*;
+import net.bilivrayka.callofequestria.data.*;
 import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.networking.packet.*;
 import net.bilivrayka.callofequestria.networking.packet.spell.RepelSpellC2SPacket;
 import net.bilivrayka.callofequestria.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
-import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeableLeatherItem;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -68,25 +47,23 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.Map;
-import java.util.jar.Attributes;
+import org.slf4j.Logger;
 
 public class ClientEvents {
     @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID, value = Dist.CLIENT)
     public static class ClientForgeEvents {
+        public static final Logger LOGGER = LogUtils.getLogger();
         private static boolean isMagicHotbarActive;
-        private static final MagicHotbarInventory magicHotbarInventory = new MagicHotbarInventory();
         private static final ResourceLocation MAGIC_HOTBAR_TEXTURE = new ResourceLocation(CallOfEquestria.MOD_ID, "textures/gui/hotbar/magic.png");
         private static final ResourceLocation SELECTED_MAGIC_SLOT_TEXTURE = new ResourceLocation(CallOfEquestria.MOD_ID, "textures/gui/hotbar/selected.png");
         private static final ResourceLocation MAGIC_GUI = new ResourceLocation(CallOfEquestria.MOD_ID, "textures/gui/magic.png");
-        //private static final long COOLDOWN_TIME_MS = 1000;
         private static final int[] magicCost = new int[9];
+        private static BlockPos previousLightPos = null;
         static {
             magicCost[0] = 1;
-            magicCost[1] = 0;
-            magicCost[2] = 2;
-            magicCost[3] = 0;
+            magicCost[1] = 5;
+            magicCost[2] = 5;
+            magicCost[3] = 3;
             magicCost[4] = 1;
             magicCost[5] = 1;
             magicCost[6] = 1;
@@ -105,6 +82,9 @@ public class ClientEvents {
             }
 
              */
+            if(event.getKey() == 8){
+
+            }
         }
 
         @SubscribeEvent
@@ -116,13 +96,14 @@ public class ClientEvents {
                 });
             }
             if (KeyBinding.MAGIC_KEY.consumeClick()) {
-                Minecraft.getInstance().player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(races ->{
-                    if(races.getSelectedRace() == 3){
-                        races.toogleMagicHotbar();
-                        //isMagicHotbarActive = races.getIsMagicHotbarActive();
-                        Minecraft.getInstance().player.playSound(SoundEvents.ALLAY_THROW,1,1);
-                        //ModMessages.sendToServer(new IsMagicHotbarActiveSyncC2SPacket());
-                    }
+                Minecraft.getInstance().player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic ->{
+                    Minecraft.getInstance().player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(races ->{
+                        if(races.getSelectedRace() == 3 && magic.getMagic() >= 1){
+                            magic.subMagic(1);
+                            races.toogleMagicHotbar();
+                            Minecraft.getInstance().player.playSound(SoundEvents.ALLAY_THROW,1,1);
+                        }
+                    });
                 });
             }
         }
@@ -161,53 +142,63 @@ public class ClientEvents {
             player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(races -> {
                 race = races.getSelectedRace();
             });
-            /*
-            float tick = 1f;
+
+            float tick;
+            float constantTick = 0.005f;
             if (Minecraft.getInstance().isSameThread()) {
                 tick = player.getRandom().nextFloat();
+            } else {
+                tick = 1f;
             }
-             */
-            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
-                if (magic.getMagic() < 10 && player.getRandom().nextFloat() < 0.035f && player.onGround()) {
-                    magic.addMagic(1);
-                    //ClientMagicData.set(magic.getMagic());
+            player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                if(player.onGround()){
+                    if (magic.getMagic() < 10 && tick < 0.001f) {
+                        magic.addMagic(1);
+                    }
+                    magic.addMagic(constantTick);
+                } else {
+                    magic.addMagic(constantTick/3);
                 }
                 magic.doCooldowns();
-            });
-            if (!player.isCreative() && race == 2 && Minecraft.getInstance().getConnection() != null) {
-                player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
-                    if (magic.getMagic() <= 10 && player.getRandom().nextFloat() < 0.035f && player.onGround()) {
+                if (!player.isCreative() && race == 2 && Minecraft.getInstance().getConnection() != null) {
+                    if (magic.getMagic() == 10) {
                         ModMessages.sendToServer(new FlyC2SPacket(true));
                     }
-                    if (player.getAbilities().flying && player.getRandom().nextFloat() < 0.002f) {
+                    if (player.getAbilities().flying && player.getRandom().nextFloat() < 0.005f) {
                         magic.subMagic(1);
-                        //ClientMagicData.set(magic.getMagic());
                     }
-                    if (magic.getMagic() <= 0) {
+                    if (magic.getMagic() <= 0.9f) {
                         ModMessages.sendToServer(new FlyC2SPacket(false));
                     }
-                });
-            }
-            if (!player.isCreative() && race != 2 && Minecraft.getInstance().getConnection() != null) {
-                ModMessages.sendToServer(new FlyC2SPacket(false));
-            }
+                }
+                if(magic.isDynamicLight()){
+                    BlockPos lightPos = player.blockPosition().above();
+                    int lightLevel = 15;
+                    updateClientLight(player.clientLevel, lightPos, lightLevel, magic.isDynamicLight());
+                }else if(!magic.isDynamicLight() && previousLightPos != null){
+                    player.clientLevel.setBlock(previousLightPos, Blocks.AIR.defaultBlockState(), 3);
+                    previousLightPos = null;
+                }
+
+            });
+
             if (player.getAbilities().flying && !player.isCreative() && race == 2) {
                 Vec3 lookDirection = player.getLookAngle();
                 Vec3 horizontalDirection = lookDirection.cross(new Vec3(0, 1, 0)).normalize();
 
                 if (KeyBinding.FLY_TOWARDS_KEY.isDown()) {
-                    player.setDeltaMovement(player.getDeltaMovement().add(lookDirection.scale(0.025).x,
-                            lookDirection.scale(0.10).y, lookDirection.scale(0.025).z));
+                    player.setDeltaMovement(player.getDeltaMovement().add(lookDirection.scale(0.010).x,
+                            lookDirection.scale(0.030).y, lookDirection.scale(0.010).z));
                 } else if (KeyBinding.FLY_BACKWARDS_KEY.isDown()) {
-                    player.setDeltaMovement(player.getDeltaMovement().add(lookDirection.scale(-0.025).x,
-                            lookDirection.scale(-0.10).y, lookDirection.scale(-0.025).z));
+                    player.setDeltaMovement(player.getDeltaMovement().add(lookDirection.scale(-0.010).x,
+                            lookDirection.scale(-0.030).y, lookDirection.scale(-0.010).z));
                 }
                 if (KeyBinding.FLY_LEFT_KEY.isDown()) {
-                    player.setDeltaMovement(player.getDeltaMovement().add(horizontalDirection.scale(-0.025).x,
-                            0, horizontalDirection.scale(-0.025).z));
+                    player.setDeltaMovement(player.getDeltaMovement().add(horizontalDirection.scale(-0.010).x,
+                            0, horizontalDirection.scale(-0.010).z));
                 } else if (KeyBinding.FLY_RIGHT_KEY.isDown()) {
-                    player.setDeltaMovement(player.getDeltaMovement().add(horizontalDirection.scale(0.025).x,
-                            0, horizontalDirection.scale(0.025).z));
+                    player.setDeltaMovement(player.getDeltaMovement().add(horizontalDirection.scale(0.010).x,
+                            0, horizontalDirection.scale(0.010).z));
                 }
             }
             if (player.getAbilities().flying && !player.isCreative() && race == 2) {
@@ -225,6 +216,18 @@ public class ClientEvents {
                 if (solidBlocks == 0) {
                     player.setDeltaMovement(player.getDeltaMovement().x, -0.25, player.getDeltaMovement().z);
                 }
+            }
+        }
+
+        private static void updateClientLight(Level level, BlockPos pos, int lightLevel, boolean isDynamicLight) {
+            if (previousLightPos != null && !previousLightPos.equals(pos)) {
+                level.setBlock(previousLightPos, Blocks.AIR.defaultBlockState(), 3);
+                previousLightPos = null;
+            }
+
+            if (level.getBrightness(LightLayer.BLOCK, pos) < lightLevel && level.getBlockState(pos).is(Blocks.AIR)) {
+                level.setBlock(pos, Blocks.LIGHT.defaultBlockState().setValue(BlockStateProperties.LEVEL, lightLevel), 3);
+                previousLightPos = pos;
             }
         }
 
@@ -246,11 +249,17 @@ public class ClientEvents {
                 guiGraphics.blit(MAGIC_HOTBAR_TEXTURE, hotbarX, hotbarY, 0, 0, hotbarWidth, hotbarHeight, hotbarWidth, hotbarHeight);
 
                 int selectedSlot = instance.player.getInventory().selected;
+                switch (selectedSlot) {
+                    case 5,6,7,8:
+                        instance.player.getInventory().selected = 0;
+                        break;
+                }
                 int slotSize = 20;
-                int slotX = hotbarX + 1 + selectedSlot * (slotSize);
+                if(selectedSlot <= 4){
+                    int slotX = hotbarX + 40 + 1 + selectedSlot * (slotSize);
+                    guiGraphics.blit(SELECTED_MAGIC_SLOT_TEXTURE, slotX, hotbarY + 1, 0, 0, slotSize, slotSize, slotSize, slotSize);
 
-                guiGraphics.blit(SELECTED_MAGIC_SLOT_TEXTURE, slotX, hotbarY + 1, 0, 0, slotSize, slotSize, slotSize, slotSize);
-
+                }
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
                 RenderSystem.setShaderColor(1F, 1F, 1.0F, 0.85F);
@@ -265,8 +274,8 @@ public class ClientEvents {
         public static void onRenderTick(TickEvent.RenderTickEvent event) {
             Minecraft instance = Minecraft.getInstance();
             if (event.phase == TickEvent.Phase.END && instance.player != null) {
-                instance.player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic ->{
-                    if(magic.getMagic() >= 3){
+                instance.player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic ->{
+                    if(magic.getMagic() >= 1){
                         instance.player.getCapability(PlayerRaceDataProvider.PLAYER_RACE_DATA).ifPresent(races -> {
                             int race = races.getSelectedRace();
                             if (race == 0 && !(instance.screen instanceof RaceChooseScreen)) {
@@ -289,6 +298,7 @@ public class ClientEvents {
 
                 if (player != null) {
                     event.setCanceled(true);
+                    /*
                     PoseStack poseStack = event.getPoseStack();
                     poseStack.pushPose();
                     poseStack.translate(0D, 0D, -0.4D);
@@ -299,7 +309,7 @@ public class ClientEvents {
                     ItemRenderer itemRenderer = instance.getItemRenderer();
                     ItemStack itemStack = new ItemStack(ModBlocks.MAGIC_PROJECTILE.get().asItem());
                     BakedModel bakedModel = itemRenderer.getModel(itemStack, instance.level, player, 0);
-                    /*
+
                     itemRenderer.renderStatic(new ItemStack(Items.DIAMOND_SWORD), ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, event.getPackedLight(),
                             OverlayTexture.NO_OVERLAY, poseStack, bufferSource, instance.level, 0);
 
@@ -323,46 +333,33 @@ public class ClientEvents {
         }
 
         public static void castSpell(Player player) {
-            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+            player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
                 int selectedSlot = player.getInventory().selected;
                 if (magic.getCooldowns(selectedSlot) <= 0 && magic.getMagic() >= magicCost[selectedSlot]) {
                     switch (selectedSlot) {
-                        case 0:
+                        case 0,5:
                             Vec3 position = player.position();
                             Vec3 direction = player.getLookAngle();
                             ModMessages.sendToServer(new MagicProjectileC2SPacket(position, direction));
-                            magic.setCooldowns(selectedSlot, 20);
                             break;
-                        case 1:
+                        case 1,6:
                             ModMessages.sendToServer(new BlinkSpellC2SPacket());
                             break;
-                        case 2:
+                        case 2,7:
                             ModMessages.sendToServer(new RepelSpellC2SPacket());
-                            magic.setCooldowns(selectedSlot, 20);
                             break;
-                        case 3:
+                        case 3,8:
                             ModMessages.sendToServer(new BlockGrabC2SPacket());
                             break;
                         case 4:
-
-                            break;
-                        case 5:
-                            //TODO
-                            break;
-                        case 6:
-
-                            break;
-                        case 7:
-
-                            break;
-                        case 8:
-
+                            magic.setDynamicLight(!magic.isDynamicLight());
+                            magic.setCooldowns(selectedSlot, 20);
+                            magic.subMagic(magicCost[selectedSlot]);
                             break;
                         default:
                             player.sendSystemMessage(Component.literal("Ты куда звонишь?"));
                     }
-                    magic.subMagic(magicCost[selectedSlot]);
-                    //ClientMagicData.set(magic.getMagic());
+                    player.inventoryMenu.broadcastChanges();
                 }
             });
         }
@@ -375,6 +372,19 @@ public class ClientEvents {
                 castSpell(player);
                 event.setCanceled(true);
             }
+        }
+        @SubscribeEvent
+        public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
+            Minecraft mc = Minecraft.getInstance();
+            LocalPlayer player = mc.player;
+            double scrollDelta = event.getScrollDelta();
+
+            if (scrollDelta > 0 && player.getInventory().selected == 0 && isMagicHotbarActive) {
+                player.getInventory().selected = 5;
+            } else if (scrollDelta < 0 && player.getInventory().selected == 4 && isMagicHotbarActive) {
+                player.getInventory().selected = 8;
+            }
+
         }
 
         @SubscribeEvent
@@ -429,20 +439,21 @@ public class ClientEvents {
         }
 
 
+
         @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
         public static class ClientModBusEvents {
             @SubscribeEvent
             public static void onKeyRegister(RegisterKeyMappingsEvent event) {
-                //event.register(KeyBinding.MAGIC_KEY);
-                event.register(KeyBinding.FLY_TOWARDS_KEY);
-                event.register(KeyBinding.FLY_BACKWARDS_KEY);
+                event.register(KeyBinding.MAGIC_KEY);
+                //event.register(KeyBinding.FLY_TOWARDS_KEY);
+                //event.register(KeyBinding.FLY_BACKWARDS_KEY);
             }
 
             @SubscribeEvent
             public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-                event.registerAboveAll("magic", MagicHudOverlay.HUD_GUI);
+                //event.registerAboveAll("magic", MagicHudOverlay.HUD_GUI);
+                event.registerBelowAll("magic", MagicHudOverlay.HUD_GUI);
             }
-
         }
     }
 }

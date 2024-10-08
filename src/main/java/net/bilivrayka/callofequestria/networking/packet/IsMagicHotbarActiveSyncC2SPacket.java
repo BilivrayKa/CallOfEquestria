@@ -1,9 +1,7 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
-import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
+import net.bilivrayka.callofequestria.data.PlayerRaceDataProvider;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;

@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
 import net.bilivrayka.callofequestria.entity.ModEntities;
-import net.bilivrayka.callofequestria.entity.custom.FloatingBlockEntity;
 import net.bilivrayka.callofequestria.entity.custom.FloatingBlockRenderer;
 import net.bilivrayka.callofequestria.entity.custom.MagicProjectileRenderer;
 import net.bilivrayka.callofequestria.fluid.ModFluidTypes;
@@ -15,9 +14,7 @@ import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.sound.ModSounds;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -49,12 +46,10 @@ public class CallOfEquestria {
         ModFluidTypes.register(modEventBus);
         ModEntities.register(modEventBus);
 
-
         MinecraftForge.EVENT_BUS.register(this);
         //MinecraftForge.EVENT_BUS.register(new ModEvents());
         //modEventBus.addListener(this::addCreative);
     }
-
     private void setup(final FMLCommonSetupEvent event) {
         // Common setup code
         event.enqueueWork(ModMessages::register);
@@ -73,6 +68,7 @@ public class CallOfEquestria {
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_MAUD_PIE.get(), RenderType.cutout());
@@ -87,5 +83,6 @@ public class CallOfEquestria {
 
             //MenuScreens.register(ModItems.RACE_CHOOSE_ITEM.get(), RaceChooseScreen::new);
         }
+
     }
 }

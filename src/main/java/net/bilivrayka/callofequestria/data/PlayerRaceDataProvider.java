@@ -1,4 +1,4 @@
-package net.bilivrayka.callofequestria.providers;
+package net.bilivrayka.callofequestria.data;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

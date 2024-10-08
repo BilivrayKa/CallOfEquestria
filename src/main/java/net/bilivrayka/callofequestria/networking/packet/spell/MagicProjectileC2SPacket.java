@@ -2,14 +2,14 @@ package net.bilivrayka.callofequestria.networking.packet.spell;
 
 import net.bilivrayka.callofequestria.entity.ModEntities;
 import net.bilivrayka.callofequestria.entity.custom.MagicProjectile;
-import net.bilivrayka.callofequestria.item.ModItems;
+import net.bilivrayka.callofequestria.networking.ModMessages;
+import net.bilivrayka.callofequestria.networking.packet.MagicSpellUsedS2CPacket;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -53,6 +53,7 @@ public class MagicProjectileC2SPacket {
             world.sendParticles(ParticleTypes.WITCH,
                     projectile.getX(), projectile.getY() - 0.5f, projectile.getZ(),
                     10, 0.1f, 0.1f, 0.1f, 0.1f);
+            ModMessages.sendToPlayer(new MagicSpellUsedS2CPacket(1,20,0), player);
         });
         context.get().setPacketHandled(true);
     }

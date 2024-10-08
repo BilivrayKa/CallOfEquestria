@@ -1,9 +1,7 @@
 package net.bilivrayka.callofequestria.networking.packet;
 
 import com.mojang.logging.LogUtils;
-import net.bilivrayka.callofequestria.networking.ModMessages;
-import net.bilivrayka.callofequestria.providers.PlayerMagicProvider;
-import net.bilivrayka.callofequestria.providers.PlayerRaceDataProvider;
+import net.bilivrayka.callofequestria.data.PlayerMagicDataProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -12,8 +10,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
@@ -39,7 +35,7 @@ public class GrabbedBlockOnDeathC2SPacket {
         NetworkEvent.Context ctx = context.get();
         ctx.enqueueWork(() -> {
             ServerPlayer player = ctx.getSender();
-            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
+            player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
                 if(magic.getFloatingBlockEntity() != null){
                     BlockPos blockPos = new BlockPos(player.getOnPos().getX(),player.getOnPos().getY()+1,player.getOnPos().getZ());
                     player.level().setBlock(blockPos, magic.getMagicGrabbedBlockState(), 3);

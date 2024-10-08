@@ -3,6 +3,7 @@ package net.bilivrayka.callofequestria.entity.custom;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.entity.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -37,13 +38,6 @@ public class FloatingBlockEntity extends Entity {
 
     public FloatingBlockEntity(Level world, BlockPos pos, BlockState blockState, ServerPlayer player) {
         this(ModEntities.FLOATING_BLOCK.get(), world);
-        /*
-        if(savedInventory != null){
-            setInventory(savedInventory);
-        }
-
-         */
-        //this.savedInventoryTag = savedInventory;
         setOwnerUUID(player.getUUID().toString());
         setBlockState(blockState.getBlock().builtInRegistryHolder().key().location().toString());
         this.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
@@ -74,6 +68,13 @@ public class FloatingBlockEntity extends Entity {
         }
         this.setDeltaMovement(interpolatedMove);
         this.move(MoverType.PLAYER, this.getDeltaMovement());
+        double maxDistance = player.distanceTo(this);
+        if (maxDistance > 20.0) {
+            this.teleportTo(player.getOnPos().getX(),player.getOnPos().getY(),player.getOnPos().getZ());
+        }
+        player.serverLevel().sendParticles(ParticleTypes.WITCH,
+                this.position().x, this.position().y + 0.5, this.position().z,
+                5,0.5,0.5,0.5,0.05);
     }
 
     public String ownerUUID() {

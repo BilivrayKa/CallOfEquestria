@@ -98,20 +98,20 @@ public class ModMessages {
                 .add();
 
          */
-        net.messageBuilder(MagicSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(MagicSyncS2CPacket::new)
-                .encoder(MagicSyncS2CPacket::toBytes)
-                .consumerMainThread(MagicSyncS2CPacket::handle)
+        net.messageBuilder(MagicSpellUsedS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MagicSpellUsedS2CPacket::new)
+                .encoder(MagicSpellUsedS2CPacket::toBytes)
+                .consumerMainThread(MagicSpellUsedS2CPacket::handle)
                 .add();
         net.messageBuilder(RaceSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(RaceSyncS2CPacket::new)
                 .encoder(RaceSyncS2CPacket::toBytes)
                 .consumerMainThread(RaceSyncS2CPacket::handle)
                 .add();
-        net.messageBuilder(MagicS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(MagicS2CPacket::new)
-                .encoder(MagicS2CPacket::toBytes)
-                .consumerMainThread(MagicS2CPacket::handle)
+        net.messageBuilder(RaceS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(RaceS2CPacket::new)
+                .encoder(RaceS2CPacket::toBytes)
+                .consumerMainThread(RaceS2CPacket::handle)
                 .add();
         net.messageBuilder(IsMagicHotbarActiveSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(IsMagicHotbarActiveSyncS2CPacket::new)

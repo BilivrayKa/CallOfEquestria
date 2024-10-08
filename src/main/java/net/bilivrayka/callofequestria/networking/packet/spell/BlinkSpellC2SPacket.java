@@ -1,14 +1,11 @@
 package net.bilivrayka.callofequestria.networking.packet.spell;
 
+import net.bilivrayka.callofequestria.data.PlayerMagicDataProvider;
 import net.bilivrayka.callofequestria.networking.ModMessages;
-import net.bilivrayka.callofequestria.networking.packet.MagicSyncS2CPacket;
-import net.bilivrayka.callofequestria.providers.PlayerMagicProvider;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
+import net.bilivrayka.callofequestria.networking.packet.MagicSpellUsedS2CPacket;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -56,10 +53,16 @@ public class BlinkSpellC2SPacket {
         }
         if (player.level().isEmptyBlock(targetPos) && player.level().isEmptyBlock(targetPos.above())
                 && !player.level().isEmptyBlock(targetPos.below()) && player.onGround()) {
-            player.teleportTo(targetPos.getX(), targetPos.getY(), targetPos.getZ());
+            player.serverLevel().sendParticles(ParticleTypes.PORTAL,
+                    player.getX(), player.getY() + 0.5f, player.getZ(),
+                    10, 0.1f, 0.1f, 0.1f, 0.1f);
+            player.teleportTo(targetPos.getX() + 0.5, targetPos.getY(), targetPos.getZ() + 0.5);
             player.level().playSound(null, player.getOnPos(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS,1,1);
-            player.getCapability(PlayerMagicProvider.PLAYER_MAGIC).ifPresent(magic -> {
-                ModMessages.sendToPlayer(new MagicSyncS2CPacket(3,100,1), player);
+            player.serverLevel().sendParticles(ParticleTypes.PORTAL,
+                    player.getX(), player.getY() + 0.5f, player.getZ(),
+                    10, 0.1f, 0.1f, 0.1f, 0.1f);
+            player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
+                ModMessages.sendToPlayer(new MagicSpellUsedS2CPacket(5,100,1), player);
             });
         }
     }

@@ -1,4 +1,4 @@
-package net.bilivrayka.callofequestria.magic;
+package net.bilivrayka.callofequestria.data;
 
 
 import net.minecraft.core.Direction;
@@ -12,15 +12,15 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PlayerMagicProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    public static Capability<PlayerMagic> PLAYER_MAGIC = CapabilityManager.get(new CapabilityToken<PlayerMagic>() { });
+public class PlayerMagicDataProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+    public static Capability<PlayerMagicData> PLAYER_MAGIC = CapabilityManager.get(new CapabilityToken<PlayerMagicData>() { });
 
-    private PlayerMagic magic = null;
-    private final LazyOptional<PlayerMagic> optional = LazyOptional.of(this::createPlayerMagic);
+    private PlayerMagicData magic = null;
+    private final LazyOptional<PlayerMagicData> optional = LazyOptional.of(this::createPlayerMagic);
 
-    private PlayerMagic createPlayerMagic() {
+    private PlayerMagicData createPlayerMagic() {
         if(this.magic == null) {
-            this.magic = new PlayerMagic();
+            this.magic = new PlayerMagicData();
         }
 
         return this.magic;

@@ -59,6 +59,7 @@ public class ModCreativeModTabs {
                         //pOutput.accept(ModBlocks.PRESSING_TROUGH.get());
                         pOutput.accept(ModBlocks.APPLE_BLOCK.get());
                         pOutput.accept(ModItems.BOULDER.get());
+                        pOutput.accept(ModItems.RACE_CHOOSE_ITEM.get());
                     })
                     .build());
 

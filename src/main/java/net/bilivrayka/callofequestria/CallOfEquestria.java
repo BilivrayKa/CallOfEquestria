@@ -3,6 +3,9 @@ package net.bilivrayka.callofequestria;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
+import net.bilivrayka.callofequestria.entity.ModEntities;
+import net.bilivrayka.callofequestria.entity.custom.FloatingBlockRenderer;
+import net.bilivrayka.callofequestria.entity.custom.MagicProjectileRenderer;
 import net.bilivrayka.callofequestria.fluid.ModFluidTypes;
 import net.bilivrayka.callofequestria.fluid.ModFluids;
 import net.bilivrayka.callofequestria.item.ModCreativeModTabs;
@@ -11,6 +14,7 @@ import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.sound.ModSounds;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -40,20 +44,17 @@ public class CallOfEquestria {
         PlushReg.register(modEventBus);
         ModFluids.register(modEventBus);
         ModFluidTypes.register(modEventBus);
-
+        ModEntities.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
         //MinecraftForge.EVENT_BUS.register(new ModEvents());
         //modEventBus.addListener(this::addCreative);
     }
-
     private void setup(final FMLCommonSetupEvent event) {
         // Common setup code
         event.enqueueWork(ModMessages::register);
 
-        ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_MAUD_PIE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_DARING_DO.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.APPLE_BLOCK.get(), RenderType.cutoutMipped());
+
         /*
         //ItemBlockRenderTypes.setRenderLayer(ModBlocks.PRESSING_TROUGH.get(), RenderType.cutout());
         ModBlocks.PRESSING_TROUGH.get().getStateDefinition().getPossibleStates().forEach(state -> {
@@ -61,14 +62,27 @@ public class CallOfEquestria {
         });
 
          */
-        ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_APPLE_JUICE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_APPLE_JUICE.get(), RenderType.translucent());
+
+        
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_MAUD_PIE.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_DARING_DO.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.APPLE_BLOCK.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_APPLE_JUICE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_APPLE_JUICE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MAGIC_PROJECTILE.get(), RenderType.translucent());
+
+            EntityRenderers.register(ModEntities.MAGIC_PROJECTILE.get(), MagicProjectileRenderer::new);
+            EntityRenderers.register(ModEntities.FLOATING_BLOCK.get(), FloatingBlockRenderer::new);
+
+            //MenuScreens.register(ModItems.RACE_CHOOSE_ITEM.get(), RaceChooseScreen::new);
         }
+
     }
 }

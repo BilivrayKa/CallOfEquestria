@@ -4,6 +4,7 @@ import net.bilivrayka.callofequestria.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -21,27 +22,34 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
 
 public class PlushBaseBlock extends Block {
     public static final BooleanProperty POWERED;
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static SoundEvents sound4;
     protected final SoundEvent sound2;
     protected final SoundEvent sound3;
 
-    public PlushBaseBlock(SoundEvent sound2, SoundEvent sound3, BlockBehaviour.Properties properties) {
-        super(properties);
-        this.sound2 = sound2;
-        this.sound3 = sound3;
-
-        this.registerDefaultState((BlockState)this.stateDefinition.any().setValue(POWERED, false));
-    }
     private static final Random rnd = new Random();
     private static final VoxelShape SHAPE =
             Block.box(6, 0, 3, 10, 7, 12);
     private static final VoxelShape SHAPE2 =
             Block.box(3, 0, 6, 12, 7, 10);
+
+
+
+    public PlushBaseBlock(SoundEvent sound2, SoundEvent sound3, BlockBehaviour.Properties properties) {
+        super(properties.sound(new SoundType(1.0F, rnd.nextFloat(1.25f,1.35f),
+                rnd.nextInt(2)+1 == 1 ? sound2 : sound3, SoundEvents.WOOL_STEP,
+                rnd.nextInt(2)+1 == 1 ? sound2 : sound3, SoundEvents.WOOL_HIT, SoundEvents.WOOL_FALL)));
+        this.sound2 = sound2;
+        this.sound3 = sound3;
+
+        this.registerDefaultState((BlockState)this.stateDefinition.any().setValue(POWERED, false));
+    }
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
@@ -124,6 +132,7 @@ public class PlushBaseBlock extends Block {
             world.setBlock(pos, state.setValue(POWERED, powered), 3);
         }
     }
+
     static {
         POWERED = BlockStateProperties.POWERED;
     }

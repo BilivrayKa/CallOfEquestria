@@ -1,4 +1,4 @@
-package net.bilivrayka.callofequestria.event;
+package net.bilivrayka.callofequestria.data;
 
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.level.block.Block;

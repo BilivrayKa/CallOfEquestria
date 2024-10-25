@@ -6,20 +6,28 @@ import net.bilivrayka.callofequestria.entity.custom.FloatingBlockEntity;
 import net.bilivrayka.callofequestria.networking.packet.*;
 import net.bilivrayka.callofequestria.data.*;
 import net.bilivrayka.callofequestria.networking.ModMessages;
+import net.bilivrayka.callofequestria.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -166,6 +174,7 @@ public class ModEvents {
             ModMessages.sendToServer(new AdvancementC2SPacket(MINUETTE_AD));
         }
     }
+
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent.EntityInteract event) {
         if (event.getEntity() instanceof ServerPlayer player) {
@@ -181,6 +190,67 @@ public class ModEvents {
         }
     }
 
+    private static float[] getCutieMarkIdByBlock(BlockState blockState) {
+        if(!blockState.is(ModTags.Blocks.ORES) && Items.NETHERITE_PICKAXE.isCorrectToolForDrops(blockState)){
+            return new float[]{0, 0.2f, 0.2f};
+        } else if (blockState.is(ModTags.Blocks.OVERWORLD_ORES)) {
+            return new float[]{1, 1f, 1f};
+        } else if (blockState.is(ModTags.Blocks.NETHER_ORES)) {
+            return new float[]{2, 1f, 1f};
+        }/*else if (blockState.is(Blocks.ANCIENT_DEBRIS)) {
+            // abusable
+            return new float[]{3, 20f, 2f};s
+        }*/else if (blockState.is(ModTags.Blocks.WOOD)) {
+            return new float[]{4, 0.4f, 0.4f};
+        } else if (Items.NETHERITE_SHOVEL.isCorrectToolForDrops(blockState)) {
+            return new float[]{6, 0.1f, 0.1f};
+        }
+        return new float[]{0,0f,0f};
+    }
+
+    @SubscribeEvent
+    public static void onPlayerBlockBreak(BlockEvent.BreakEvent event) {
+        Player player = event.getPlayer();
+        boolean isCorrectToolForDrops = new ItemStack(player.getMainHandItem().getItem()).isCorrectToolForDrops(event.getState())
+                && player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH) <= 0;
+        if(!isCorrectToolForDrops) {
+            return;
+        }
+        player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
+            float[] cutieMarkParameters = getCutieMarkIdByBlock(event.getState());
+            if(!player.isEyeInFluid(FluidTags.WATER)){
+                    /*if(!cutieMarkParameters.equals(new float[]{0, 0f, 0f})){
+
+                    }*/
+                magic.changeCutieMarkProgress((int)cutieMarkParameters[0], cutieMarkParameters[1], cutieMarkParameters[2]);
+                player.sendSystemMessage(Component.literal(magic.getCutieMarkProgress()[(int)cutieMarkParameters[0]] + ""));
+            } else {
+                magic.changeCutieMarkProgress(5, 0.4f, 0.25f);
+                player.sendSystemMessage(Component.literal(magic.getCutieMarkProgress()[5] + ""));
+            }
+            player.sendSystemMessage(Component.literal(player.isEyeInFluid(FluidTags.WATER) + ""));
+        });
+    }
+
+    @SubscribeEvent
+    public static void onBlockBreakSpeed(PlayerEvent.BreakSpeed event) {
+        Player player = event.getEntity();
+        boolean pickaxeMineable = player != null && new ItemStack(Items.NETHERITE_PICKAXE).isCorrectToolForDrops(event.getState());
+        player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
+            boolean isCutieMarkObtained = true;
+            if(!isCutieMarkObtained){
+                return;
+            }
+            if(pickaxeMineable && !event.getState().is(ModTags.Blocks.ORES) && magic.getCutieMarkProgress()[0] == 1000f) {
+                event.setNewSpeed(event.getOriginalSpeed() * 1.5F);
+            } else if (event.getState().is(ModTags.Blocks.OVERWORLD_ORES) && magic.getCutieMarkProgress()[1] == 1000f) {
+                event.setNewSpeed(event.getOriginalSpeed() * 1.5F);
+            } else if (event.getState().is(ModTags.Blocks.NETHER_ORES) && magic.getCutieMarkProgress()[2] == 1000f) {
+                event.setNewSpeed(event.getOriginalSpeed() * 1.5F);
+            } else if (event.getState().is(Blocks.ANCIENT_DEBRIS)&& magic.getCutieMarkProgress()[3] == 1000f) {
+            }
+        });
+    }
     @SubscribeEvent
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer) {

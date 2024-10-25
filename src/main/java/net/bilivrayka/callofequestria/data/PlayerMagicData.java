@@ -17,10 +17,25 @@ public class PlayerMagicData {
     private final int MIN_MAGIC = 0;
     private final int MAX_MAGIC = 10;
 
+    private float[] cutieMarkProgress = new float[]
+    {
+            0, // Pickaxe Block Mining Boost
+            0, // Pickaxe Ore Mining Boost
+            0, // Pickaxe Nether Ore Mining Boost
+            0, // Pickaxe Ancient Debris Mining Boost
+            0, // Axe Wood Chopping Boost
+            0, // Underwater Mining Boost
+            0,
+            0,
+            0,
+            0
+    };
+
+
     public float getMagic() {
         return magic;
     }
-    public BlockState getMagicGrabbedBlockState(){
+    public BlockState getMagicGrabbedBlockState() {
         return magicGrabbedBlockState;
     }
     public int getCooldowns(int i) {
@@ -32,10 +47,13 @@ public class PlayerMagicData {
     public CompoundTag getSavedBlockGrabbedInventory() {
         return savedBlockGrabbedInventory;
     }
-    public boolean isBlockGrabbed(){
+    public float[] getCutieMarkProgress() {
+        return cutieMarkProgress;
+    }
+    public boolean isBlockGrabbed() {
         return isBlockGrabbed;
     }
-    public boolean isDynamicLight(){
+    public boolean isDynamicLight() {
         return isDynamicLight;
     }
     public void addMagic(float add) {
@@ -47,20 +65,29 @@ public class PlayerMagicData {
     public void changeMagicGrabbedBlockState(BlockState blockState) {
         this.magicGrabbedBlockState = blockState;
     }
-    public void setMagicGrabble(boolean isBlockGrabbed){
+    public void setMagicGrabble(boolean isBlockGrabbed) {
         this.isBlockGrabbed = isBlockGrabbed;
     }
-    public void setDynamicLight(boolean isDynamicLight){
+    public void setDynamicLight(boolean isDynamicLight) {
         this.isDynamicLight = isDynamicLight;
     }
     public void setCooldowns(int slot, int tick) {
         this.cooldowns[slot] = tick;
     }
-    public void setFloatingBlockEntity(FloatingBlockEntity floatingBlockEntity){
+    public void setFloatingBlockEntity(FloatingBlockEntity floatingBlockEntity) {
         this.floatingBlockEntity = floatingBlockEntity;
     }
-    public void saveBlockGrabbedInventory(CompoundTag savedBlockGrabbedInventory){
+    public void saveBlockGrabbedInventory(CompoundTag savedBlockGrabbedInventory) {
         this.savedBlockGrabbedInventory = savedBlockGrabbedInventory;
+    }
+    public void changeCutieMarkProgress(int cutieMarkId, float positiveMultiplier, float negativeMultiplier) {
+        for (int i = 0; i < this.cutieMarkProgress.length; i++) {
+            if (i == cutieMarkId) {
+                this.cutieMarkProgress[i] = Math.min(this.cutieMarkProgress[i] + positiveMultiplier, 1000f);
+            } else {
+                this.cutieMarkProgress[i] = Math.max(this.cutieMarkProgress[i] - negativeMultiplier, 0f);
+            }
+        }
     }
     public void doCooldowns() {
         for (int i = 0; i < this.cooldowns.length; i++) {
@@ -78,6 +105,7 @@ public class PlayerMagicData {
         this.isDynamicLight = source.isDynamicLight;
         this.floatingBlockEntity = source.floatingBlockEntity;
         this.savedBlockGrabbedInventory = source.savedBlockGrabbedInventory;
+        this.cutieMarkProgress = source.cutieMarkProgress;
     }
 
     public void saveNBTData(CompoundTag nbt) {
@@ -86,14 +114,15 @@ public class PlayerMagicData {
         nbt.putIntArray("cooldowns", cooldowns);
         nbt.putBoolean("grabbed", isBlockGrabbed);
         nbt.putBoolean("light", isDynamicLight);
-        /*
-        if(floatingBlockEntity != null){
-            nbt.putString("floatingBlockEntity", floatingBlockEntity.getStringUUID());
-        }
-
-         */
         if(savedBlockGrabbedInventory != null){
             nbt.put("savedBlockGrabbedInventory", savedBlockGrabbedInventory);
+        }
+        if(cutieMarkProgress != null) {
+            int[] intCutieMarkProgress = new int[cutieMarkProgress.length];
+            for (int i = 0; i < cutieMarkProgress.length; i++) {
+                intCutieMarkProgress[i] = (int) cutieMarkProgress[i];
+            }
+            nbt.putIntArray("cutieMarkProgress", intCutieMarkProgress);
         }
     }
 
@@ -105,6 +134,10 @@ public class PlayerMagicData {
         isDynamicLight = nbt.getBoolean("light");
         //floatingBlockEntity = nbt.getString("floatingBlockEntity");
         savedBlockGrabbedInventory = nbt.getCompound("savedBlockGrabbedInventory");
+        int[] intCutieMarkProgress = nbt.getIntArray("cutieMarkProgress");
+        for (int i = 0; i < intCutieMarkProgress.length; i++) {
+            cutieMarkProgress[i] = (float) intCutieMarkProgress[i];
+        }
     }
 
 }

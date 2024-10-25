@@ -1,5 +1,6 @@
 package net.bilivrayka.callofequestria.event;
 
+import ca.weblite.objc.Client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
@@ -12,10 +13,12 @@ import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.networking.packet.*;
 import net.bilivrayka.callofequestria.networking.packet.spell.RepelSpellC2SPacket;
 import net.bilivrayka.callofequestria.util.KeyBinding;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -25,6 +28,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -48,6 +52,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
+
+import java.awt.*;
 
 public class ClientEvents {
     @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID, value = Dist.CLIENT)
@@ -82,9 +88,6 @@ public class ClientEvents {
             }
 
              */
-            if(event.getKey() == 8){
-
-            }
         }
 
         @SubscribeEvent
@@ -107,6 +110,7 @@ public class ClientEvents {
                 });
             }
         }
+
         @SubscribeEvent
         public static void onPlayerInteract(PlayerInteractEvent event) {
             Player player = event.getEntity();
@@ -119,6 +123,7 @@ public class ClientEvents {
                 }
             });
         }
+
         @SubscribeEvent
         public static void onPlayerAttack(AttackEntityEvent event) {
             Player player = event.getEntity();
@@ -269,7 +274,7 @@ public class ClientEvents {
                 event.setCanceled(true);
             }
         }
-
+/*
         @SubscribeEvent
         public static void onRenderTick(TickEvent.RenderTickEvent event) {
             Minecraft instance = Minecraft.getInstance();
@@ -289,6 +294,8 @@ public class ClientEvents {
                 });
             }
         }
+
+ */
 
         @SubscribeEvent
         public static void onRenderHand(RenderHandEvent event) {
@@ -452,7 +459,7 @@ public class ClientEvents {
             @SubscribeEvent
             public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
                 //event.registerAboveAll("magic", MagicHudOverlay.HUD_GUI);
-                event.registerBelowAll("magic", MagicHudOverlay.HUD_GUI);
+                //event.registerBelowAll("magic", MagicHudOverlay.HUD_GUI);
             }
         }
     }

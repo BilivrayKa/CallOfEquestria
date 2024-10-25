@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 
-//@OnlyIn(Dist.CLIENT)
 public class RaceChooseScreen extends Screen {
 
     private static final ResourceLocation CARD_TEXTURE_1 = new ResourceLocation(CallOfEquestria.MOD_ID, "textures/gui/races/earthpony.png");

@@ -15,6 +15,10 @@ import net.bilivrayka.callofequestria.sound.ModSounds;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -23,6 +27,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -31,8 +37,8 @@ public class CallOfEquestria {
     public static final String MOD_ID = "callofequestria";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public CallOfEquestria() {
 
+    public CallOfEquestria() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::setup);
 
@@ -45,15 +51,17 @@ public class CallOfEquestria {
         ModFluids.register(modEventBus);
         ModFluidTypes.register(modEventBus);
         ModEntities.register(modEventBus);
+        //ModConfiguredFeatures.register(modEventBus);
+        //ModPlacedFeatures.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
         //MinecraftForge.EVENT_BUS.register(new ModEvents());
         //modEventBus.addListener(this::addCreative);
     }
+
     private void setup(final FMLCommonSetupEvent event) {
         // Common setup code
         event.enqueueWork(ModMessages::register);
-
 
         /*
         //ItemBlockRenderTypes.setRenderLayer(ModBlocks.PRESSING_TROUGH.get(), RenderType.cutout());

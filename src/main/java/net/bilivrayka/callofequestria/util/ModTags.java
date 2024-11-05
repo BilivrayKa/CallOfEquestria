@@ -2,6 +2,7 @@ package net.bilivrayka.callofequestria.util;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.Registries;
@@ -15,6 +16,14 @@ public class ModTags {
 
         private static TagKey<Block> create(String name) {
             return TagKey.create(Registries.BLOCK, new ResourceLocation(CallOfEquestria.MOD_ID, name));
+        }
+    }
+
+    public static class Items {
+        public static final TagKey<Item> INGOTS = create("ingots");
+
+        private static TagKey<Item> create(String name) {
+            return TagKey.create(Registries.ITEM, new ResourceLocation(CallOfEquestria.MOD_ID, name));
         }
     }
 }

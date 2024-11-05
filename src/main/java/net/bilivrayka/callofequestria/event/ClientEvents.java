@@ -434,6 +434,8 @@ public class ClientEvents {
                 });
             }
         }
+
+        /*
         @SubscribeEvent
         public static void onPlayerPlaceBlock(BlockEvent.EntityPlaceEvent event){
             Player player = (Player) event.getEntity();
@@ -444,6 +446,8 @@ public class ClientEvents {
                 }
             });
         }
+
+         */
 
 
 

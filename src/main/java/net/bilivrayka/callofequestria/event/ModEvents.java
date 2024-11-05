@@ -21,7 +21,9 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -41,6 +43,7 @@ import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
 public class ModEvents {
@@ -203,9 +206,18 @@ public class ModEvents {
         }*/else if (blockState.is(ModTags.Blocks.WOOD)) {
             return new float[]{4, 0.4f, 0.4f};
         } else if (Items.NETHERITE_SHOVEL.isCorrectToolForDrops(blockState)) {
-            return new float[]{6, 0.1f, 0.1f};
+            return new float[]{6, 0.4f, 04f};
         }
         return new float[]{0,0f,0f};
+    }
+    private static float[] getCutieMarkIdByItemStackSmelt(ItemStack itemStack) {
+        int multiplier = itemStack.getCount();
+        if(itemStack.isEdible()){
+            return new float[]{7, 1f * multiplier, 1f * multiplier};
+        } else if (itemStack.is(ModTags.Items.INGOTS)) {
+            return new float[]{8, 1f * multiplier, 1f * multiplier};
+        }
+        return new float[]{9, 0.4f * multiplier, 0.4f * multiplier};
     }
 
     @SubscribeEvent
@@ -230,6 +242,29 @@ public class ModEvents {
             }
             player.sendSystemMessage(Component.literal(player.isEyeInFluid(FluidTags.WATER) + ""));
         });
+    }
+
+    @SubscribeEvent
+    public static void onItemSmelted(PlayerEvent.ItemSmeltedEvent event) {
+        Player player = event.getEntity();
+        ItemStack smeltedItem = event.getSmelting();
+        if(smeltedItem.isEmpty()){
+            return;
+        }
+        if(player.level().isClientSide){
+            return;
+        }
+        player.getCapability(PlayerMagicDataProvider.PLAYER_MAGIC).ifPresent(magic -> {
+            float[] cutieMarkParameters = getCutieMarkIdByItemStackSmelt(event.getSmelting());
+            magic.changeCutieMarkProgress((int)cutieMarkParameters[0], cutieMarkParameters[1], cutieMarkParameters[2]);
+            player.sendSystemMessage(Component.literal(magic.getCutieMarkProgress()[(int)cutieMarkParameters[0]] + ""));
+            if(magic.getCutieMarkProgress()[(int)cutieMarkParameters[0]] <= 1000f){return;}
+            Random rnd = new Random();
+            if(rnd.nextInt(0,3) == 3) {
+                player.getInventory().add(smeltedItem);
+            }
+        });
+        //player.sendSystemMessage(Component.literal("Вы переплавили: " + smeltedItem.getHoverName().getString()));
     }
 
     @SubscribeEvent

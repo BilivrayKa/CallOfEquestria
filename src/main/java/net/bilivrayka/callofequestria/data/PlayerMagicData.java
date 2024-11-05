@@ -16,6 +16,7 @@ public class PlayerMagicData {
     private boolean isDynamicLight = false;
     private final int MIN_MAGIC = 0;
     private final int MAX_MAGIC = 10;
+    private final float MAX_CUTIE_MARK_PROGRESS = 1000f;
 
     private float[] cutieMarkProgress = new float[]
     {
@@ -25,10 +26,10 @@ public class PlayerMagicData {
             0, // Pickaxe Ancient Debris Mining Boost
             0, // Axe Wood Chopping Boost
             0, // Underwater Mining Boost
-            0,
-            0,
-            0,
-            0
+            0, // Shovel Block Mining Boost
+            0, // Cooked food Boost
+            0, // Smelted ingots Boost
+            0  // Smelted etc Boost
     };
 
 
@@ -83,7 +84,7 @@ public class PlayerMagicData {
     public void changeCutieMarkProgress(int cutieMarkId, float positiveMultiplier, float negativeMultiplier) {
         for (int i = 0; i < this.cutieMarkProgress.length; i++) {
             if (i == cutieMarkId) {
-                this.cutieMarkProgress[i] = Math.min(this.cutieMarkProgress[i] + positiveMultiplier, 1000f);
+                this.cutieMarkProgress[i] = Math.min(this.cutieMarkProgress[i] + positiveMultiplier, MAX_CUTIE_MARK_PROGRESS);
             } else {
                 this.cutieMarkProgress[i] = Math.max(this.cutieMarkProgress[i] - negativeMultiplier, 0f);
             }

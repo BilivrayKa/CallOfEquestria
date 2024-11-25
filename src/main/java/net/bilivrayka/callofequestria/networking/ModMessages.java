@@ -2,10 +2,6 @@ package net.bilivrayka.callofequestria.networking;
 
 import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.networking.packet.*;
-import net.bilivrayka.callofequestria.networking.packet.spell.BlinkSpellC2SPacket;
-import net.bilivrayka.callofequestria.networking.packet.spell.BlockGrabC2SPacket;
-import net.bilivrayka.callofequestria.networking.packet.spell.MagicProjectileC2SPacket;
-import net.bilivrayka.callofequestria.networking.packet.spell.RepelSpellC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;

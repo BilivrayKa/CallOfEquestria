@@ -47,7 +47,7 @@ public class ModItems {
             () -> new DrinkItem(ModItems.JAR.get(), new Item.Properties().food(ModFoods.NOTCH_APPLE_JAM)));
     public static final RegistryObject<Item> HAYBURGER = ITEMS.register("hayburger",
             () -> new Yay(new Item.Properties().food(ModFoods.HAYBURGER)));
-
+    /*
     public static final RegistryObject<Item> FLOWER_DUST = ITEMS.register("flower_dust",
             () -> new FlowerDustItem(new Item.Properties().food(ModFoods.FLOWER_DUST)));
     public static final RegistryObject<Item> FLOWER_DUST_BLACK = ITEMS.register("flower_dust_black",
@@ -89,6 +89,8 @@ public class ModItems {
     public static final RegistryObject<Item> CRYSTAL_CLUSTER = ITEMS.register("crystal_cluster",
             () -> new ItemNameBlockItem(ModBlocks.CRYSTAL_CLUSTER_BLOCK.get(), new Item.Properties()));
 
+     */
+
     //Дальше бога нет
     public static final RegistryObject<Item> PLUSH_PINKIE_PIE = ITEMS.register("plush_pinkie_pie",
             () -> new PlushItem(ModSounds.PINKIE1.get(),ModSounds.PINKIE2.get(),ModSounds.STEREO_PINKIE1.get(),ModSounds.STEREO_PINKIE2.get(),PlushReg.PLUSH_PINKIE_PIE.get(), new Item.Properties()));
@@ -123,9 +125,6 @@ public class ModItems {
 
     public static final RegistryObject<Item> BOULDER = ITEMS.register("boulder",
             () -> new Item(new Item.Properties()));
-
-    public static final RegistryObject<Item> RACE_CHOOSE_ITEM = ITEMS.register("race_choose_item",
-            () -> new RaceChooseItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

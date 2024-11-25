@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.Registries;
 
 public class ModTags {
+    /*
     public static class Blocks {
         public static final TagKey<Block> ORES = create("ores");
         public static final TagKey<Block> OVERWORLD_ORES = create("overworld_ores");
@@ -26,4 +27,5 @@ public class ModTags {
             return TagKey.create(Registries.ITEM, new ResourceLocation(CallOfEquestria.MOD_ID, name));
         }
     }
+     */
 }

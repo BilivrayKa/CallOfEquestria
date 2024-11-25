@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ModCommands {
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
-        RaceChanger.register(event.getDispatcher());
+        //RaceChanger.register(event.getDispatcher());
     }
 
     public static void registerEvents() {

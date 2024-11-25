@@ -4,7 +4,7 @@ license="GPL-3.0"
 
 [[mods]]
 modId="callofequestria"
-version="0.2"
+version="0.3"
 displayName="Ponified"
 authors="Bilivrayka"
 displayTest="IGNORE_SERVER_VERSION"

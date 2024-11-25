@@ -5,6 +5,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 
 public class ModFoods {
+    /*
     public static final FoodProperties FLOWER_DUST = new FoodProperties.Builder().nutrition(1).
             saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.HARM, 10), 0.33f).build();
     public static final FoodProperties FLOWER_DUST_BLACK = new FoodProperties.Builder().nutrition(1).
@@ -39,7 +40,7 @@ public class ModFoods {
             saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.HARM, 10), 0.33f).build();
     public static final FoodProperties FLOWER_DUST_YELLOW = new FoodProperties.Builder().nutrition(1).
             saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.HARM, 10), 0.33f).build();
-
+     */
     public static final FoodProperties MUG_APPLE = new FoodProperties.Builder().nutrition(1).
             saturationMod(0.2f).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 100), 0.33f).build();
     public static final FoodProperties NOTCH_APPLE_JAM = new FoodProperties.Builder()

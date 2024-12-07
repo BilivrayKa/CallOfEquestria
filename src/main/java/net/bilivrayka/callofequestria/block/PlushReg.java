@@ -50,21 +50,21 @@ public class PlushReg {
     public static final RegistryObject<Block> PLUSH_GRANNY_SMITH = registerBlock("plush_granny_smith",
             () -> new PlushBaseBlock(ModSounds.GRANNY_SMITH1.get(),ModSounds.GRANNY_SMITH2.get(), BlockBehaviour.Properties.copy(Blocks.GREEN_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_LIMESTONE_PIE = registerBlock("plush_limestone_pie",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.GRAY_WOOL).strength(2).noOcclusion()));
+            () -> new PlushBaseBlock(ModSounds.LIMESTONE_PIE1.get(),ModSounds.LIMESTONE_PIE2.get(), BlockBehaviour.Properties.copy(Blocks.GRAY_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_NURSE_REDHEART = registerBlock("plush_nurse_redheart",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).strength(2).noOcclusion()));
+            () -> new PlushBaseBlock(ModSounds.NURSE_REDHEART1.get(),ModSounds.NURSE_REDHEART2.get(), BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_LILY_VALLEY = registerBlock("plush_lily_valley",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+            () -> new PlushBaseBlock(ModSounds.LILY_VALLEY1.get(),ModSounds.LILY_VALLEY2.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_DAISY = registerBlock("plush_daisy",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+            () -> new PlushBaseBlock(ModSounds.DAISY1.get(),ModSounds.DAISY2.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_LOTUS_BLOSSOM = registerBlock("plush_lotus_blossom",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.CYAN_WOOL).strength(2).noOcclusion()));
+            () -> new PlushBaseBlock(ModSounds.LOTUS_BLOSSOM1.get(),ModSounds.LOTUS_BLOSSOM2.get(), BlockBehaviour.Properties.copy(Blocks.CYAN_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_ALOE_VERA = registerBlock("plush_aloe_vera",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+            () -> new PlushBaseBlock(ModSounds.ALOE_VERA1.get(),ModSounds.ALOE_VERA2.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_OCTAVIA_MELODY = registerBlock("plush_octavia_melody",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+            () -> new PlushBaseBlock(ModSounds.OCTAVIA_MELODY1.get(),ModSounds.OCTAVIA_MELODY2.get(), BlockBehaviour.Properties.copy(Blocks.GRAY_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_DJ_PON3 = registerBlock("plush_dj_pon3",
-            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).strength(2).noOcclusion()));
+            () -> new PlushBaseBlock(ModSounds.DJ_PON31.get(),ModSounds.DJ_PON32.get(), BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_CHEERILEE = registerBlock("plush_cheerilee",
             () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_SPITFIRE = registerBlock("plush_spitfire",

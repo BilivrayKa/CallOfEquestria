@@ -132,21 +132,21 @@ public class ModItems {
     public static final RegistryObject<Item> PLUSH_GRANNY_SMITH = ITEMS.register("plush_granny_smith",
             () -> new PlushItem(ModSounds.GRANNY_SMITH1.get(),ModSounds.GRANNY_SMITH2.get(),ModSounds.STEREO_GRANNY_SMITH1.get(),ModSounds.STEREO_GRANNY_SMITH2.get(), PlushReg.PLUSH_GRANNY_SMITH.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_LIMESTONE_PIE = ITEMS.register("plush_limestone_pie",
-            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(), PlushReg.PLUSH_LIMESTONE_PIE.get(), new Item.Properties()));
+            () -> new PlushItem(ModSounds.LIMESTONE_PIE1.get(),ModSounds.LIMESTONE_PIE2.get(),ModSounds.STEREO_LIMESTONE_PIE1.get(),ModSounds.STEREO_LIMESTONE_PIE2.get(), PlushReg.PLUSH_LIMESTONE_PIE.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_NURSE_REDHEART = ITEMS.register("plush_nurse_redheart",
-            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(), PlushReg.PLUSH_NURSE_REDHEART.get(), new Item.Properties()));
+            () -> new PlushItem(ModSounds.NURSE_REDHEART1.get(),ModSounds.NURSE_REDHEART2.get(),ModSounds.STEREO_NURSE_REDHEART1.get(),ModSounds.STEREO_NURSE_REDHEART2.get(), PlushReg.PLUSH_NURSE_REDHEART.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_LILY_VALLEY = ITEMS.register("plush_lily_valley",
-            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(), PlushReg.PLUSH_LILY_VALLEY.get(), new Item.Properties()));
+            () -> new PlushItem(ModSounds.LILY_VALLEY1.get(),ModSounds.LILY_VALLEY2.get(),ModSounds.STEREO_LILY_VALLEY1.get(),ModSounds.STEREO_LILY_VALLEY2.get(), PlushReg.PLUSH_LILY_VALLEY.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_DAISY = ITEMS.register("plush_daisy",
-            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(), PlushReg.PLUSH_DAISY.get(), new Item.Properties()));
+            () -> new PlushItem(ModSounds.DAISY1.get(),ModSounds.DAISY2.get(),ModSounds.STEREO_DAISY1.get(),ModSounds.STEREO_DAISY2.get(), PlushReg.PLUSH_DAISY.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_LOTUS_BLOSSOM = ITEMS.register("plush_lotus_blossom",
-            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(), PlushReg.PLUSH_LOTUS_BLOSSOM.get(), new Item.Properties()));
+            () -> new PlushItem(ModSounds.LOTUS_BLOSSOM1.get(),ModSounds.LOTUS_BLOSSOM2.get(),ModSounds.STEREO_LOTUS_BLOSSOM1.get(),ModSounds.STEREO_LOTUS_BLOSSOM2.get(), PlushReg.PLUSH_LOTUS_BLOSSOM.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_ALOE_VERA = ITEMS.register("plush_aloe_vera",
-            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(), PlushReg.PLUSH_ALOE_VERA.get(), new Item.Properties()));
+            () -> new PlushItem(ModSounds.ALOE_VERA1.get(),ModSounds.ALOE_VERA2.get(),ModSounds.STEREO_ALOE_VERA1.get(),ModSounds.STEREO_ALOE_VERA2.get(), PlushReg.PLUSH_ALOE_VERA.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_OCTAVIA_MELODY = ITEMS.register("plush_octavia_melody",
-            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(), PlushReg.PLUSH_OCTAVIA_MELODY.get(), new Item.Properties()));
+            () -> new PlushItem(ModSounds.OCTAVIA_MELODY1.get(),ModSounds.OCTAVIA_MELODY2.get(),ModSounds.STEREO_OCTAVIA_MELODY1.get(),ModSounds.STEREO_OCTAVIA_MELODY2.get(), PlushReg.PLUSH_OCTAVIA_MELODY.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_DJ_PON3 = ITEMS.register("plush_dj_pon3",
-            () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(), PlushReg.PLUSH_DJ_PON3.get(), new Item.Properties()));
+            () -> new PlushItem(ModSounds.DJ_PON31.get(),ModSounds.DJ_PON32.get(),ModSounds.STEREO_DJ_PON31.get(),ModSounds.STEREO_DJ_PON32.get(), PlushReg.PLUSH_DJ_PON3.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_CHEERILEE = ITEMS.register("plush_cheerilee",
             () -> new PlushItem(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(),ModSounds.STEREO_SQUEE2.get(),ModSounds.STEREO_SQUEE3.get(), PlushReg.PLUSH_CHEERILEE.get(), new Item.Properties()));
     public static final RegistryObject<Item> PLUSH_SPITFIRE = ITEMS.register("plush_spitfire",

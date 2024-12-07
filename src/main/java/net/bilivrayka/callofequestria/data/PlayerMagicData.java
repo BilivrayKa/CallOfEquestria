@@ -1,9 +1,6 @@
 package net.bilivrayka.callofequestria.data;
 
-import net.bilivrayka.callofequestria.entity.custom.BlockUtils;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.state.BlockState;
-
 
 public class PlayerMagicData {
     private int magic;

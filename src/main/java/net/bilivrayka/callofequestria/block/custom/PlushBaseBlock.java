@@ -13,6 +13,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -51,6 +52,7 @@ public class PlushBaseBlock extends Block {
         this.registerDefaultState((BlockState)this.stateDefinition.any().setValue(POWERED, false));
     }
 
+
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
 
@@ -59,6 +61,11 @@ public class PlushBaseBlock extends Block {
         }
 
         playSound(pLevel,pPos);
+        /*
+        boolean powered = pState.getValue(BlockStateProperties.POWERED);
+        pLevel.setBlock(pPos, pState.setValue(BlockStateProperties.POWERED, !powered), 3);
+
+         */
 
         return InteractionResult.CONSUME;
     }
@@ -128,8 +135,8 @@ public class PlushBaseBlock extends Block {
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         boolean powered = world.hasNeighborSignal(pos);
         if (powered != state.getValue(POWERED)) {
-            playSound(world,pos);
-            world.setBlock(pos, state.setValue(POWERED, powered), 3);
+            //playSound(world,pos);
+            //world.setBlock(pos, state.setValue(POWERED, powered), 3);
         }
     }
 

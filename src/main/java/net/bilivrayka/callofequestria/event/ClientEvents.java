@@ -4,6 +4,9 @@ import ca.weblite.objc.Client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
+import net.bilivrayka.callofequestria.block.ModBlocks;
+import net.bilivrayka.callofequestria.block.PlushReg;
+import net.bilivrayka.callofequestria.block.custom.PlushBlockBakedModel;
 import net.bilivrayka.callofequestria.data.*;
 import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.networking.packet.*;
@@ -15,7 +18,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.block.BlockModelShaper;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -38,6 +44,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -111,8 +118,27 @@ public class ClientEvents {
                 });
             }
         }
+        @SubscribeEvent
+        public static void onRegisterModels(ModelEvent.RegisterAdditional event) {
+            event.register(new ResourceLocation(CallOfEquestria.MOD_ID, "block/plush/plush_pinkie_pie"));
+        }
 
+        @SubscribeEvent
+        public static void onModelBake(ModelEvent.BakingCompleted event) {
+            BlockModelShaper modelShaper = Minecraft.getInstance().getBlockRenderer().getBlockModelShaper();
 
+            // Используем ResourceLocation для поиска модели
+            ModelResourceLocation poweredModelLocation = new ModelResourceLocation(PlushReg.PLUSH_PINKIE_PIE.getId(), "powered=true");
+            ModelResourceLocation unpoweredModelLocation = new ModelResourceLocation(PlushReg.PLUSH_PINKIE_PIE.getId(), "powered=false");
+
+            // Заменяем модель на основанную на powered
+            event.getModels().replace(
+                    poweredModelLocation,
+                    new PlushBlockBakedModel(
+                            modelShaper.getModelManager().getModel(unpoweredModelLocation)
+                    )
+            );
+        }
 
         @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
         public static class ClientModBusEvents {

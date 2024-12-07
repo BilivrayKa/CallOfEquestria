@@ -24,23 +24,6 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.WOOD_NAILS.get());
                         pOutput.accept(ModItems.LONG_STICK.get());
                         pOutput.accept(ModItems.BARK.get());
-                        pOutput.accept(ModItems.FLOWER_DUST.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_BLACK.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_BLUE.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_BROWN.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_CYAN.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_GRAY.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_GREEN.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_LIGHTBLUE.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_LIGHTGRAY.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_LIME.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_MAGENTA.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_ORANGE.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_PINK.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_PURPLE.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_RED.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_WHITE.get());
-                        pOutput.accept(ModItems.FLOWER_DUST_YELLOW.get());
                         pOutput.accept(ModItems.ZINNIA_BUSH_FLOWER.get());
                         pOutput.accept(ModItems.CRYSTAL_CLUSTER.get());
                         pOutput.accept(ModItems.BUDDING_CRYSTAL.get());
@@ -59,7 +42,6 @@ public class ModCreativeModTabs {
                         //pOutput.accept(ModBlocks.PRESSING_TROUGH.get());
                         pOutput.accept(ModBlocks.APPLE_BLOCK.get());
                         pOutput.accept(ModItems.BOULDER.get());
-                        pOutput.accept(ModItems.RACE_CHOOSE_ITEM.get());
                     })
                     .build());
 
@@ -82,6 +64,21 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModItems.PLUSH_MAUD_PIE.get());
                         pOutput.accept(ModItems.PLUSH_MARBLE_PIE.get());
                         pOutput.accept(ModItems.PLUSH_DARING_DO.get());
+                        pOutput.accept(ModItems.PLUSH_GRANNY_SMITH.get());
+                        pOutput.accept(ModItems.PLUSH_LIMESTONE_PIE.get());
+                        pOutput.accept(ModItems.PLUSH_NURSE_REDHEART.get());
+                        pOutput.accept(ModItems.PLUSH_LILY_VALLEY.get());
+                        pOutput.accept(ModItems.PLUSH_DAISY.get());
+                        pOutput.accept(ModItems.PLUSH_LOTUS_BLOSSOM.get());
+                        pOutput.accept(ModItems.PLUSH_ALOE_VERA.get());
+                        pOutput.accept(ModItems.PLUSH_OCTAVIA_MELODY.get());
+                        pOutput.accept(ModItems.PLUSH_DJ_PON3.get());
+                        pOutput.accept(ModItems.PLUSH_CHEERILEE.get());
+                        pOutput.accept(ModItems.PLUSH_SPITFIRE.get());
+                        pOutput.accept(ModItems.PLUSH_CHERRY_BERRY.get());
+                        pOutput.accept(ModItems.PLUSH_SUGAR_BELLE.get());
+                        pOutput.accept(ModItems.PLUSH_TWILIGHT_VELVET.get());
+                        pOutput.accept(ModItems.PLUSH_LIGHTNING_DUST.get());
                     })
                     .build());
 

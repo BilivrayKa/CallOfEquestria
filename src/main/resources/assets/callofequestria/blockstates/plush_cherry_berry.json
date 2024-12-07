@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "callofequestria:block/plush_cherry_berry",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "callofequestria:block/plush_cherry_berry"
+    },
+    "facing=south": {
+      "model": "callofequestria:block/plush_cherry_berry",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "callofequestria:block/plush_cherry_berry",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "callofequestria:block/plush_lily_valley",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "callofequestria:block/plush_lily_valley"
+    },
+    "facing=south": {
+      "model": "callofequestria:block/plush_lily_valley",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "callofequestria:block/plush_lily_valley",
+      "y": 270
+    }
+  }
+}

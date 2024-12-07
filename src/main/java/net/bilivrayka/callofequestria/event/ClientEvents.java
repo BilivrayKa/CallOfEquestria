@@ -4,7 +4,6 @@ import ca.weblite.objc.Client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.gui.*;
 import net.bilivrayka.callofequestria.data.*;
 import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.networking.packet.*;

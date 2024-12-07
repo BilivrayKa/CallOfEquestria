@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "callofequestria:block/plush_lotus_blossom",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "callofequestria:block/plush_lotus_blossom"
+    },
+    "facing=south": {
+      "model": "callofequestria:block/plush_lotus_blossom",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "callofequestria:block/plush_lotus_blossom",
+      "y": 270
+    }
+  }
+}

@@ -204,6 +204,18 @@
       "callofequestria:daring_do2"
     ]
   },
+  "granny_smith1": {
+    "subtitles": "sounds.callofequestria.granny_smith1",
+    "sounds": [
+      "callofequestria:granny_smith1"
+    ]
+  },
+  "granny_smith2": {
+    "subtitles": "sounds.callofequestria.granny_smith2",
+    "sounds": [
+      "callofequestria:granny_smith2"
+    ]
+  },
 
   "stereo_sniff_sound": {
     "subtitles": "sounds.callofequestria.sniff_sound",
@@ -407,6 +419,18 @@
     "subtitles": "sounds.callofequestria.daring_do2",
     "sounds": [
       "callofequestria:stereo_daring_do2"
+    ]
+  },
+  "stereo_granny_smith1": {
+    "subtitles": "sounds.callofequestria.granny_smith1",
+    "sounds": [
+      "callofequestria:stereo_granny_smith1"
+    ]
+  },
+  "stereo_granny_smith2": {
+    "subtitles": "sounds.callofequestria.granny_smith2",
+    "sounds": [
+      "callofequestria:stereo_granny_smith2"
     ]
   }
 }

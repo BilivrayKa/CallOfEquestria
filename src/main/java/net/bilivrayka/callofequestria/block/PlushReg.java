@@ -47,6 +47,37 @@ public class PlushReg {
             () -> new PlushBaseBlock(ModSounds.MARBLE_PIE1.get(),ModSounds.MARBLE_PIE2.get(), BlockBehaviour.Properties.copy(Blocks.GRAY_WOOL).strength(2).noOcclusion()));
     public static final RegistryObject<Block> PLUSH_DARING_DO = registerBlock("plush_daring_do",
             () -> new PlushBaseBlock(ModSounds.DARING_DO1.get(),ModSounds.DARING_DO2.get(), BlockBehaviour.Properties.copy(Blocks.BROWN_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_GRANNY_SMITH = registerBlock("plush_granny_smith",
+            () -> new PlushBaseBlock(ModSounds.GRANNY_SMITH1.get(),ModSounds.GRANNY_SMITH2.get(), BlockBehaviour.Properties.copy(Blocks.GREEN_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_LIMESTONE_PIE = registerBlock("plush_limestone_pie",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.GRAY_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_NURSE_REDHEART = registerBlock("plush_nurse_redheart",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_LILY_VALLEY = registerBlock("plush_lily_valley",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_DAISY = registerBlock("plush_daisy",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_LOTUS_BLOSSOM = registerBlock("plush_lotus_blossom",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.CYAN_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_ALOE_VERA = registerBlock("plush_aloe_vera",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_OCTAVIA_MELODY = registerBlock("plush_octavia_melody",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_DJ_PON3 = registerBlock("plush_dj_pon3",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_CHEERILEE = registerBlock("plush_cheerilee",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_SPITFIRE = registerBlock("plush_spitfire",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.YELLOW_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_CHERRY_BERRY = registerBlock("plush_cherry_berry",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_SUGAR_BELLE = registerBlock("plush_sugar_belle",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.PINK_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_TWILIGHT_VELVET = registerBlock("plush_twilight_velvet",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).strength(2).noOcclusion()));
+    public static final RegistryObject<Block> PLUSH_LIGHTNING_DUST = registerBlock("plush_lightning_dust",
+            () -> new PlushBaseBlock(ModSounds.SQUEE2.get(),ModSounds.SQUEE3.get(), BlockBehaviour.Properties.copy(Blocks.CYAN_WOOL).strength(2).noOcclusion()));
+
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = PLUSHIES.register(name, block);

@@ -46,6 +46,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> MARBLE_PIE2 = registerSoundEvents("marble_pie2");
     public static final RegistryObject<SoundEvent> DARING_DO1 = registerSoundEvents("daring_do1");
     public static final RegistryObject<SoundEvent> DARING_DO2 = registerSoundEvents("daring_do2");
+    public static final RegistryObject<SoundEvent> GRANNY_SMITH1 = registerSoundEvents("granny_smith1");
+    public static final RegistryObject<SoundEvent> GRANNY_SMITH2 = registerSoundEvents("granny_smith2");
 
     public static final RegistryObject<SoundEvent> STEREO_SNIFF_SOUND = registerSoundEvents("stereo_sniff_sound");
     public static final RegistryObject<SoundEvent> STEREO_YAY = registerSoundEvents("stereo_yay");
@@ -81,6 +83,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> STEREO_MARBLE_PIE2 = registerSoundEvents("stereo_marble_pie2");
     public static final RegistryObject<SoundEvent> STEREO_DARING_DO1 = registerSoundEvents("stereo_daring_do1");
     public static final RegistryObject<SoundEvent> STEREO_DARING_DO2 = registerSoundEvents("stereo_daring_do2");
+    public static final RegistryObject<SoundEvent> STEREO_GRANNY_SMITH1 = registerSoundEvents("stereo_granny_smith1");
+    public static final RegistryObject<SoundEvent> STEREO_GRANNY_SMITH2 = registerSoundEvents("stereo_granny_smith2");
 
 
 

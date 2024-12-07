@@ -69,6 +69,12 @@ public class CallOfEquestria {
         public static void onClientSetup(FMLClientSetupEvent event) {
             ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_MAUD_PIE.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_DARING_DO.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_GRANNY_SMITH.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_LOTUS_BLOSSOM.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_ALOE_VERA.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_OCTAVIA_MELODY.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_DJ_PON3.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(PlushReg.PLUSH_SPITFIRE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.APPLE_BLOCK.get(), RenderType.cutoutMipped());
             ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_APPLE_JUICE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_APPLE_JUICE.get(), RenderType.translucent());

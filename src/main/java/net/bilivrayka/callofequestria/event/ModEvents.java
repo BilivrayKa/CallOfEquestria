@@ -17,10 +17,15 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
@@ -29,6 +34,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -42,10 +48,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.slf4j.Logger;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID)
 public class ModEvents {
@@ -97,6 +100,73 @@ public class ModEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 
     }
+/*
+    @SubscribeEvent
+    public static void onPotionUse(LivingEntityUseItemEvent event) {
+        ItemStack item = event.getItem();
+        if(!(event.getEntity() instanceof Player player)){
+            return;
+        }
+        Potion potion = PotionUtils.getPotion(item);
+        if(potion != Potions.REGENERATION && potion != Potions.HEALING){
+            return;
+        }
+        System.out.println("Item type: " + item.getItem().getClass().getSimpleName());
+        if(!(item.getItem() instanceof LingeringPotionItem || item.getItem() instanceof ThrowablePotionItem)){
+            return;
+        }
+
+        ResourceLocation NURSE_REDHEART = new ResourceLocation(CallOfEquestria.MOD_ID, "nurse_redheart");
+        ModMessages.sendToServer(new AdvancementC2SPacket(NURSE_REDHEART));
+    }
+
+ */
+
+    @SubscribeEvent
+    public static void onItemPickup(PlayerEvent.ItemPickupEvent event) {
+        Player player = event.getEntity();
+        ItemStack item = event.getStack();
+
+        if (item.getItem() instanceof PotionItem) {
+            Potion potion = PotionUtils.getPotion(item);
+
+            if (potion == Potions.REGENERATION || potion == Potions.HEALING) {
+                ResourceLocation NURSE_REDHEART = new ResourceLocation(CallOfEquestria.MOD_ID, "nurse_redheart");
+                ModMessages.sendToServer(new AdvancementC2SPacket(NURSE_REDHEART));
+                }
+        }
+    }
+
+
+    @SubscribeEvent
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        Player player = event.getPlayer();
+        BlockState state = event.getState();
+        BlockPos pos = event.getPos();
+        Level level = player.level();
+
+        if (state.is(Blocks.SMOOTH_BASALT) || state.is(Blocks.CALCITE) || state.is(Blocks.AMETHYST_BLOCK)) {
+            if (isGeodeStructure(level, pos)) {
+                ResourceLocation RARITY_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "rarity");
+                ModMessages.sendToServer(new AdvancementC2SPacket(RARITY_AD));
+            }
+        }
+    }
+
+    private static boolean isGeodeStructure(Level level, BlockPos pos) {
+        int basaltCount = 0;
+        int calciteCount = 0;
+        int amethystCount = 0;
+
+        for (BlockPos nearby : BlockPos.betweenClosed(pos.offset(-3, -3, -3), pos.offset(3, 3, 3))) {
+            BlockState state = level.getBlockState(nearby);
+            if (state.is(Blocks.SMOOTH_BASALT)) basaltCount++;
+            if (state.is(Blocks.CALCITE)) calciteCount++;
+            if (state.is(Blocks.AMETHYST_BLOCK)) amethystCount++;
+        }
+
+        return basaltCount >= 10 && calciteCount >= 5 && amethystCount >= 5;
+    }
 
     @SubscribeEvent
     public static void onPlayerDamage(LivingDamageEvent event) {
@@ -114,10 +184,15 @@ public class ModEvents {
     public static void onServerChat(ServerChatEvent event) {
         ServerPlayer player = event.getPlayer();
         int messageCount = messageCounters.getOrDefault(player, 0) + 1;
+        String message = event.getMessage().toString().toLowerCase(Locale.ROOT);
         messageCounters.put(player, messageCount);
         if (messageCount >= MESSAGE_THRESHOLD) {
             ResourceLocation MINUETTE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "minuette");
             ModMessages.sendToServer(new AdvancementC2SPacket(MINUETTE_AD));
+        }
+        if (message.contains("party")) {
+            ResourceLocation PINKIE_PIE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "pinkie_pie");
+            ModMessages.sendToServer(new AdvancementC2SPacket(PINKIE_PIE_AD));
         }
     }
 
@@ -140,47 +215,19 @@ public class ModEvents {
     public static void onPlayerBlockInteract(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getEntity();
         BlockState blockState = event.getLevel().getBlockState(event.getPos());
-        if(!(event.getLevel().getBlockEntity(event.getPos()) instanceof BeehiveBlockEntity)){
-            return;
-        }
-        BeehiveBlockEntity beehive = (BeehiveBlockEntity) event.getLevel().getBlockEntity(event.getPos());
-        boolean isRightTool = player.getItemInHand(InteractionHand.MAIN_HAND).is(Items.SHEARS)
-                || player.getItemInHand(InteractionHand.MAIN_HAND).is(Items.GLASS_BOTTLE);
-        if(!isRightTool) {
-            return;
-        }
-        if (beehive == null || BeehiveBlockEntity.getHoneyLevel(blockState) <= 4) {
-            return;
-        }
     }
 
     @SubscribeEvent
     public static void onPlayerBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
-        boolean isCorrectToolForDrops = new ItemStack(player.getMainHandItem().getItem()).isCorrectToolForDrops(event.getState())
-                && player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH) <= 0;
-        if(!isCorrectToolForDrops && event.getState().requiresCorrectToolForDrops()) {
-            return;
-        }
     }
 
     @SubscribeEvent
     public static void onItemSmelted(PlayerEvent.ItemSmeltedEvent event) {
         Player player = event.getEntity();
         ItemStack smeltedItem = event.getSmelting();
-        if(smeltedItem.isEmpty()){return;}
-        if(player.level().isClientSide){
-            return;
-        }
-
     }
 
-    @SubscribeEvent
-    public static void onBlockBreakSpeed(PlayerEvent.BreakSpeed event) {
-        Player player = event.getEntity();
-        boolean pickaxeMineable = player != null &&
-                new ItemStack(Items.NETHERITE_PICKAXE).isCorrectToolForDrops(event.getState());
-    }
     @SubscribeEvent
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer) {

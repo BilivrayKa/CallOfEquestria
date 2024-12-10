@@ -79,12 +79,18 @@
   "achievement.marble_pie.description": "Мм-хмм...",
   "achievement.minuette.title": "Слушайте меня, Меня!",
   "achievement.minuette.description": "Говорите слишком много",
-  "achievement.pinkie_pie.title": "ТОРТИКИ!!!",
-  "achievement.pinkie_pie.description": "Приготовьте торт",
-  "achievement.rarity.title": "Посмотрите на меня!",
-  "achievement.rarity.description": "Покрасьте броню",
+  "achievement.pinkie_pie.title": "Кто-то сказал... ВЕЧЕРИНКА!?",
+  "achievement.pinkie_pie.description": "Говорите о вечеринке",
+  "achievement.rarity.title": "Просто восхитительно! Эти аметисты — божественны!",
+  "achievement.rarity.description": "Найдите аметистовую жиоду",
   "achievement.rose.title": "Ужас!",
   "achievement.rose.description": "Подожгите крипера огнивом",
   "achievement.starlight.title": "Единственный способ быть счастливым – это быть все равными!",
-  "achievement.starlight.description": "Лишите жителя его профессии"
+  "achievement.starlight.description": "Лишите жителя его профессии",
+  "achievement.granny_smith.title": "В моё время яблоки были куда сочнее!",
+  "achievement.granny_smith.description": "Найдите яблоко",
+  "achievement.limestone_pie.title": "Что за… Серьезно? Я ведь сказала, что это не место для шахтерства!",
+  "achievement.limestone_pie.description": "Докопайтесь до бедрока",
+  "achievement.nurse_redheart.title": "Зелье лечения? А я-то думала, что у меня уже есть всё для спасения! Ну, ладно, можно и больше!",
+  "achievement.nurse_redheart.description": "Найдите или сварите зелье лечения"
 }

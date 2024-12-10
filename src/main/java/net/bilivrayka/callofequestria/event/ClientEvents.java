@@ -1,61 +1,32 @@
 package net.bilivrayka.callofequestria.event;
 
-import ca.weblite.objc.Client;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.bilivrayka.callofequestria.CallOfEquestria;
-import net.bilivrayka.callofequestria.block.ModBlocks;
 import net.bilivrayka.callofequestria.block.PlushReg;
-import net.bilivrayka.callofequestria.block.custom.PlushBlockBakedModel;
 import net.bilivrayka.callofequestria.data.*;
 import net.bilivrayka.callofequestria.networking.ModMessages;
 import net.bilivrayka.callofequestria.networking.packet.*;
-import net.bilivrayka.callofequestria.util.KeyBinding;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
-
-import java.awt.*;
 
 public class ClientEvents {
     @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID, value = Dist.CLIENT)
@@ -90,6 +61,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onPlayerCraft(PlayerEvent.ItemCraftedEvent event) {
             ItemStack itemStack = event.getCrafting();
+            /*
             if (itemStack.getItem() instanceof DyeableLeatherItem) {
                 DyeableLeatherItem dyeableItem = (DyeableLeatherItem) itemStack.getItem();
                 int color = dyeableItem.getColor(itemStack);
@@ -98,10 +70,14 @@ public class ClientEvents {
                     ModMessages.sendToServer(new AdvancementC2SPacket(RARITY_AD));
 
                 }
-            } else if (itemStack.getItem() == Items.CAKE) {
+            }
+
+             */
+            /*else if (itemStack.getItem() == Items.CAKE) {
                 ResourceLocation PINKIE_PIE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "pinkie_pie");
                 ModMessages.sendToServer(new AdvancementC2SPacket(PINKIE_PIE_AD));
             }
+             */
         }
         @SubscribeEvent
         public static void onBreakingSomeVillagerLive(BlockEvent.BreakEvent event) {
@@ -117,27 +93,6 @@ public class ClientEvents {
                     }
                 });
             }
-        }
-        @SubscribeEvent
-        public static void onRegisterModels(ModelEvent.RegisterAdditional event) {
-            event.register(new ResourceLocation(CallOfEquestria.MOD_ID, "block/plush/plush_pinkie_pie"));
-        }
-
-        @SubscribeEvent
-        public static void onModelBake(ModelEvent.BakingCompleted event) {
-            BlockModelShaper modelShaper = Minecraft.getInstance().getBlockRenderer().getBlockModelShaper();
-
-            // Используем ResourceLocation для поиска модели
-            ModelResourceLocation poweredModelLocation = new ModelResourceLocation(PlushReg.PLUSH_PINKIE_PIE.getId(), "powered=true");
-            ModelResourceLocation unpoweredModelLocation = new ModelResourceLocation(PlushReg.PLUSH_PINKIE_PIE.getId(), "powered=false");
-
-            // Заменяем модель на основанную на powered
-            event.getModels().replace(
-                    poweredModelLocation,
-                    new PlushBlockBakedModel(
-                            modelShaper.getModelManager().getModel(unpoweredModelLocation)
-                    )
-            );
         }
 
         @Mod.EventBusSubscriber(modid = CallOfEquestria.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)

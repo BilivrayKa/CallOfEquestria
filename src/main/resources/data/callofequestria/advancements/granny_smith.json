@@ -1,0 +1,36 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_granny_smith"
+    },
+    "title": {
+      "translate": "achievement.granny_smith.title",
+      "color": "green"
+    },
+    "description": {
+      "translate": "achievement.granny_smith.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:apple"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:granny_smith"
+  }
+}

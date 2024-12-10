@@ -1,0 +1,27 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_nurse_redheart"
+    },
+    "title": {
+      "translate": "achievement.nurse_redheart.title",
+      "color": "white"
+    },
+    "description": {
+      "translate": "achievement.nurse_redheart.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:nurse_redheart"
+  }
+}

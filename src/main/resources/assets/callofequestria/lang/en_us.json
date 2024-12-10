@@ -99,12 +99,18 @@
   "achievement.marble_pie.description": "Mm-hmm...",
   "achievement.minuette.title": "Over Here, Over Here!",
   "achievement.minuette.description": "Talk too much",
-  "achievement.pinkie_pie.title": "CAKES!!!",
-  "achievement.pinkie_pie.description": "Bake a cake",
-  "achievement.rarity.title": "Look Upon Me!",
-  "achievement.rarity.description": "Dye an armor",
+  "achievement.pinkie_pie.title": "Did someone say... PARTY!?",
+  "achievement.pinkie_pie.description": "Talk about party",
+  "achievement.rarity.title": "Simply dazzling! These amethysts are divine!",
+  "achievement.rarity.description": "Find an amethyst geode",
   "achievement.rose.title": "The Horror!",
   "achievement.rose.description": "Set the Creeper on fire",
   "achievement.starlight.title": "The Only Way To Be Happy Is If We're All Equal!",
-  "achievement.starlight.description": "Make a villager lose his job"
+  "achievement.starlight.description": "Make a villager lose his job",
+  "achievement.granny_smith.title": "Back in my day, apples were gold!",
+  "achievement.granny_smith.description": "Find an apple",
+  "achievement.limestone_pie.title": "What's this... Seriously? I told you, this isn't a mining spot!",
+  "achievement.limestone_pie.description": "Reach bedrock",
+  "achievement.nurse_redheart.title": "Healing potion? I thought I had everything to save them already! Well, guess it’s always good to have more!",
+  "achievement.nurse_redheart.description": "Find or brew a healing potion"
 }

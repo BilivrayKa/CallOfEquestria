@@ -26,6 +26,12 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
+
+        net.messageBuilder(AdvancementC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(AdvancementC2SPacket::decode)
+                .encoder(AdvancementC2SPacket::encode)
+                .consumerMainThread(AdvancementC2SPacket::handle)
+                .add();
     }
     public static <MSG> void sendToServer(MSG message) {
         INSTANCE.sendToServer(message);

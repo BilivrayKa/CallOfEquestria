@@ -78,7 +78,6 @@ public class PlushReg {
     public static final RegistryObject<Block> PLUSH_LIGHTNING_DUST = registerBlock("plush_lightning_dust",
             () -> new PlushBaseBlock(ModSounds.LIGHTNING_DUST1.get(),ModSounds.LIGHTNING_DUST2.get(), BlockBehaviour.Properties.copy(Blocks.CYAN_WOOL).strength(2).noOcclusion()));
 
-
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = PLUSHIES.register(name, block);
         return toReturn;

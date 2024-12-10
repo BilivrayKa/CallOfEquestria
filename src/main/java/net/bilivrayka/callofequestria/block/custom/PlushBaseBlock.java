@@ -24,6 +24,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -143,4 +144,5 @@ public class PlushBaseBlock extends Block {
     static {
         POWERED = BlockStateProperties.POWERED;
     }
+
 }

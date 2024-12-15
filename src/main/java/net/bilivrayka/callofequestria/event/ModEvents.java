@@ -17,9 +17,12 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -33,6 +36,7 @@ import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -57,6 +61,7 @@ public class ModEvents {
     public static final Logger LOGGER = LogUtils.getLogger();
     private static final Map<ServerPlayer, Integer> messageCounters = new HashMap<>();
     private static final int MESSAGE_THRESHOLD = 25;
+    private static final WeakHashMap<ZombieVillager, Player> curingPlayers = new WeakHashMap<>();
 
     @SubscribeEvent
     public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
@@ -101,6 +106,42 @@ public class ModEvents {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 
+    }
+
+    @SubscribeEvent
+    public static void onVillagerCure(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getTarget() instanceof ZombieVillager zombieVillager)) {
+            return;
+        }
+
+        Player player = event.getEntity();
+        if (player.getMainHandItem().getItem() == Items.GOLDEN_APPLE &&
+                zombieVillager.hasEffect(MobEffects.WEAKNESS)) {
+            curingPlayers.put(zombieVillager, player);
+        }
+    }
+
+    // Отслеживание завершения излечения
+    @SubscribeEvent
+    public static void onEntityTransform(EntityJoinLevelEvent event) {
+        if (!(event.getEntity() instanceof Villager villager)) {
+            return;
+        }
+
+        curingPlayers.entrySet().removeIf(entry -> {
+            ZombieVillager zombieVillager = entry.getKey();
+            Player player = entry.getValue();
+
+            if (zombieVillager.isAlive() &&
+                    zombieVillager.distanceToSqr(villager) < 4 &&
+                    zombieVillager.isBaby()) {
+
+                ResourceLocation CHEERILEE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "cheerilee");
+                ModMessages.sendToServer(new AdvancementC2SPacket(CHEERILEE_AD));
+                return true;
+            }
+            return false;
+        });
     }
 
     @SubscribeEvent

@@ -1,0 +1,27 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_cheerilee"
+    },
+    "title": {
+      "translate": "achievement.cheerilee.title",
+      "color": "gray"
+    },
+    "description": {
+      "translate": "achievement.cheerilee.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:cheerilee"
+  }
+}

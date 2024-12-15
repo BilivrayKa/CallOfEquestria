@@ -89,8 +89,22 @@
   "achievement.starlight.description": "Лишите жителя его профессии",
   "achievement.granny_smith.title": "В моё время яблоки были куда сочнее!",
   "achievement.granny_smith.description": "Найдите яблоко",
-  "achievement.limestone_pie.title": "Что за… Серьезно? Я ведь сказала, что это не место для шахтерства!",
+  "achievement.limestone_pie.title": "Я ведь сказала, что это не место для шахтерства!",
   "achievement.limestone_pie.description": "Докопайтесь до бедрока",
-  "achievement.nurse_redheart.title": "Зелье лечения? А я-то думала, что у меня уже есть всё для спасения! Ну, ладно, можно и больше!",
-  "achievement.nurse_redheart.description": "Найдите или сварите зелье лечения"
+  "achievement.nurse_redheart.title": "Всегда хорошо иметь про запас!",
+  "achievement.nurse_redheart.description": "Найдите или сварите зелье лечения",
+  "achievement.lily_valley.title": "Мои любимые!",
+  "achievement.lily_valley.description": "Найдите Ландыш",
+  "achievement.daisy.title": "Обожаю их!",
+  "achievement.daisy.description": "Найдите маргаритку",
+  "achievement.lotus_blossom.title": "Природа знает, как расслабить!",
+  "achievement.lotus_blossom.description": "Найдите спороцвет",
+  "achievement.aloe_vera.title": "Эти свечи пахнут чудесно!",
+  "achievement.aloe_vera.description": "Поставьте свечку",
+  "achievement.octavia_melody.title": "Музыка начинается с правильных нот.",
+  "achievement.octavia_melody.description": "Скрафтите нотный блок",
+  "achievement.dj_pon3.title": "[Музыка]",
+  "achievement.dj_pon3.description": "[Музыка]",
+  "_comment": "развоплотить жителя, ачивочка чирилилипарипуричили"
+
 }

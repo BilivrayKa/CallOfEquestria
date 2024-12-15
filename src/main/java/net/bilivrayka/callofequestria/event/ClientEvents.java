@@ -17,6 +17,7 @@ import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
@@ -61,23 +62,10 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onPlayerCraft(PlayerEvent.ItemCraftedEvent event) {
             ItemStack itemStack = event.getCrafting();
-            /*
-            if (itemStack.getItem() instanceof DyeableLeatherItem) {
-                DyeableLeatherItem dyeableItem = (DyeableLeatherItem) itemStack.getItem();
-                int color = dyeableItem.getColor(itemStack);
-                if (color != -1) {
-                    ResourceLocation RARITY_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "rarity");
-                    ModMessages.sendToServer(new AdvancementC2SPacket(RARITY_AD));
-
-                }
+            if (itemStack.getItem() == Items.NOTE_BLOCK){
+                ResourceLocation OCTAVIA_MELODY_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "octavia_melody");
+                ModMessages.sendToServer(new AdvancementC2SPacket(OCTAVIA_MELODY_AD));
             }
-
-             */
-            /*else if (itemStack.getItem() == Items.CAKE) {
-                ResourceLocation PINKIE_PIE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "pinkie_pie");
-                ModMessages.sendToServer(new AdvancementC2SPacket(PINKIE_PIE_AD));
-            }
-             */
         }
         @SubscribeEvent
         public static void onBreakingSomeVillagerLive(BlockEvent.BreakEvent event) {

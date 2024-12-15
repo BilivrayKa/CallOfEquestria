@@ -1,0 +1,36 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_lotus_blossom"
+    },
+    "title": {
+      "translate": "achievement.lotus_blossom.title",
+      "color": "cyan"
+    },
+    "description": {
+      "translate": "achievement.lotus_blossom.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:spore_blossom"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:lotus_blossom"
+  }
+}

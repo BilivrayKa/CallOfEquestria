@@ -1,0 +1,27 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_dj_pon3"
+    },
+    "title": {
+      "translate": "achievement.dj_pon3.title",
+      "color": "white"
+    },
+    "description": {
+      "translate": "achievement.dj_pon3.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:dj_pon3"
+  }
+}

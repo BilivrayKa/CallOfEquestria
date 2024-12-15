@@ -27,6 +27,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -46,6 +47,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 
 import java.util.*;
@@ -100,27 +102,6 @@ public class ModEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 
     }
-/*
-    @SubscribeEvent
-    public static void onPotionUse(LivingEntityUseItemEvent event) {
-        ItemStack item = event.getItem();
-        if(!(event.getEntity() instanceof Player player)){
-            return;
-        }
-        Potion potion = PotionUtils.getPotion(item);
-        if(potion != Potions.REGENERATION && potion != Potions.HEALING){
-            return;
-        }
-        System.out.println("Item type: " + item.getItem().getClass().getSimpleName());
-        if(!(item.getItem() instanceof LingeringPotionItem || item.getItem() instanceof ThrowablePotionItem)){
-            return;
-        }
-
-        ResourceLocation NURSE_REDHEART = new ResourceLocation(CallOfEquestria.MOD_ID, "nurse_redheart");
-        ModMessages.sendToServer(new AdvancementC2SPacket(NURSE_REDHEART));
-    }
-
- */
 
     @SubscribeEvent
     public static void onItemPickup(PlayerEvent.ItemPickupEvent event) {
@@ -131,12 +112,28 @@ public class ModEvents {
             Potion potion = PotionUtils.getPotion(item);
 
             if (potion == Potions.REGENERATION || potion == Potions.HEALING) {
-                ResourceLocation NURSE_REDHEART = new ResourceLocation(CallOfEquestria.MOD_ID, "nurse_redheart");
-                ModMessages.sendToServer(new AdvancementC2SPacket(NURSE_REDHEART));
+                ResourceLocation NURSE_REDHEART_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "nurse_redheart");
+                ModMessages.sendToServer(new AdvancementC2SPacket(NURSE_REDHEART_AD));
                 }
+        }
+
+        if (item.getItem() instanceof RecordItem){
+            ResourceLocation DJ_PON3_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "dj_pon3");
+            ModMessages.sendToServer(new AdvancementC2SPacket(DJ_PON3_AD));
         }
     }
 
+    @SubscribeEvent
+    public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+
+        if (event.getPlacedBlock().getBlock() instanceof CandleBlock) {
+            ResourceLocation ALOE_VERA = new ResourceLocation(CallOfEquestria.MOD_ID, "aloe_vera");
+            ModMessages.sendToServer(new AdvancementC2SPacket(ALOE_VERA));
+        }
+    }
 
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {

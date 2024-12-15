@@ -1,0 +1,27 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_aloe_vera"
+    },
+    "title": {
+      "translate": "achievement.aloe_vera.title",
+      "color": "pink"
+    },
+    "description": {
+      "translate": "achievement.aloe_vera.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:aloe_vera"
+  }
+}

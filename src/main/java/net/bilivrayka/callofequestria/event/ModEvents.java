@@ -5,21 +5,13 @@ import net.bilivrayka.callofequestria.CallOfEquestria;
 import net.bilivrayka.callofequestria.networking.packet.*;
 import net.bilivrayka.callofequestria.data.*;
 import net.bilivrayka.callofequestria.networking.ModMessages;
-import net.bilivrayka.callofequestria.util.ModTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.entity.npc.Villager;
@@ -27,19 +19,18 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CandleBlock;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -51,7 +42,6 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 
 import java.util.*;
@@ -135,9 +125,7 @@ public class ModEvents {
             if (zombieVillager.isAlive() &&
                     zombieVillager.distanceToSqr(villager) < 4 &&
                     zombieVillager.isBaby()) {
-
-                ResourceLocation CHEERILEE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "cheerilee");
-                ModMessages.sendToServer(new AdvancementC2SPacket(CHEERILEE_AD));
+                ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.CHEERILEE_AD));
                 return true;
             }
             return false;
@@ -153,14 +141,20 @@ public class ModEvents {
             Potion potion = PotionUtils.getPotion(item);
 
             if (potion == Potions.REGENERATION || potion == Potions.HEALING) {
-                ResourceLocation NURSE_REDHEART_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "nurse_redheart");
-                ModMessages.sendToServer(new AdvancementC2SPacket(NURSE_REDHEART_AD));
+                ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.NURSE_REDHEART_AD));
                 }
         }
 
         if (item.getItem() instanceof RecordItem){
-            ResourceLocation DJ_PON3_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "dj_pon3");
-            ModMessages.sendToServer(new AdvancementC2SPacket(DJ_PON3_AD));
+            ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.DJ_PON3_AD));
+        }
+
+        if (item.getItem() instanceof EnchantedBookItem) {
+            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(item);
+
+            if (enchantments.containsKey(Enchantments.MENDING)) {
+                ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.TWILIGHT_VELVET_AD));
+            }
         }
     }
 
@@ -171,8 +165,7 @@ public class ModEvents {
         }
 
         if (event.getPlacedBlock().getBlock() instanceof CandleBlock) {
-            ResourceLocation ALOE_VERA = new ResourceLocation(CallOfEquestria.MOD_ID, "aloe_vera");
-            ModMessages.sendToServer(new AdvancementC2SPacket(ALOE_VERA));
+            ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.ALOE_VERA));
         }
     }
 
@@ -185,8 +178,7 @@ public class ModEvents {
 
         if (state.is(Blocks.SMOOTH_BASALT) || state.is(Blocks.CALCITE) || state.is(Blocks.AMETHYST_BLOCK)) {
             if (isGeodeStructure(level, pos)) {
-                ResourceLocation RARITY_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "rarity");
-                ModMessages.sendToServer(new AdvancementC2SPacket(RARITY_AD));
+                ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.RARITY_AD));
             }
         }
     }
@@ -213,8 +205,7 @@ public class ModEvents {
         }
         boolean isCollisionDamage = event.getSource().getMsgId().equals("flyIntoWall");
         if (isCollisionDamage && event.getSource().is(DamageTypes.FALL)) {
-            ResourceLocation DERPY_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "derpy");
-            ModMessages.sendToServer(new AdvancementC2SPacket(DERPY_AD));
+            ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.DERPY_AD));
         }
     }
 
@@ -225,14 +216,13 @@ public class ModEvents {
         String message = event.getMessage().toString().toLowerCase(Locale.ROOT);
         messageCounters.put(player, messageCount);
         if (messageCount >= MESSAGE_THRESHOLD) {
-            ResourceLocation MINUETTE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "minuette");
-            ModMessages.sendToServer(new AdvancementC2SPacket(MINUETTE_AD));
+            ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.MINUETTE_AD));
         }
         if (message.contains("party")) {
-            ResourceLocation PINKIE_PIE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "pinkie_pie");
-            ModMessages.sendToServer(new AdvancementC2SPacket(PINKIE_PIE_AD));
+            ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.PINKIE_PIE_AD));
         }
     }
+
 
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent.EntityInteract event) {
@@ -241,10 +231,12 @@ public class ModEvents {
             if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
                 Entity targetEntity = event.getTarget();
                 if (targetEntity instanceof Creeper) {
-                    ResourceLocation ROSE_AD = new ResourceLocation(CallOfEquestria.MOD_ID, "rose");
-                    ModMessages.sendToServer(new AdvancementC2SPacket(ROSE_AD));
+                    ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.ROSE_AD));
 
                 }
+            }
+            if (itemStack.is(ItemTags.FLOWERS)) {
+                ModMessages.sendToServer(new AdvancementC2SPacket(AdvancementData.CHERRY_BERRY_AD));
             }
         }
     }

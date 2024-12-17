@@ -34,8 +34,6 @@ public class PlushItem extends BlockItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        // У игроков звуки воспроизводятся разные
-        //мб потом пофикшу
         float pitch = rnd.nextFloat(1,1.15f);
         SoundEvent sound = ModSounds.SQUEE1.get();
         SoundEvent stereoSound = ModSounds.STEREO_SQUEE1.get();

@@ -105,6 +105,14 @@
   "achievement.octavia_melody.description": "Скрафтите нотный блок",
   "achievement.dj_pon3.title": "[Музыка]",
   "achievement.dj_pon3.description": "[Музыка]",
-  "_comment": "развоплотить жителя, ачивочка чирилилипарипуричили"
-
+  "achievement.cheerilee.title": "Ты в порядке?",
+  "achievement.cheerilee.description": "Вылечите жителя ребенка",
+  "achievement.spitfire.title": "Ты чувствуешь этот огонь?",
+  "achievement.spitfire.description": "Загоритесь при полете на элитрах",
+  "achievement.cherry_berry.title": "Мило!",
+  "achievement.cherry_berry.description": "Дайте цветок пчеле",
+  "achievement.twilight_velvet.title": "Ну что, починим все сразу!",
+  "achievement.twilight_velvet.description": "Найдите книгу на починку",
+  "achievement.lightning_dust.title": "СОПЕРНИКИ НА ВСЮ ЖИЗНЬ!!!",
+  "achievement.lightning_dust.description": "Сломайте элитры"
 }

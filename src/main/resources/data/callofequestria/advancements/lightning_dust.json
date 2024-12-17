@@ -1,0 +1,27 @@
+{
+  "parent": "callofequestria:root",
+  "display": {
+    "icon": {
+      "item": "callofequestria:plush_lightning_dust"
+    },
+    "title": {
+      "translate": "achievement.lightning_dust.title",
+      "color": "white"
+    },
+    "description": {
+      "translate": "achievement.lightning_dust.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "callofequestria:lightning_dust"
+  }
+}
